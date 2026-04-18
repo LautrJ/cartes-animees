@@ -25,6 +25,7 @@ class Setting extends Model
         ];
     }
 
+    // Helpers
     public function getTypedValue(): mixed
     {
         return match($this->type) {
@@ -35,6 +36,7 @@ class Setting extends Model
         };
     }
 
+    // Filament
     public function scopeByKey($query, string $key)
     {
         return $query->where('key', $key);

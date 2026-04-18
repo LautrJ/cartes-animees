@@ -36,6 +36,7 @@ class Subscription extends Model
         ];
     }
 
+    // Relations
     public function child(): BelongsTo
     {
         return $this->belongsTo(Child::class);
@@ -51,6 +52,7 @@ class Subscription extends Model
         return $this->hasMany(Invoice::class);
     }
 
+    // Filament
     public function scopeActive($query)
     {
         return $query->where('status', SubscriptionStatus::Active);

@@ -8,6 +8,7 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -79,6 +80,17 @@ class User extends Authenticatable implements FilamentUser, HasName
         return $this->hasMany(TherapistPayout::class, 'processed_by');
     }
 
+    public function patientsAsTherapist(): BelongsToMany
+    {
+        return $this->belongsToMany(Child::class, 'child_therapist', 'therapist_id', 'child_id')
+            ->withPivot(['assigned_by', 'assigned_at', 'ended_at'])
+            ->withTimestamps();
+    }
+
+    public function activePatients(): BelongsToMany
+    {
+        return $this->patientsAsTherapist()->wherePivotNull('ended_at');
+    }
 
     // Helpers
     public function isAdmin(): bool     { return $this->role === UserRole::Admin; }

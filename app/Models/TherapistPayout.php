@@ -34,6 +34,7 @@ class TherapistPayout extends Model
         ];
     }
 
+    // Relations
     public function therapist(): BelongsTo
     {
         return $this->belongsTo(User::class, 'therapist_id');
@@ -44,6 +45,7 @@ class TherapistPayout extends Model
         return $this->belongsTo(User::class, 'processed_by');
     }
 
+    // Filament
     public function scopePending($query)
     {
         return $query->whereNull('paid_at');

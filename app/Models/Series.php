@@ -34,6 +34,7 @@ class Series extends Model
         ];
     }
 
+    // Relations
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
@@ -59,6 +60,7 @@ class Series extends Model
         return $this->morphMany(ContentValidation::class, 'validatable');
     }
 
+    // Filament
     public function scopeBase($query)      { return $query->where('is_base', true); }
     public function scopeValidated($query) { return $query->where('is_validated', true); }
     public function scopeActive($query)    { return $query->where('is_active', true); }

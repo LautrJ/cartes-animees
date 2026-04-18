@@ -34,11 +34,13 @@ class Invoice extends Model
         ];
     }
 
+    // Relations
     public function subscription(): BelongsTo
     {
         return $this->belongsTo(Subscription::class);
     }
 
+    // Filament
     public function scopePaid($query)
     {
         return $query->where('status', InvoiceStatus::Paid);

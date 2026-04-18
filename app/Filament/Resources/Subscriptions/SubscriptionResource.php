@@ -22,9 +22,18 @@ class SubscriptionResource extends Resource
 {
     protected static ?string $model = Subscription::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNewspaper;
 
     protected static ?string $recordTitleAttribute = 'status';
+
+    protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
+
+    protected static ?int $navigationSort = 7;
+
+
+    protected static ?string $navigationLabel = 'Abonnements';
+    protected static ?string $modelLabel = 'Abonnement';
+    protected static ?string $pluralModelLabel = 'Abonnements';
 
     public static function form(Schema $schema): Schema
     {

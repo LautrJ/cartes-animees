@@ -24,7 +24,16 @@ class SeriesResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $recordTitleAttribute = 'name->fr';
+
+    protected static string|null|\UnitEnum $navigationGroup = 'Gérer le contenu';
+
+    protected static ?int $navigationSort = 3;
+
+
+    protected static ?string $navigationLabel = 'Séries';
+    protected static ?string $modelLabel = 'Série';
+    protected static ?string $pluralModelLabel = 'Séries';
 
     public static function form(Schema $schema): Schema
     {

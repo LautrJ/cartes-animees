@@ -22,9 +22,18 @@ class TherapistPaymentInfoResource extends Resource
 {
     protected static ?string $model = TherapistPaymentInfo::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCreditCard;
 
     protected static ?string $recordTitleAttribute = 'bank_name';
+
+    protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
+
+    protected static ?int $navigationSort = 10;
+
+
+    protected static ?string $navigationLabel = 'Infos bancaires Orthophonistes';
+    protected static ?string $modelLabel = 'Infos bancaires Orthophoniste';
+    protected static ?string $pluralModelLabel = 'Infos bancaires Orthophonistes';
 
     public static function form(Schema $schema): Schema
     {

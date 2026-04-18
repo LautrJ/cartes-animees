@@ -22,9 +22,18 @@ class ChildResource extends Resource
 {
     protected static ?string $model = Child::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedFaceSmile;
 
     protected static ?string $recordTitleAttribute = 'first_name';
+
+    protected static string|null|\UnitEnum $navigationGroup = 'Gérer les utilisateurs';
+
+    protected static ?int $navigationSort = 5;
+
+
+    protected static ?string $navigationLabel = 'Enfants';
+    protected static ?string $modelLabel = 'Enfant';
+    protected static ?string $pluralModelLabel = 'Enfants';
 
     public static function form(Schema $schema): Schema
     {

@@ -107,4 +107,14 @@ class User extends Authenticatable implements FilamentUser, HasName
     {
         return "{$this->first_name} {$this->last_name}";
     }
+
+    public function canImpersonate(): bool
+    {
+        return $this->isAdmin();
+    }
+
+    public function canBeImpersonated(): bool
+    {
+        return !$this->isAdmin();
+    }
 }

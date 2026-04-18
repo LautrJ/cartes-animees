@@ -22,9 +22,18 @@ class TherapistPayoutResource extends Resource
 {
     protected static ?string $model = TherapistPayout::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedInboxArrowDown;
 
     protected static ?string $recordTitleAttribute = 'amount';
+
+    protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
+
+    protected static ?int $navigationSort = 9;
+
+
+    protected static ?string $navigationLabel = 'Paies Orthophonistes';
+    protected static ?string $modelLabel = 'Paie Orthophoniste';
+    protected static ?string $pluralModelLabel = 'Paies Orthophonistes';
 
     public static function form(Schema $schema): Schema
     {

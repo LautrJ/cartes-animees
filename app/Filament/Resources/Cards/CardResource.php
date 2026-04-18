@@ -22,9 +22,18 @@ class CardResource extends Resource
 {
     protected static ?string $model = Card::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedGif;
 
-    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $recordTitleAttribute = 'name->fr';
+
+    protected static string|null|\UnitEnum $navigationGroup = 'Gérer le contenu';
+
+    protected static ?int $navigationSort = 2;
+
+
+    protected static ?string $navigationLabel = 'Animations';
+    protected static ?string $modelLabel = 'Animation';
+    protected static ?string $pluralModelLabel = 'Animations';
 
     public static function form(Schema $schema): Schema
     {

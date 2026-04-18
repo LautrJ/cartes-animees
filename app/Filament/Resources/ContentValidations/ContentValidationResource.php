@@ -22,9 +22,18 @@ class ContentValidationResource extends Resource
 {
     protected static ?string $model = ContentValidation::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentCheck;
 
-    protected static ?string $recordTitleAttribute = 'status';
+    protected static ?string $recordTitleAttribute = 'submitted_at';
+
+    protected static string|null|\UnitEnum $navigationGroup = 'Gérer le contenu';
+
+    protected static ?int $navigationSort = 1;
+
+
+    protected static ?string $navigationLabel = 'Validation de contenu';
+    protected static ?string $modelLabel = 'Validation de contenu';
+    protected static ?string $pluralModelLabel = 'Validation de contenu';
 
     public static function form(Schema $schema): Schema
     {
@@ -52,7 +61,6 @@ class ContentValidationResource extends Resource
     {
         return [
             'index' => ListContentValidations::route('/'),
-            'create' => CreateContentValidation::route('/create'),
             'view' => ViewContentValidation::route('/{record}'),
             'edit' => EditContentValidation::route('/{record}/edit'),
         ];
@@ -61,6 +69,15 @@ class ContentValidationResource extends Resource
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->with(['validatable', 'submitter', 'reviewer'])
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

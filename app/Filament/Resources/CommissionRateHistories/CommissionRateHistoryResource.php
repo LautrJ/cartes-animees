@@ -20,9 +20,18 @@ class CommissionRateHistoryResource extends Resource
 {
     protected static ?string $model = CommissionRateHistory::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChartBar;
 
     protected static ?string $recordTitleAttribute = 'rate';
+
+    protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
+
+    protected static ?int $navigationSort = 8;
+
+
+    protected static ?string $navigationLabel = 'Historique des taux de commission';
+    protected static ?string $modelLabel = 'Historique des taux de commission';
+    protected static ?string $pluralModelLabel = 'Historique des taux de commission';
 
     public static function form(Schema $schema): Schema
     {

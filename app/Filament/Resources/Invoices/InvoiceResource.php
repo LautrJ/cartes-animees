@@ -22,9 +22,18 @@ class InvoiceResource extends Resource
 {
     protected static ?string $model = Invoice::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedReceiptPercent;
 
     protected static ?string $recordTitleAttribute = 'stripe_invoice_id';
+
+    protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
+
+    protected static ?int $navigationSort = 6;
+
+
+    protected static ?string $navigationLabel = 'Factures';
+    protected static ?string $modelLabel = 'Facture';
+    protected static ?string $pluralModelLabel = 'Factures';
 
     public static function form(Schema $schema): Schema
     {

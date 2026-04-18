@@ -17,13 +17,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'role'       => UserRole::Admin,
-            'first_name' => 'Admin',
-            'last_name'  => 'Cartes Animées',
-            'email'      => 'admin@cartes-animees.test',
-            'password'   => Hash::make('admin123'),
-            'is_active'  => true,
+        $this->call([
+            TestUsersDataSeeder::class,
         ]);
     }
 }

@@ -9,6 +9,7 @@ use App\Filament\Resources\CommissionRateHistories\Pages\ViewCommissionRateHisto
 use App\Filament\Resources\CommissionRateHistories\Schemas\CommissionRateHistoryForm;
 use App\Filament\Resources\CommissionRateHistories\Schemas\CommissionRateHistoryInfolist;
 use App\Filament\Resources\CommissionRateHistories\Tables\CommissionRateHistoriesTable;
+use App\Filament\Resources\CommissionRateHistories\Widgets\CommissionRateChart;
 use App\Models\CommissionRateHistory;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -22,7 +23,7 @@ class CommissionRateHistoryResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChartBar;
 
-    protected static ?string $recordTitleAttribute = 'rate';
+    protected static ?string $recordTitleAttribute = 'effective_from';
 
     protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
 
@@ -59,9 +60,14 @@ class CommissionRateHistoryResource extends Resource
     {
         return [
             'index' => ListCommissionRateHistories::route('/'),
-            'create' => CreateCommissionRateHistory::route('/create'),
             'view' => ViewCommissionRateHistory::route('/{record}'),
-            'edit' => EditCommissionRateHistory::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            CommissionRateChart::class,
         ];
     }
 }

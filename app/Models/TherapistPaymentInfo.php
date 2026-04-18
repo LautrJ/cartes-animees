@@ -28,4 +28,10 @@ class TherapistPaymentInfo extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // Helpers
+    public function getTherapistNameAttribute(): string
+    {
+        return "{$this->user->first_name} {$this->user->last_name}";
+    }
 }

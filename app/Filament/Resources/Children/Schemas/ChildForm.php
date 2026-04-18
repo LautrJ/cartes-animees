@@ -43,8 +43,19 @@ class ChildForm
                             ->required(),
                     ]),
 
-                Section::make('Notes')
+                Section::make('Suivi')
                     ->schema([
+                        Select::make('therapists')
+                            ->label('Orthophonistes')
+                            ->relationship(
+                                'therapists',
+                                'first_name',
+                                fn($query) => $query->where('role', UserRole::Therapist)
+                            )
+                            ->multiple()
+                            ->preload()
+                            ->getOptionLabelFromRecordUsing(fn($record) => "{$record->first_name} {$record->last_name}")
+                            ->columnSpanFull(),
                         Textarea::make('notes')
                             ->label('Notes')
                             ->rows(4)

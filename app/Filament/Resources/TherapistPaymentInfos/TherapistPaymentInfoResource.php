@@ -24,7 +24,7 @@ class TherapistPaymentInfoResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCreditCard;
 
-    protected static ?string $recordTitleAttribute = 'bank_name';
+    protected static ?string $recordTitleAttribute = 'therapist_name';
 
     protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
 

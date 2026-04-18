@@ -24,7 +24,7 @@ class TherapistPayoutResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedInboxArrowDown;
 
-    protected static ?string $recordTitleAttribute = 'amount';
+    protected static ?string $recordTitleAttribute = 'payout_label';
 
     protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
 
@@ -61,9 +61,7 @@ class TherapistPayoutResource extends Resource
     {
         return [
             'index' => ListTherapistPayouts::route('/'),
-            'create' => CreateTherapistPayout::route('/create'),
             'view' => ViewTherapistPayout::route('/{record}'),
-            'edit' => EditTherapistPayout::route('/{record}/edit'),
         ];
     }
 

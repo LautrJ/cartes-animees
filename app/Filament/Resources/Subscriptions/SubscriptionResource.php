@@ -24,7 +24,7 @@ class SubscriptionResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNewspaper;
 
-    protected static ?string $recordTitleAttribute = 'status';
+    protected static ?string $recordTitleAttribute = 'stripe_subscription_id';
 
     protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
 
@@ -61,7 +61,6 @@ class SubscriptionResource extends Resource
     {
         return [
             'index' => ListSubscriptions::route('/'),
-            'create' => CreateSubscription::route('/create'),
             'view' => ViewSubscription::route('/{record}'),
             'edit' => EditSubscription::route('/{record}/edit'),
         ];

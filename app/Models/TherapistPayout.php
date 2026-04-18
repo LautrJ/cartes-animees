@@ -50,4 +50,10 @@ class TherapistPayout extends Model
     {
         return $query->whereNull('paid_at');
     }
+
+    // Helpers
+    public function getPayoutLabelAttribute(): string
+    {
+        return "#{$this->id} — {$this->therapist->first_name} {$this->therapist->last_name} ({$this->period_start->format('m/Y')})";
+    }
 }

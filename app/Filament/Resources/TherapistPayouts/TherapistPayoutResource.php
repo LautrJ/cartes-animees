@@ -28,7 +28,7 @@ class TherapistPayoutResource extends Resource
 
     protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
 
-    protected static ?int $navigationSort = 9;
+    protected static ?int $navigationSort = 4;
 
 
     protected static ?string $navigationLabel = 'Paies Orthophonistes';

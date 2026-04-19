@@ -1,0 +1,110 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+
+@theme {
+    /* Palette vert menthe — remplace le gray de Tailwind/Filament */
+    --color-gray-50:  #f7fdfb;
+    --color-gray-100: #eafaf4;
+    --color-gray-200: #d6f2e8;
+    --color-gray-300: #bfe8d8;
+    --color-gray-400: #a3dcc6;
+    --color-gray-500: #7fcfb0;
+    --color-gray-600: #5fb798;
+    --color-gray-700: #449b7f;
+    --color-gray-800: #2f7f66;
+    --color-gray-900: #1f5f4c;
+    --color-gray-950: #10372c;
+
+    --color-white: #f7fdfb;
+
+    /* Couleur primaire menthe */
+    --color-primary-50:  #f7fdfb;
+    --color-primary-100: #eafaf4;
+    --color-primary-200: #d6f2e8;
+    --color-primary-300: #bfe8d8;
+    --color-primary-400: #a3dcc6;
+    --color-primary-500: #7fcfb0;
+    --color-primary-600: #5fb798;
+    --color-primary-700: #449b7f;
+    --color-primary-800: #2f7f66;
+    --color-primary-900: #1f5f4c;
+    --color-primary-950: #10372c;
+}
+
+@layer components {
+    /* Sections */
+    .fi-section {
+        background-color: var(--color-gray-50) !important;
+        border-color: var(--color-gray-200) !important;
+    }
+
+    /* Tables */
+    .fi-ta-ctn {
+        background-color: var(--color-gray-50) !important;
+        border-color: var(--color-gray-200) !important;
+    }
+
+    /* Header des tables */
+    .fi-ta-header {
+        background-color: var(--color-gray-100) !important;
+    }
+
+    /* Topbar */
+    .fi-topbar {
+        background-color: var(--color-gray-50) !important;
+    }
+
+    /* Sidebar mobile */
+    .fi-sidebar-header {
+        background-color: var(--color-gray-100) !important;
+    }
+
+    /* Stats overview widget */
+    .fi-wi-stats-overview-stat {
+        background-color: var(--color-gray-50) !important;
+        border-color: var(--color-gray-200) !important;
+    }
+
+    /* Widget container parasite */
+    .fi-wi-stats-overview {
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Account widget */
+    .fi-account-widget .fi-section {
+        background-color: var(--color-gray-50) !important;
+    }
+
+    /* Boutons outline */
+    .fi-btn-color-gray {
+        background-color: var(--color-gray-50) !important;
+        border-color: var(--color-gray-200) !important;
+    }
+
+    /* Pagination */
+    .fi-pagination {
+        background-color: var(--color-gray-50) !important;
+        border-color: var(--color-gray-200) !important;
+    }
+
+    .fi-pagination-item-btn {
+        background-color: var(--color-gray-50) !important;
+    }
+
+    /* Fond blanc hardcodé sur les sections et conteneurs */
+    .fi-section:not(.fi-section-not-contained),
+    .fi-section-content,
+    .fi-section-header,
+    .fi-ta-ctn,
+    .fi-pagination-ctn,
+    .fi-topbar,
+    .fi-sidebar-header,
+    .fi-dropdown-panel,
+    .fi-modal-window {
+        background-color: var(--color-gray-50) !important;
+    }
+}

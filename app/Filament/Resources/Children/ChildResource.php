@@ -28,7 +28,7 @@ class ChildResource extends Resource
 
     protected static string|null|\UnitEnum $navigationGroup = 'Gérer les utilisateurs';
 
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 2;
 
 
     protected static ?string $navigationLabel = 'Enfants';

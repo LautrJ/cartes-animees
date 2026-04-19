@@ -22,7 +22,7 @@ class SettingResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'label';
 
-    protected static ?int $navigationSort = 11;
+    protected static ?int $navigationSort = 1;
 
 
     protected static ?string $navigationLabel = 'Paramètres';

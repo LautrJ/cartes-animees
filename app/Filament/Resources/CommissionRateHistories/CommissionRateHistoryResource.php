@@ -27,7 +27,7 @@ class CommissionRateHistoryResource extends Resource
 
     protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
 
-    protected static ?int $navigationSort = 8;
+    protected static ?int $navigationSort = 3;
 
 
     protected static ?string $navigationLabel = 'Historique des taux de commission';

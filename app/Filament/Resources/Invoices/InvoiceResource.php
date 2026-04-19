@@ -28,7 +28,7 @@ class InvoiceResource extends Resource
 
     protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
 
-    protected static ?int $navigationSort = 6;
+    protected static ?int $navigationSort = 1;
 
 
     protected static ?string $navigationLabel = 'Factures';

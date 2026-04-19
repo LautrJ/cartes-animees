@@ -65,4 +65,10 @@ class Child extends Model
             ->withPivot(['unlocked_by', 'status', 'unlocked_at', 'completed_at'])
             ->withTimestamps();
     }
+
+    // Helpers
+    public function completedSeries(): BelongsToMany
+    {
+        return $this->series()->wherePivot('status', 'completed');
+    }
 }

@@ -60,7 +60,13 @@ class UsersTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                Impersonate::make()->label(''),
+                Impersonate::make()
+                    ->label('')
+                    ->redirectTo(fn($record) => match(true) {
+                        $record->isTherapist() => '/therapist',
+                        $record->isParent()    => '/',
+                        default                => '/admin',
+                    }),
                 ViewAction::make(),
                 EditAction::make(),
             ])

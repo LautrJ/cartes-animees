@@ -20,8 +20,8 @@ class CommissionRateChart extends ChartWidget
                 [
                     'label'           => 'Taux (€/patient)',
                     'data'            => $history->pluck('rate')->toArray(),
-                    'borderColor'     => '#f59e0b',
-                    'backgroundColor' => 'rgba(245, 158, 11, 0.1)',
+                    'borderColor'     => '#a896d8',
+                    'backgroundColor' => 'rgba(193, 175, 228, 0.1)',
                     'fill'            => true,
                     'tension'         => 0.3,
                 ],

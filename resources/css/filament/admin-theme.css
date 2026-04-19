@@ -1,0 +1,665 @@
+/*
+ * Cartes Animées — Filament Theme
+ * Admin (Lilas) + Therapist (Menthe) via CSS custom properties
+ * Therapist theme activates on body.role-therapist (injected via renderHook)
+ */
+
+/* ============================================================
+   1. CSS CUSTOM PROPERTIES
+   ============================================================ */
+
+/* --- Admin / Lilas (default) --- */
+:root,
+body {
+    --ca-sidebar-bg:           #f0ecfb;
+    --ca-active-bg:            #c4b8e8;
+    --ca-content-bg:           #faf9fd;
+    --ca-sidebar-text:         #6b5aad;
+    --ca-sidebar-text-muted:   #9b8fc4;
+    --ca-primary:              #a896d8;
+    --ca-primary-r:            168;
+    --ca-primary-g:            150;
+    --ca-primary-b:            216;
+    --ca-shape-opacity:        0.06;
+    --ca-transition:           200ms ease;
+    --ca-transition-slow:      300ms ease;
+    /* State colors */
+    --ca-success:              #22c55e;
+    --ca-warning:              #f97316;
+    --ca-danger:               #ef4444;
+    --ca-info:                 #3b82f6;
+}
+
+/* --- Admin / Lilas dark --- */
+html.dark body:not(.role-therapist) {
+    --ca-sidebar-bg:           #1e1a2e;
+    --ca-active-bg:            #3d3063;
+    --ca-content-bg:           #13111f;
+    --ca-sidebar-text:         #a896d8;
+    --ca-sidebar-text-muted:   #7b6faa;
+    --ca-primary:              #a896d8;
+    --ca-shape-opacity:        0.05;
+}
+
+/* --- Therapist / Menthe light --- */
+body.role-therapist {
+    --ca-sidebar-bg:           #eaf7f2;
+    --ca-active-bg:            #7ecfb3;
+    --ca-content-bg:           #f5fdf9;
+    --ca-sidebar-text:         #3a8c6e;
+    --ca-sidebar-text-muted:   #68b89a;
+    --ca-primary:              #5ab99a;
+    --ca-primary-r:            90;
+    --ca-primary-g:            185;
+    --ca-primary-b:            154;
+    --ca-shape-opacity:        0.06;
+}
+
+/* --- Therapist / Menthe dark --- */
+html.dark body.role-therapist {
+    --ca-sidebar-bg:           #0d2219;
+    --ca-active-bg:            #1a4a35;
+    --ca-content-bg:           #091710;
+    --ca-sidebar-text:         #5ab99a;
+    --ca-sidebar-text-muted:   #3a6e56;
+    --ca-primary:              #5ab99a;
+    --ca-primary-r:            90;
+    --ca-primary-g:            185;
+    --ca-primary-b:            154;
+    --ca-shape-opacity:        0.05;
+}
+
+/* ============================================================
+   2. SIDEBAR
+   ============================================================ */
+
+.fi-sidebar.fi-main-sidebar {
+    background-color: var(--ca-sidebar-bg) !important;
+    border-right: 1px solid rgba(var(--ca-primary-r), var(--ca-primary-g), var(--ca-primary-b), 0.15) !important;
+    transition: background-color var(--ca-transition-slow) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Gradient shimmer at top of sidebar */
+.fi-sidebar.fi-main-sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 180px;
+    background: linear-gradient(
+        180deg,
+        rgba(var(--ca-primary-r), var(--ca-primary-g), var(--ca-primary-b), 0.18) 0%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Group labels */
+.fi-sidebar-group-label {
+    color: var(--ca-sidebar-text-muted) !important;
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.09em !important;
+    text-transform: uppercase !important;
+}
+
+/* Nav item text */
+.fi-sidebar-item-label {
+    color: var(--ca-sidebar-text) !important;
+    transition: color var(--ca-transition) !important;
+}
+
+/* Nav item button */
+.fi-sidebar-item-btn {
+    border-radius: 10px !important;
+    transition: background-color var(--ca-transition), color var(--ca-transition) !important;
+}
+
+/* Nav item hover */
+.fi-sidebar-item-btn:hover {
+    background-color: rgba(var(--ca-primary-r), var(--ca-primary-g), var(--ca-primary-b), 0.12) !important;
+}
+
+/* Active nav item */
+.fi-sidebar-item.fi-active .fi-sidebar-item-btn {
+    background-color: var(--ca-active-bg) !important;
+}
+
+.fi-sidebar-item.fi-active .fi-sidebar-item-label {
+    color: var(--ca-primary) !important;
+    font-weight: 600 !important;
+}
+
+/* ============================================================
+   3. MAIN CONTENT — Teinture lilas / menthe sur tout le back-office
+   ============================================================ */
+
+/*
+ * Approche directe avec !important sur les sélecteurs Filament exacts.
+ * Les CSS variables Tailwind v4 compilées par Filament ont une spécificité
+ * qui écrase nos overrides de variables — on cible les éléments directement.
+ */
+
+/* --- Fond de page --- */
+body.role-admin,
+body:not(.role-therapist) .fi-body,
+body:not(.role-therapist).fi-body {
+    background-color: #faf9fd !important;
+}
+
+.fi-main {
+    background-color: #faf9fd !important;
+    transition: background-color var(--ca-transition-slow) !important;
+}
+
+.fi-main-ctn {
+    background-color: #faf9fd !important;
+}
+
+/* --- Sections — bords arrondis complets + teinte lilas --- */
+body:not(.role-therapist) .fi-section {
+    background-color: #faf9fd !important;
+    border-color: #e0d8f5 !important;
+    border-radius: 0.75rem !important;
+    overflow: hidden !important;
+}
+
+body:not(.role-therapist) .fi-section-header {
+    background-color: #faf9fd !important;
+    border-radius: 0.75rem 0.75rem 0 0 !important;
+}
+
+body:not(.role-therapist) .fi-section-content {
+    background-color: #faf9fd !important;
+    border-color: #e0d8f5 !important;
+    border-radius: 0 0 0.75rem 0.75rem !important;
+}
+
+/* --- Tables --- */
+body:not(.role-therapist) .fi-ta-ctn {
+    background-color: #faf9fd !important;
+    border-color: #e0d8f5 !important;
+}
+
+body:not(.role-therapist) .fi-ta-header-cell {
+    background-color: #f0ecfb !important;
+}
+
+body:not(.role-therapist) .fi-ta-row:hover td,
+body:not(.role-therapist) .fi-ta-row:hover {
+    background-color: #f0ecfb !important;
+}
+
+/* --- Widget stats — supprimer le fond parasite du conteneur --- */
+body:not(.role-therapist) .fi-wi-stats-overview {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+/* --- Stats cards --- */
+body:not(.role-therapist) .fi-wi-stats-overview-stat {
+    background: linear-gradient(135deg, #f0ecfb, #faf9fd) !important;
+    border: 0.5px solid #d9d0f0 !important;
+    transition: box-shadow var(--ca-transition), transform var(--ca-transition) !important;
+}
+
+/* --- Sous-navigation & conteneurs de formulaire --- */
+body:not(.role-therapist) .fi-page-sub-navigation,
+body:not(.role-therapist) .fi-fo-component-ctn {
+    background-color: #faf9fd !important;
+    border-color: #e0d8f5 !important;
+}
+
+/* ============================================================
+   Dark mode — Admin / Lilas
+   ============================================================ */
+
+html.dark body:not(.role-therapist) .fi-body,
+html.dark body:not(.role-therapist).fi-body,
+html.dark body.role-admin {
+    background-color: #13111f !important;
+}
+
+html.dark body:not(.role-therapist) .fi-main,
+html.dark body:not(.role-therapist) .fi-main-ctn {
+    background-color: #13111f !important;
+}
+
+html.dark body:not(.role-therapist) .fi-section {
+    background-color: #1e1a2e !important;
+    border-color: #3d3063 !important;
+    border-radius: 0.75rem !important;
+    overflow: hidden !important;
+}
+
+html.dark body:not(.role-therapist) .fi-section-header {
+    background-color: #1e1a2e !important;
+    border-radius: 0.75rem 0.75rem 0 0 !important;
+}
+
+html.dark body:not(.role-therapist) .fi-section-content {
+    background-color: #1e1a2e !important;
+    border-color: #3d3063 !important;
+    border-radius: 0 0 0.75rem 0.75rem !important;
+}
+
+html.dark body:not(.role-therapist) .fi-ta-ctn {
+    background-color: #1e1a2e !important;
+    border-color: #3d3063 !important;
+}
+
+html.dark body:not(.role-therapist) .fi-ta-header-cell {
+    background-color: #251f3a !important;
+}
+
+html.dark body:not(.role-therapist) .fi-ta-row:hover td,
+html.dark body:not(.role-therapist) .fi-ta-row:hover {
+    background-color: #251f3a !important;
+}
+
+html.dark body:not(.role-therapist) .fi-wi-stats-overview {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+html.dark body:not(.role-therapist) .fi-wi-stats-overview-stat {
+    background: linear-gradient(135deg, #1e1a2e, #13111f) !important;
+    border: 0.5px solid #3d3063 !important;
+}
+
+html.dark body:not(.role-therapist) .fi-page-sub-navigation,
+html.dark body:not(.role-therapist) .fi-fo-component-ctn {
+    background-color: #1e1a2e !important;
+    border-color: #3d3063 !important;
+}
+
+/* ============================================================
+   Dark mode — Therapist / Menthe
+   ============================================================ */
+
+html.dark body.role-therapist .fi-body,
+html.dark body.role-therapist.fi-body {
+    background-color: #091710 !important;
+}
+
+html.dark body.role-therapist .fi-main,
+html.dark body.role-therapist .fi-main-ctn {
+    background-color: #091710 !important;
+}
+
+html.dark body.role-therapist .fi-section {
+    background-color: #0d2219 !important;
+    border-color: #1a4a35 !important;
+    border-radius: 0.75rem !important;
+    overflow: hidden !important;
+}
+
+html.dark body.role-therapist .fi-section-header {
+    background-color: #0d2219 !important;
+    border-radius: 0.75rem 0.75rem 0 0 !important;
+}
+
+html.dark body.role-therapist .fi-section-content {
+    background-color: #0d2219 !important;
+    border-color: #1a4a35 !important;
+    border-radius: 0 0 0.75rem 0.75rem !important;
+}
+
+html.dark body.role-therapist .fi-ta-ctn {
+    background-color: #0d2219 !important;
+    border-color: #1a4a35 !important;
+}
+
+html.dark body.role-therapist .fi-ta-header-cell {
+    background-color: #142b20 !important;
+}
+
+html.dark body.role-therapist .fi-ta-row:hover td,
+html.dark body.role-therapist .fi-ta-row:hover {
+    background-color: #142b20 !important;
+}
+
+html.dark body.role-therapist .fi-wi-stats-overview {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+html.dark body.role-therapist .fi-wi-stats-overview-stat {
+    background: linear-gradient(135deg, #0d2219, #091710) !important;
+    border: 0.5px solid #1a4a35 !important;
+}
+
+html.dark body.role-therapist .fi-page-sub-navigation,
+html.dark body.role-therapist .fi-fo-component-ctn {
+    background-color: #0d2219 !important;
+    border-color: #1a4a35 !important;
+}
+
+/* --- Therapist / Menthe --- */
+body.role-therapist .fi-body,
+body.role-therapist.fi-body {
+    background-color: #f5fdf9 !important;
+}
+
+body.role-therapist .fi-main {
+    background-color: #f5fdf9 !important;
+}
+
+body.role-therapist .fi-section {
+    background-color: #f5fdf9 !important;
+    border-color: #b8e8d6 !important;
+    border-radius: 0.75rem !important;
+    overflow: hidden !important;
+}
+
+body.role-therapist .fi-section-header {
+    background-color: #f5fdf9 !important;
+    border-radius: 0.75rem 0.75rem 0 0 !important;
+}
+
+body.role-therapist .fi-section-content {
+    background-color: #f5fdf9 !important;
+    border-color: #b8e8d6 !important;
+    border-radius: 0 0 0.75rem 0.75rem !important;
+}
+
+body.role-therapist .fi-ta-ctn {
+    background-color: #f5fdf9 !important;
+    border-color: #b8e8d6 !important;
+}
+
+body.role-therapist .fi-ta-header-cell {
+    background-color: #eaf7f2 !important;
+}
+
+body.role-therapist .fi-ta-row:hover td,
+body.role-therapist .fi-ta-row:hover {
+    background-color: #eaf7f2 !important;
+}
+
+body.role-therapist .fi-wi-stats-overview {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+body.role-therapist .fi-wi-stats-overview-stat {
+    background: linear-gradient(135deg, #eaf7f2, #f5fdf9) !important;
+    border: 0.5px solid #a8ddc8 !important;
+}
+
+body.role-therapist .fi-page-sub-navigation,
+body.role-therapist .fi-fo-component-ctn {
+    background-color: #f5fdf9 !important;
+    border-color: #b8e8d6 !important;
+}
+
+/* ============================================================
+   4. LOGIN PAGE — Fond lilas solid + formes menthe + Glassmorphism
+   ============================================================ */
+
+/*
+ * Fond entièrement lilas, hardcodé en hex avec !important.
+ * Le dark mode Filament (html.dark .fi-simple-layout) est neutralisé
+ * par la même règle répétée avec html.dark pour plus de spécificité.
+ * min-height: 100dvh couvre le body dark:bg-gray-950.
+ *
+ * Les formes SVG menthe sont injectées INSIDE .fi-simple-layout
+ * via PanelsRenderHook::SIMPLE_LAYOUT_START (position: absolute)
+ * car position: fixed passe derrière le fond solid du layout.
+ */
+.fi-simple-layout,
+html.dark .fi-simple-layout {
+    position: relative !important;
+    min-height: 100dvh !important;
+    background-color: #f0ecfb !important;
+    background-image: none !important;
+    overflow: hidden !important;
+}
+
+/* Carte de connexion au-dessus des formes */
+.fi-simple-main-ctn {
+    position: relative;
+    z-index: 1;
+}
+
+/*
+ * Glassmorphism — cible .fi-simple-main directement
+ * (Filament applique bg-white dark:bg-gray-900 dessus).
+ * Valeurs hardcodées pour immunité totale au dark mode.
+ */
+.fi-simple-main,
+html.dark .fi-simple-main {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border: 1px solid rgba(196, 184, 232, 0.4) !important;
+    border-radius: 20px !important;
+    box-shadow:
+        0 8px 40px rgba(168, 150, 216, 0.12),
+        0 2px 8px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    animation: ca-card-enter 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ============================================================
+   5. FORMES GÉOMÉTRIQUES — Back-office (fixed) + Login (absolute)
+   ============================================================ */
+
+/*
+ * Back-office : position fixed, z-index 0, couleurs du thème actif.
+ * Le .fi-layout (z-index: 1) et la sidebar passent par dessus.
+ */
+.ca-bg-shapes {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.ca-bg-shape {
+    position: absolute;
+    fill: rgba(var(--ca-primary-r), var(--ca-primary-g), var(--ca-primary-b), var(--ca-shape-opacity));
+    transition: fill var(--ca-transition-slow);
+}
+
+/*
+ * Login : position absolute INSIDE .fi-simple-layout, couleurs menthe
+ * hardcodées (#7ecfb3, #a8e0cc) pour être visibles sur fond lilas.
+ * Opacité légère (0.13 max) pour effet subtil.
+ */
+.ca-login-shapes {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.ca-login-shape {
+    position: absolute;
+    opacity: 0.13;
+}
+
+/* Forcer le contenu Filament (layout + nav) au-dessus des formes fixed */
+.fi-layout,
+.fi-topbar,
+.fi-sidebar.fi-main-sidebar {
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================================
+   5. BACKGROUND GEOMETRIC SHAPES
+   ============================================================ */
+
+.ca-bg-shapes {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.ca-bg-shape {
+    position: absolute;
+    fill: rgba(var(--ca-primary-r), var(--ca-primary-g), var(--ca-primary-b), var(--ca-shape-opacity));
+    transition: fill var(--ca-transition-slow);
+}
+
+/* --- Positions & animations back-office shapes --- */
+.ca-bg-shape-1 {
+    width: 380px; height: 380px;
+    top: -100px; right: 8%;
+    animation: ca-float-1 20s ease-in-out infinite;
+}
+.ca-bg-shape-2 {
+    width: 220px; height: 220px;
+    bottom: 12%; left: 4%;
+    animation: ca-float-2 26s ease-in-out infinite;
+}
+.ca-bg-shape-3 {
+    width: 160px; height: 160px;
+    top: 38%; right: 4%;
+    animation: ca-float-3 18s ease-in-out infinite;
+}
+.ca-bg-shape-4 {
+    width: 110px; height: 110px;
+    top: 18%; left: 22%;
+    animation: ca-float-1 28s ease-in-out infinite reverse;
+}
+.ca-bg-shape-5 {
+    width: 280px; height: 280px;
+    bottom: -60px; right: 28%;
+    animation: ca-float-2 24s ease-in-out infinite reverse;
+}
+.ca-bg-shape-6 {
+    width: 130px; height: 130px;
+    top: 65%; left: 35%;
+    animation: ca-float-3 22s ease-in-out infinite;
+}
+
+/* --- Positions & animations login shapes (absolute, menthe) --- */
+.ca-login-shape-1 {
+    width: 420px; height: 420px;
+    top: -120px; right: -60px;
+    animation: ca-float-1 22s ease-in-out infinite;
+}
+.ca-login-shape-2 {
+    width: 260px; height: 260px;
+    bottom: -80px; left: -40px;
+    animation: ca-float-2 28s ease-in-out infinite;
+}
+.ca-login-shape-3 {
+    width: 180px; height: 180px;
+    top: 30%; left: 5%;
+    animation: ca-float-3 19s ease-in-out infinite;
+}
+.ca-login-shape-4 {
+    width: 120px; height: 120px;
+    top: 10%; left: 40%;
+    animation: ca-float-1 32s ease-in-out infinite reverse;
+}
+.ca-login-shape-5 {
+    width: 300px; height: 300px;
+    bottom: 5%; right: 5%;
+    animation: ca-float-2 25s ease-in-out infinite reverse;
+}
+.ca-login-shape-6 {
+    width: 140px; height: 140px;
+    top: 55%; right: 15%;
+    animation: ca-float-3 21s ease-in-out infinite;
+}
+
+/* ============================================================
+   6. KEYFRAME ANIMATIONS
+   ============================================================ */
+
+@keyframes ca-card-enter {
+    from {
+        opacity: 0;
+        transform: translateY(28px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes ca-float-1 {
+    0%,  100% { transform: translate(0,     0)     rotate(0deg); }
+    25%        { transform: translate(12px, -22px)  rotate(9deg); }
+    50%        { transform: translate(-9px,  6px)   rotate(-4deg); }
+    75%        { transform: translate(16px,  14px)  rotate(7deg); }
+}
+
+@keyframes ca-float-2 {
+    0%,  100% { transform: translate(0,     0)     rotate(0deg); }
+    33%        { transform: translate(-20px, 18px)  rotate(-11deg); }
+    66%        { transform: translate(14px, -10px)  rotate(6deg); }
+}
+
+@keyframes ca-float-3 {
+    0%,  100% { transform: translate(0,     0)     rotate(0deg); }
+    50%        { transform: translate(22px,  22px)  rotate(16deg); }
+}
+
+@keyframes ca-pulse-badge {
+    0%,  100% { opacity: 1;    transform: scale(1); }
+    50%        { opacity: 0.78; transform: scale(1.1); }
+}
+
+/* ============================================================
+   7. MICRO-INTERACTIONS
+   ============================================================ */
+
+/* Table row hover */
+.fi-ta-row {
+    transition: background-color var(--ca-transition) !important;
+}
+
+/* Buttons */
+.fi-btn {
+    transition: all var(--ca-transition) !important;
+    border-radius: 10px !important;
+}
+
+/* Stats cards — hover lift (fond géré en section 3) */
+.fi-wi-stats-overview-stat {
+    border-radius: 16px !important;
+    transition: box-shadow var(--ca-transition), transform var(--ca-transition) !important;
+}
+
+.fi-wi-stats-overview-stat:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.09) !important;
+}
+
+/* Stats value counter fade-in (JS animation targets this) */
+.fi-wi-stats-overview-stat-value {
+    transition: color var(--ca-transition) !important;
+}
+
+/* Badge pulse — notification & pending counters */
+.fi-badge[class*="warning"],
+.fi-badge[class*="danger"],
+[data-indicator="true"] {
+    animation: ca-pulse-badge 2.5s ease-in-out infinite;
+}
+
+/* Topbar */
+.fi-topbar {
+    transition: background-color var(--ca-transition-slow) !important;
+}

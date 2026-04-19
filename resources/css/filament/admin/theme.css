@@ -1,0 +1,24 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+
+/*
+ * Remplacement de la palette gray de Tailwind v4 par des tons lilas.
+ * Filament utilise bg-gray-*, text-gray-*, ring-gray-*, border-gray-*
+ * partout — redéfinir ces variables ici les applique nativement dans
+ * toute l'UI compilée, sans !important ni surspécificité.
+ */
+@theme {
+    --color-gray-50:  #faf9fd;
+    --color-gray-100: #f0ecfb;
+    --color-gray-200: #e0d8f5;
+    --color-gray-300: #d9d0f0;
+    --color-gray-400: #c4b8e8;
+    --color-gray-500: #a896d8;
+    --color-gray-600: #8b7ac4;
+    --color-gray-700: #6b5aad;
+    --color-gray-800: #4d3d8a;
+    --color-gray-900: #2d1f6e;
+    --color-gray-950: #1a0f4a;
+}

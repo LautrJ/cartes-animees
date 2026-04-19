@@ -1,0 +1,38 @@
+/*
+ * Cartes Animées — Therapist / Menthe Standalone Theme
+ * For use with a dedicated therapist Filament panel.
+ * Imports admin-theme.css base and overrides variables to menthe palette.
+ */
+
+/* Override CSS custom properties to Menthe palette */
+:root,
+body {
+    --ca-sidebar-bg:           #eaf7f2;
+    --ca-active-bg:            #7ecfb3;
+    --ca-content-bg:           #f5fdf9;
+    --ca-sidebar-text:         #3a8c6e;
+    --ca-sidebar-text-muted:   #68b89a;
+    --ca-primary:              #5ab99a;
+    --ca-primary-r:            90;
+    --ca-primary-g:            185;
+    --ca-primary-b:            154;
+    --ca-shape-opacity:        0.06;
+    --ca-login-left:           #f0ecfb;
+    --ca-login-right:          #eaf7f2;
+    --ca-transition:           200ms ease;
+    --ca-transition-slow:      300ms ease;
+    --ca-success:              #22c55e;
+    --ca-warning:              #f97316;
+    --ca-danger:               #ef4444;
+    --ca-info:                 #3b82f6;
+}
+
+html.dark body {
+    --ca-sidebar-bg:           #0d2219;
+    --ca-active-bg:            #1a4a35;
+    --ca-content-bg:           #091710;
+    --ca-sidebar-text:         #5ab99a;
+    --ca-sidebar-text-muted:   #3a6e56;
+    --ca-primary:              #5ab99a;
+    --ca-shape-opacity:        0.05;
+}

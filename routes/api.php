@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ChildController;
+use App\Http\Controllers\Api\ChildSeriesController;
+use App\Http\Controllers\Api\SeriesController;
 use App\Http\Controllers\Api\TherapistInvitationController;
 use App\Http\Controllers\Api\TherapistPatientController;
 use Illuminate\Support\Facades\Route;
@@ -20,14 +22,28 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    // Enfants - parent
     Route::apiResource('children', ChildController::class);
-    Route::post('children/{child}/therapist', [TherapistInvitationController::class, 'attach']);
-    Route::delete('children/{child}/therapist/{therapist}', [TherapistInvitationController::class, 'detach']);
+    Route::prefix('children')->group(function () {
+        // Enfants - parent
+        Route::post('{child}/therapist', [TherapistInvitationController::class, 'attach']);
+        Route::delete('{child}/therapist/{therapist}', [TherapistInvitationController::class, 'detach']);
 
+        // Séries d'un enfant — parent
+        Route::get('{child}/series', [SeriesController::class, 'index']);
+        Route::get('{child}/series/{series}', [SeriesController::class, 'show']);
+    });
+
+
+    // Orthophoniste
     Route::prefix('therapist')->group(function () {
         Route::get('patients', [TherapistPatientController::class, 'index']);
         Route::get('patients/{child}', [TherapistPatientController::class, 'show']);
         Route::post('invitation-code', [TherapistInvitationController::class, 'regenerate']);
+
+        // Gestion des séries des patients
+        Route::post('patients/{child}/series/{series}', [ChildSeriesController::class, 'store']);
+        Route::patch('patients/{child}/series/{series}', [ChildSeriesController::class, 'update']);
+        Route::delete('patients/{child}/series/{series}', [ChildSeriesController::class, 'destroy']);
     });
+
 });

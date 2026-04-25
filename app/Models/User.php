@@ -97,6 +97,13 @@ class User extends Authenticatable implements FilamentUser, HasName
     public function isTherapist(): bool { return $this->role === UserRole::Therapist; }
     public function isParent(): bool    { return $this->role === UserRole::Parent; }
 
+    public function sendPasswordResetNotification($token): void
+    {
+        $url = config('app.frontend_url') . '/reset-password?token=' . $token . '&email=' . urlencode($this->email);
+
+        \Illuminate\Support\Facades\Log::info('Password reset link: ' . $url);
+    }
+
     // Filament
     public function canAccessPanel(Panel $panel): bool
     {

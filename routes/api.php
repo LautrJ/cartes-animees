@@ -3,6 +3,8 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ChildController;
 use App\Http\Controllers\Api\ChildSeriesController;
+use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\SeriesController;
 use App\Http\Controllers\Api\TherapistInvitationController;
 use App\Http\Controllers\Api\TherapistPatientController;
@@ -46,4 +48,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('patients/{child}/series/{series}', [ChildSeriesController::class, 'destroy']);
     });
 
+    // Notifications
+    Route::get('notifications', [NotificationController::class, 'index']);
+    Route::patch('notifications/read-all', [NotificationController::class, 'markAllAsRead']);
+    Route::patch('notifications/{id}', [NotificationController::class, 'markAsRead']);
+
+    // Profil
+    Route::get('profile', [ProfileController::class, 'show']);
+    Route::put('profile', [ProfileController::class, 'update']);
+    Route::patch('profile/password', [ProfileController::class, 'updatePassword']);
 });

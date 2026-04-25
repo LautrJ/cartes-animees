@@ -40,6 +40,12 @@
         border-color: var(--color-gray-200) !important;
     }
 
+    /* Bords arrondis sur toutes les sections */
+    .fi-section:not(.fi-section-not-contained) {
+        border-radius: 0.75rem !important;
+        overflow: hidden !important;
+    }
+
     /* Tables */
     .fi-ta-ctn {
         background-color: var(--color-gray-50) !important;
@@ -65,6 +71,7 @@
     .fi-wi-stats-overview-stat {
         background-color: var(--color-gray-50) !important;
         border-color: var(--color-gray-200) !important;
+        height: 100% !important;
     }
 
     /* Widget container parasite */

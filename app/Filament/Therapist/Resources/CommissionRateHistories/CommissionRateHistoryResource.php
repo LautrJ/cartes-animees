@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Filament\Resources\CommissionRateHistories;
+namespace App\Filament\Therapist\Resources\CommissionRateHistories;
 
-use App\Filament\Resources\CommissionRateHistories\Pages\ListCommissionRateHistories;
-use App\Filament\Resources\CommissionRateHistories\Pages\ViewCommissionRateHistory;
-use App\Filament\Resources\CommissionRateHistories\Schemas\CommissionRateHistoryForm;
-use App\Filament\Resources\CommissionRateHistories\Schemas\CommissionRateHistoryInfolist;
-use App\Filament\Resources\CommissionRateHistories\Tables\CommissionRateHistoriesTable;
-use App\Filament\Resources\CommissionRateHistories\Widgets\CommissionRateChart;
+use App\Filament\Therapist\Resources\CommissionRateHistories\Pages\ListCommissionRateHistories;
+use App\Filament\Therapist\Resources\CommissionRateHistories\Pages\ViewCommissionRateHistory;
+use App\Filament\Therapist\Resources\CommissionRateHistories\Schemas\CommissionRateHistoryForm;
+use App\Filament\Therapist\Resources\CommissionRateHistories\Schemas\CommissionRateHistoryInfolist;
+use App\Filament\Therapist\Resources\CommissionRateHistories\Tables\CommissionRateHistoriesTable;
+use App\Filament\Therapist\Resources\CommissionRateHistories\Widgets\CommissionRateChart;
 use App\Models\CommissionRateHistory;
 use BackedEnum;
 use Filament\Resources\Resource;

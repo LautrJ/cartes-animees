@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\CommissionRateHistories\Tables;
+namespace App\Filament\Therapist\Resources\CommissionRateHistories\Tables;
 
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;

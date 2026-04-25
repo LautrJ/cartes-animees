@@ -4,7 +4,6 @@ namespace App\Filament\Therapist\Resources\PaymentInfos;
 
 use App\Filament\Therapist\Resources\PaymentInfos\Pages\CreatePaymentInfo;
 use App\Filament\Therapist\Resources\PaymentInfos\Pages\EditPaymentInfo;
-use App\Filament\Therapist\Resources\PaymentInfos\Pages\ListPaymentInfos;
 use App\Filament\Therapist\Resources\PaymentInfos\Pages\ViewPaymentInfo;
 use App\Filament\Therapist\Resources\PaymentInfos\Schemas\PaymentInfoForm;
 use App\Filament\Therapist\Resources\PaymentInfos\Schemas\PaymentInfoInfolist;
@@ -26,6 +25,9 @@ class PaymentInfoResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'bank_name';
 
+    protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
+
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationLabel = 'Informations bancaire';
     protected static ?string $modelLabel = 'Informations bancaire';
@@ -63,16 +65,32 @@ class PaymentInfoResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListPaymentInfos::route('/'),
+            'index' => ViewPaymentInfo::route('/'),
             'create' => CreatePaymentInfo::route('/create'),
             'view' => ViewPaymentInfo::route('/{record}'),
             'edit' => EditPaymentInfo::route('/{record}/edit'),
         ];
     }
 
+    public static function getUrl(?string $name = null, array $parameters = [], bool $isAbsolute = true, ?string $panel = null, ?\Illuminate\Database\Eloquent\Model $tenant = null, bool $shouldGuessMissingParameters = false): string
+    {
+        if ($name === 'index' || $name === null) {
+            $paymentInfo = TherapistPaymentInfo::where('user_id', auth()->id())->first();
+
+            if ($paymentInfo) {
+                return parent::getUrl('view', ['record' => $paymentInfo], $isAbsolute, $panel, $tenant);
+            }
+
+            return parent::getUrl('create', [], $isAbsolute, $panel, $tenant);
+        }
+
+        return parent::getUrl($name, $parameters, $isAbsolute, $panel, $tenant, $shouldGuessMissingParameters);
+    }
+
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()
+            ->where('user_id', auth()->id())
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

@@ -18,11 +18,6 @@ class TherapistPaymentInfo extends Model
         'bank_name',
     ];
 
-    protected $hidden = [
-        'iban',
-        'bic',
-    ];
-
     // Relations
     public function user(): BelongsTo
     {

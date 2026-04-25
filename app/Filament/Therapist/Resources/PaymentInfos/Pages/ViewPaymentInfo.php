@@ -13,7 +13,8 @@ class ViewPaymentInfo extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            EditAction::make(),
+            EditAction::make()
+                ->url(fn() => PaymentInfoResource::getUrl('edit', ['record' => $this->record])),
         ];
     }
 }

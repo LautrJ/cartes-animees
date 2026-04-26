@@ -32,13 +32,10 @@ class AdminPanelProvider extends PanelProvider
             ->darkMode(false)
             ->login()
             ->colors([
-                'primary' => Color::hex('#9b8fc4'), // Lilas
-                'success' => Color::hex('#7ec8a4'), // Vert menthe
-                'warning' => Color::hex('#f5c27a'), // Ambre doux
-                'danger'  => Color::hex('#f4847b'), // Rose corail doux
-                'info'    => Color::hex('#7ab8d4'), // Bleu ciel doux
-                'gray'    => Color::Slate,
+                'primary' => Color::hex('#775ab8'),
             ])
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
             ->brandName('Cartes Animées')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')

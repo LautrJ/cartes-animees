@@ -40,10 +40,14 @@ class RejectContentValidation extends Action
                     'rejection_reason' => $data['rejection_reason'],
                 ]);
 
+                $contentName = $record->validatable->name['fr'] ?? '';
+                $contentType = class_basename($record->validatable_type) === 'Card' ? 'carte' : 'série';
+
                 Notification::make()
-                    ->title('Contenu rejeté')
+                    ->title("Votre {$contentType} \"{$contentName}\" a été refusée.")
+                    ->body($data['rejection_reason'])
                     ->danger()
-                    ->send();
+                    ->sendToDatabase($record->submitter);
             });
     }
 }

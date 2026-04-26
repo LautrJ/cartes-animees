@@ -5,6 +5,8 @@ namespace App\Filament\Therapist\Resources\Cards\Pages;
 use App\Enums\ContentValidationStatus;
 use App\Filament\Therapist\Resources\Cards\CardResource;
 use App\Models\ContentValidation;
+use App\Models\User;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateCard extends CreateRecord
@@ -27,5 +29,13 @@ class CreateCard extends CreateRecord
             'status'           => ContentValidationStatus::Pending,
             'submitted_at'     => now(),
         ]);
+
+        User::admins()->each(fn($admin) =>
+            Notification::make()
+                ->title(auth()->user()->getFilamentName() . " a soumis une carte en attente de validation.")
+                ->body($this->record->name['fr'] ?? '')
+                ->warning()
+                ->sendToDatabase($admin)
+        );
     }
 }

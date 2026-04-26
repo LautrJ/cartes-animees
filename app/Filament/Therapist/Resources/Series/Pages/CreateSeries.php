@@ -6,6 +6,8 @@ use App\Enums\ContentValidationStatus;
 use App\Filament\Therapist\Resources\Series\SeriesResource;
 use App\Models\ContentValidation;
 use App\Models\Series;
+use App\Models\User;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateSeries extends CreateRecord
@@ -30,5 +32,13 @@ class CreateSeries extends CreateRecord
             'status'           => ContentValidationStatus::Pending,
             'submitted_at'     => now(),
         ]);
+
+        User::admins()->each(fn($admin) =>
+            Notification::make()
+                ->title(auth()->user()->getFilamentName() . " a soumis une série en attente de validation.")
+                ->body($this->record->name['fr'] ?? '')
+                ->warning()
+                ->sendToDatabase($admin)
+        );
     }
 }

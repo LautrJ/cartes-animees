@@ -29,8 +29,10 @@ class TherapistPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/therapist/theme.css')
             ->brandName('Cartes Animées')
             ->colors([
-                'primary' => Color::hex('#5ab99a'),
+                'primary' => Color::hex('#449b7f'),
             ])
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
             ->login()
             ->renderHook(
                 'panels::topbar.end',

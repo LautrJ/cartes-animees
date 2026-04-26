@@ -6,6 +6,7 @@ use App\Filament\Therapist\Resources\Patients\Pages\CreatePatient;
 use App\Filament\Therapist\Resources\Patients\Pages\EditPatient;
 use App\Filament\Therapist\Resources\Patients\Pages\ListPatients;
 use App\Filament\Therapist\Resources\Patients\Pages\ViewPatient;
+use App\Filament\Therapist\Resources\Patients\RelationManagers\SeriesRelationManager;
 use App\Filament\Therapist\Resources\Patients\Schemas\PatientForm;
 use App\Filament\Therapist\Resources\Patients\Schemas\PatientInfolist;
 use App\Filament\Therapist\Resources\Patients\Tables\PatientsTable;
@@ -53,7 +54,7 @@ class PatientResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            SeriesRelationManager::class,
         ];
     }
 

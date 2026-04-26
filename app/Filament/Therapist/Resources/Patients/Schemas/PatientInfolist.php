@@ -2,6 +2,8 @@
 
 namespace App\Filament\Therapist\Resources\Patients\Schemas;
 
+use Filament\Actions\Action;
+use Filament\Forms\Components\Textarea;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -30,21 +32,34 @@ class PatientInfolist
                     ]),
 
                 Section::make('Notes')
+                    ->headerActions([
+                        Action::make('edit_notes')
+                            ->label('')
+                            ->icon('heroicon-s-pencil-square')
+                            ->color('gray')
+                            ->fillForm(fn($record) => ['notes' => $record->notes])
+                            ->form([
+                                Textarea::make('notes')
+                                    ->label('Notes')
+                                    ->rows(5)
+                                    ->placeholder('Ajouter des notes sur ce patient...'),
+                            ])
+                            ->modalHeading('Modifier les notes')
+                            ->modalSubmitActionLabel('Enregistrer')
+                            ->action(function ($record, array $data) {
+                                $record->update(['notes' => $data['notes']]);
+
+                                Notification::make()
+                                    ->title('Notes mises à jour')
+                                    ->success()
+                                    ->send();
+                            }),
+                    ])
                     ->schema([
                         TextEntry::make('notes')
                             ->label('Notes')
                             ->placeholder('Aucune note')
                             ->columnSpanFull(),
-                    ]),
-
-                Section::make('Séries')
-                    ->schema([
-                        TextEntry::make('series_count')
-                            ->label('Séries débloquées')
-                            ->getStateUsing(fn($record) => $record->series()->count()),
-                        TextEntry::make('completed_series')
-                            ->label('Séries complétées')
-                            ->getStateUsing(fn($record) => $record->completedSeries()->count()),
                     ]),
 
                 Section::make('Dates')

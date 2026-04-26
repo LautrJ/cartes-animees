@@ -7,6 +7,8 @@ use App\Http\Responses\ApiResponse;
 use App\Enums\ChildSeriesStatus;
 use App\Models\Child;
 use App\Models\Series;
+use App\Notifications\SeriesCompletedNotification;
+use App\Notifications\SeriesUnlockedNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -40,6 +42,10 @@ class ChildSeriesController extends Controller
             'unlocked_at' => now(),
         ]);
 
+        $child->parent->notify(
+            new SeriesUnlockedNotification($child, $series)
+        );
+
         return ApiResponse::success(['message' => 'Série débloquée avec succès.'], 201);
     }
 
@@ -69,6 +75,10 @@ class ChildSeriesController extends Controller
             'status'       => ChildSeriesStatus::Completed,
             'completed_at' => now(),
         ]);
+
+        $child->parent->notify(
+            new SeriesCompletedNotification($child, $series)
+        );
 
         return ApiResponse::success(['message' => 'Série marquée comme complétée.']);
     }

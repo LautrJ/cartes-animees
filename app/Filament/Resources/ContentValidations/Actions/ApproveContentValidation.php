@@ -35,10 +35,13 @@ class ApproveContentValidation extends Action
 
                 $record->validatable->update(['is_validated' => true]);
 
+                $contentName = $record->validatable->name['fr'] ?? '';
+                $contentType = class_basename($record->validatable_type) === 'Card' ? 'carte' : 'série';
+
                 Notification::make()
-                    ->title('Contenu approuvé')
+                    ->title("Votre {$contentType} \"{$contentName}\" a été approuvée.")
                     ->success()
-                    ->send();
+                    ->sendToDatabase($record->submitter);
             });
     }
 }

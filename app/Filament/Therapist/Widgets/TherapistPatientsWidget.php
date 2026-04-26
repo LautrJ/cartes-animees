@@ -39,10 +39,15 @@ class TherapistPatientsWidget extends BaseWidget
                     ->getStateUsing(fn($record) => $record->series()->count()),
                 TextColumn::make('last_unlock')
                     ->label('Dernier déblocage')
-                    ->getStateUsing(fn($record) => $record->series()
-                        ->orderByPivot('unlocked_at', 'desc')
-                        ->first()?->pivot->unlocked_at?->format('d/m/Y') ?? 'Jamais'
-                    ),
+                    ->getStateUsing(function ($record) {
+                        $lastSeries = $record->series()
+                            ->orderByPivot('unlocked_at', 'desc')
+                            ->first();
+
+                        return $lastSeries?->pivot->unlocked_at
+                            ? \Carbon\Carbon::parse($lastSeries->pivot->unlocked_at)->format('d/m/Y')
+                            : 'Jamais';
+                    }),
             ])
             ->recordUrl(fn($record) => PatientResource::getUrl('view', ['record' => $record]))
             ->toolbarActions([]);

@@ -52,7 +52,11 @@ class Series extends Model
     {
         return $this->belongsToMany(Child::class, 'child_series')
             ->withPivot(['unlocked_by', 'status', 'unlocked_at', 'completed_at'])
-            ->withTimestamps();
+            ->withTimestamps()
+            ->withCasts([
+                'unlocked_at'  => 'datetime',
+                'completed_at' => 'datetime',
+            ]);
     }
 
     public function validations(): MorphMany

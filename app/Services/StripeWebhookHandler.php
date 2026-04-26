@@ -48,7 +48,11 @@ class StripeWebhookHandler
             ]
         );
 
-        $subscription->update(['status' => SubscriptionStatus::Active]);
+        $subscription->update([
+            'status' => SubscriptionStatus::Active,
+            'current_period_start' => \Carbon\Carbon::createFromTimestamp($stripeInvoice->period_start),
+            'current_period_end'   => \Carbon\Carbon::createFromTimestamp($stripeInvoice->period_end),
+        ]);
 
         Log::channel('stripe')->info('Facture payée', [
             'stripe_invoice_id' => $stripeInvoice->id,
@@ -87,6 +91,8 @@ class StripeWebhookHandler
             'stripe_invoice_id' => $stripeInvoice->id,
             'subscription_id'   => $subscription->id,
         ]);
+
+        $subscription->child->parent->notify(new \App\Notifications\PaymentFailedNotification($subscription));
     }
 
     private function handleSubscriptionDeleted(Event $event): void
@@ -125,10 +131,23 @@ class StripeWebhookHandler
             return;
         }
 
-        $subscription->update([
-            'current_period_start' => now()->createFromTimestamp($stripeSubscription->current_period_start),
-            'current_period_end'   => now()->createFromTimestamp($stripeSubscription->current_period_end),
-        ]);
+        $stripeStatus = match($stripeSubscription->status) {
+            'active'   => SubscriptionStatus::Active,
+            'past_due' => SubscriptionStatus::PastDue,
+            'canceled' => SubscriptionStatus::Canceled,
+            default    => null,
+        };
+
+        $data = [
+            'current_period_start' => \Carbon\Carbon::createFromTimestamp($stripeSubscription->current_period_start),
+            'current_period_end'   => \Carbon\Carbon::createFromTimestamp($stripeSubscription->current_period_end),
+        ];
+
+        if ($stripeStatus) {
+            $data['status'] = $stripeStatus;
+        }
+
+        $subscription->update($data);
 
         Log::channel('stripe')->info('Abonnement mis à jour', [
             'stripe_subscription_id' => $stripeSubscription->id,

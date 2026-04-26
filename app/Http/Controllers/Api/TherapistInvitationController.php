@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
 use App\Models\Child;
 use App\Models\User;
+use Filament\Notifications\Notification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -52,6 +53,11 @@ class TherapistInvitationController extends Controller
             'assigned_at' => now(),
             'ended_at'    => null,
         ]);
+
+        Notification::make()
+            ->title("{$child->first_name} {$child->last_name} a été rattaché à votre compte.")
+            ->success()
+            ->sendToDatabase($therapist);
 
         return ApiResponse::success(['message' => 'Orthophoniste affilié avec succès.'], 201);
     }

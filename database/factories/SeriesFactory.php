@@ -11,7 +11,7 @@ class SeriesFactory extends Factory
     public function definition(): array
     {
         return [
-            'created_by'      => User::where('role', UserRole::Admin)->first()->id,
+            'created_by'      => User::factory()->admin(),
             'name'            => ['fr' => $this->faker->words(3, true)],
             'description'     => ['fr' => $this->faker->sentence()],
             'thumbnail_path'  => null,
@@ -19,6 +19,14 @@ class SeriesFactory extends Factory
             'is_validated'    => true,
             'is_active'       => true,
         ];
+    }
+
+    public function byTherapist(User $therapist): static
+    {
+        return $this->state([
+            'created_by'   => $therapist->id,
+            'is_validated' => false,
+        ]);
     }
 
     public function base(): static

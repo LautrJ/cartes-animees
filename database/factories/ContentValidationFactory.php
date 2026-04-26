@@ -12,8 +12,8 @@ class ContentValidationFactory extends Factory
     public function definition(): array
     {
         return [
-            'submitted_by'     => User::where('role', UserRole::Therapist)->inRandomOrder()->first()->id,
-            'reviewed_by'      => User::where('role', UserRole::Admin)->first()->id,
+            'submitted_by'     => User::therapists()->inRandomOrder()->first()->id,
+            'reviewed_by'      => User::admins()->first()->id,
             'status'           => ContentValidationStatus::Approved,
             'rejection_reason' => null,
             'submitted_at'     => now()->subDays(rand(1, 30)),

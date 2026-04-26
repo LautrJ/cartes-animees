@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('therapist_id')->constrained('users')->restrictOnDelete();
             $table->foreignId('processed_by')->constrained('users')->restrictOnDelete();
             $table->decimal('amount', 8, 2);
-            $table->decimal('commission_rate', 5, 2);
             $table->unsignedSmallInteger('patient_count');
             $table->date('period_start');
             $table->date('period_end');

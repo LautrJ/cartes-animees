@@ -18,7 +18,6 @@ class TherapistPayoutFactory extends Factory
             'therapist_id'    => User::where('role', UserRole::Therapist)->inRandomOrder()->first()->id,
             'processed_by'    => User::where('role', UserRole::Admin)->first()->id,
             'amount'          => $this->faker->randomFloat(2, 10, 100),
-            'commission_rate' => 2.00,
             'patient_count'   => $this->faker->numberBetween(1, 10),
             'period_start'    => $periodStart,
             'period_end'      => $periodEnd,

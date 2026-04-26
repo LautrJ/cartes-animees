@@ -15,7 +15,6 @@ class TherapistPayout extends Model
         'therapist_id',
         'processed_by',
         'amount',
-        'commission_rate',
         'patient_count',
         'period_start',
         'period_end',

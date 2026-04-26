@@ -11,7 +11,7 @@ class CardFactory extends Factory
     public function definition(): array
     {
         return [
-            'created_by'   => User::where('role', UserRole::Admin)->first()->id,
+            'created_by'   => User::factory()->admin(),
             'name'         => ['fr' => $this->faker->word()],
             'gif_path'     => 'placeholders/placeholder.gif',
             'video_path'   => 'placeholders/placeholder.mp4',
@@ -21,6 +21,11 @@ class CardFactory extends Factory
             'duration'     => $this->faker->numberBetween(2, 10),
             'is_validated' => true,
         ];
+    }
+
+    public function byTherapist(User $therapist): static
+    {
+        return $this->state(['created_by' => $therapist->id]);
     }
 
     public function unvalidated(): static

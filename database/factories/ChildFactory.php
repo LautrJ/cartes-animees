@@ -11,8 +11,7 @@ class ChildFactory extends Factory
     public function definition(): array
     {
         return [
-            'parent_id' => User::where('role', UserRole::Parent)->inRandomOrder()->first()?->id
-                ?? User::factory()->create(['role' => UserRole::Parent])->id,
+            'parent_id' => User::factory()->parent(),
             'first_name' => $this->faker->firstName(),
             'last_name'  => $this->faker->lastName(),
             'birthdate'  => $this->faker->dateTimeBetween('-12 years', '-3 years')->format('Y-m-d'),

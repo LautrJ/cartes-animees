@@ -13,7 +13,7 @@ class CommissionRateHistoryFactory extends Factory
         return [
             'rate'           => $this->faker->randomFloat(2, 1, 5),
             'effective_from' => now(),
-            'created_by'     => User::where('role', UserRole::Admin)->first()->id,
+            'created_by'     => User::factory()->admin(),
         ];
     }
 }

@@ -30,6 +30,26 @@ class UserFactory extends Factory
         ];
     }
 
+    public function therapist(): static
+    {
+        return $this->state(['role' => UserRole::Therapist]);
+    }
+
+    public function admin(): static
+    {
+        return $this->state(['role' => UserRole::Admin]);
+    }
+
+    public function parent(): static
+    {
+        return $this->state(['role' => UserRole::Parent]);
+    }
+
+    public function inactive(): static
+    {
+        return $this->state(['is_active' => false]);
+    }
+
     public function unverified(): static
     {
         return $this->state(fn(array $attributes) => [

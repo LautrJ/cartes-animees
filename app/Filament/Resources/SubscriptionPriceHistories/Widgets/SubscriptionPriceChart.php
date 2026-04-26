@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\RateHistories\Widgets;
+namespace App\Filament\Resources\SubscriptionPriceHistories\Widgets;
 
 use App\Models\SubscriptionPriceHistory;
 use Filament\Widgets\ChartWidget;
@@ -8,6 +8,7 @@ use Filament\Widgets\ChartWidget;
 class SubscriptionPriceChart extends ChartWidget
 {
     protected ?string $heading = 'Évolution du prix d\'abonnement';
+
     protected int|string|array $columnSpan = 'full';
     protected ?string $maxHeight = '300px';
 

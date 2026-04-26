@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\SeriesController;
 use App\Http\Controllers\Api\StripeWebhookController;
+use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\TherapistInvitationController;
 use App\Http\Controllers\Api\TherapistPatientController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,11 @@ Route::middleware('auth:sanctum')->group(function () {
         // Séries d'un enfant — parent
         Route::get('{child}/series', [SeriesController::class, 'index']);
         Route::get('{child}/series/{series}', [SeriesController::class, 'show']);
+
+        // Gestion des abonnements
+        Route::get('{child}/subscription', [SubscriptionController::class, 'show']);
+        Route::post('{child}/subscription', [SubscriptionController::class, 'store']);
+        Route::delete('{child}/subscription', [SubscriptionController::class, 'destroy']);
     });
 
 
@@ -61,3 +67,8 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::post('stripe/webhook', [StripeWebhookController::class, 'handle']);
+
+Route::get('test/payment-method', function () {
+    $service = new \App\Services\StripeService();
+    return response()->json(['payment_method_id' => $service->createTestPaymentMethod()]);
+});

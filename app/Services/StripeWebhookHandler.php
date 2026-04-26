@@ -18,6 +18,7 @@ class StripeWebhookHandler
             'invoice.payment_failed'           => $this->handleInvoicePaymentFailed($event),
             'customer.subscription.deleted'    => $this->handleSubscriptionDeleted($event),
             'customer.subscription.updated'    => $this->handleSubscriptionUpdated($event),
+            'invoice.finalized'                => $this->handleInvoiceFinalized($event),
             default => Log::channel('stripe')->info('Event Stripe non géré : ' . $event->type),
         };
     }
@@ -131,6 +132,37 @@ class StripeWebhookHandler
 
         Log::channel('stripe')->info('Abonnement mis à jour', [
             'stripe_subscription_id' => $stripeSubscription->id,
+        ]);
+    }
+
+    private function handleInvoiceFinalized(Event $event): void
+    {
+        $stripeInvoice = $event->data->object;
+
+        $subscription = Subscription::where('stripe_subscription_id', $stripeInvoice->parent?->subscription_details?->subscription)->first();
+
+        if (!$subscription) {
+            Log::channel('stripe')->warning('Subscription introuvable pour invoice.finalized', [
+                'stripe_invoice_id' => $stripeInvoice->id,
+            ]);
+            return;
+        }
+
+        Invoice::updateOrCreate(
+            ['stripe_invoice_id' => $stripeInvoice->id],
+            [
+                'subscription_id' => $subscription->id,
+                'amount'          => $stripeInvoice->amount_due / 100,
+                'status'          => InvoiceStatus::Open,
+                'invoice_pdf'     => $stripeInvoice->invoice_pdf,
+                'period_start'    => now()->createFromTimestamp($stripeInvoice->period_start),
+                'period_end'      => now()->createFromTimestamp($stripeInvoice->period_end),
+                'paid_at'         => null,
+            ]
+        );
+
+        Log::channel('stripe')->info('Facture finalisée', [
+            'stripe_invoice_id' => $stripeInvoice->id,
         ]);
     }
 }

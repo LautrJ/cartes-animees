@@ -36,6 +36,17 @@ class StripeService
         return $customer->id;
     }
 
+    public function attachPaymentMethod(string $customerId, string $paymentMethodId): void
+    {
+        $this->stripe->paymentMethods->attach($paymentMethodId, [
+            'customer' => $customerId,
+        ]);
+
+        $this->stripe->customers->update($customerId, [
+            'invoice_settings' => ['default_payment_method' => $paymentMethodId],
+        ]);
+    }
+
     public function createSubscription(string $customerId, string $priceId): \Stripe\Subscription
     {
         return $this->stripe->subscriptions->create([
@@ -58,5 +69,15 @@ class StripeService
             $signature,
             config('services.stripe.webhook_secret')
         );
+    }
+
+    public function createTestPaymentMethod(): string
+    {
+        $paymentMethod = $this->stripe->paymentMethods->create([
+            'type' => 'card',
+            'card' => ['token' => 'tok_visa'],
+        ]);
+
+        return $paymentMethod->id;
     }
 }

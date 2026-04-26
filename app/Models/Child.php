@@ -36,7 +36,6 @@ class Child extends Model
         return $this->belongsTo(User::class, 'parent_id');
     }
 
-
     public function subscriptions(): HasMany
     {
         return $this->hasMany(Subscription::class);
@@ -70,5 +69,16 @@ class Child extends Model
     public function completedSeries(): BelongsToMany
     {
         return $this->series()->wherePivot('status', 'completed');
+    }
+
+    // Filament
+    public function scopeWithActiveSubscription($query)
+    {
+        return $query->whereHas('subscriptions', fn($q) => $q->active());
+    }
+
+    public function scopeWithAccessibleSubscription($query)
+    {
+        return $query->whereHas('subscriptions', fn($q) => $q->accesible());
     }
 }

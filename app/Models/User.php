@@ -128,4 +128,24 @@ class User extends Authenticatable implements FilamentUser, HasName
     {
         return !$this->isAdmin();
     }
+
+    public function scopeAdmins($query)
+    {
+        return $query->where('role', UserRole::Admin);
+    }
+
+    public function scopeTherapists($query)
+    {
+        return $query->where('role', UserRole::Therapist);
+    }
+
+    public function scopeParents($query)
+    {
+        return $query->where('role', UserRole::Parent);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
 }

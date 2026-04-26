@@ -45,4 +45,29 @@ class Invoice extends Model
     {
         return $query->where('status', InvoiceStatus::Paid);
     }
+
+    public function scopeDraft($query)
+    {
+        return $query->where('status', InvoiceStatus::Draft);
+    }
+
+    public function scopeOpen($query)
+    {
+        return $query->where('status', InvoiceStatus::Open);
+    }
+
+    public function scopeUncollectible($query)
+    {
+        return $query->where('status', InvoiceStatus::Uncollectible);
+    }
+
+    public function scopeVoid($query)
+    {
+        return $query->where('status', InvoiceStatus::Void);
+    }
+
+    public function scopeForPeriod($query, $start, $end)
+    {
+        return $query->whereBetween('period_start', [$start, $end]);
+    }
 }

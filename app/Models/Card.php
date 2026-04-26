@@ -51,8 +51,19 @@ class Card extends Model
         return $this->morphMany(ContentValidation::class, 'validatable');
     }
 
+    // Filament
     public function scopeValidated($query)
     {
         return $query->where('is_validated', true);
+    }
+
+    public function scopeUnvalidated($query)
+    {
+        return $query->where('is_validated', false);
+    }
+
+    public function scopeCreatedBy($query, int $userId)
+    {
+        return $query->where('created_by', $userId);
     }
 }

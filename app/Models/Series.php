@@ -61,7 +61,35 @@ class Series extends Model
     }
 
     // Filament
-    public function scopeBase($query)      { return $query->where('is_base', true); }
-    public function scopeValidated($query) { return $query->where('is_validated', true); }
-    public function scopeActive($query)    { return $query->where('is_active', true); }
+    public function scopeBase($query)
+    {
+        return $query->where('is_base', true);
+    }
+
+    public function scopeValidated($query)
+    {
+        return $query->where('is_validated', true);
+    }
+
+    public function scopeUnvalidated($query)
+    {
+        return $query->where('is_validated', false);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+
+
+    }
+
+    public function scopeUnactive($query)
+    {
+        return $query->where('is_active', false);
+    }
+
+    public function scopeCreatedBy($query, int $userId)
+    {
+        return $query->where('created_by', $userId);
+    }
 }

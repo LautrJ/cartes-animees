@@ -51,6 +51,16 @@ class TherapistPayout extends Model
         return $query->whereNull('paid_at');
     }
 
+    public function scopePaid($query)
+    {
+        return $query->whereNotNull('paid_at');
+    }
+
+    public function scopeForPeriod($query, $start, $end)
+    {
+        return $query->whereBetween('period_start', [$start, $end]);
+    }
+
     // Helpers
     public function getPayoutLabelAttribute(): string
     {

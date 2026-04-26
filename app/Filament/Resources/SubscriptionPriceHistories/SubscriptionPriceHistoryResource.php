@@ -21,7 +21,7 @@ class SubscriptionPriceHistoryResource extends Resource
 {
     protected static ?string $model = SubscriptionPriceHistory::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPresentationChartLine;
 
     protected static ?string $recordTitleAttribute = 'stripe_price_id';
 

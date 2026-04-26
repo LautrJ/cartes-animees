@@ -57,4 +57,24 @@ class Subscription extends Model
     {
         return $query->where('status', SubscriptionStatus::Active);
     }
+
+    public function scopeAccessible($query)
+    {
+        return $query->whereIn('status', [SubscriptionStatus::Active, SubscriptionStatus::Free]);
+    }
+
+    public function scopeFree($query)
+    {
+        return $query->where('status', SubscriptionStatus::Free);
+    }
+
+    public function scopePastDue($query)
+    {
+        return $query->where('status', SubscriptionStatus::PastDue);
+    }
+
+    public function scopeCanceled($query)
+    {
+        return $query->where('status', SubscriptionStatus::Canceled);
+    }
 }

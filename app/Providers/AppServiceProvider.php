@@ -15,8 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        Child::observe(ChildObserver::class);
-        Setting::observe(SettingObserver::class);
+        //
     }
 
     /**
@@ -24,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Child::observe(ChildObserver::class);
+        Setting::observe(SettingObserver::class);
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ChildSeriesController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\SeriesController;
+use App\Http\Controllers\Api\StripeWebhookController;
 use App\Http\Controllers\Api\TherapistInvitationController;
 use App\Http\Controllers\Api\TherapistPatientController;
 use Illuminate\Support\Facades\Route;
@@ -58,3 +59,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('profile', [ProfileController::class, 'update']);
     Route::patch('profile/password', [ProfileController::class, 'updatePassword']);
 });
+
+Route::post('stripe/webhook', [StripeWebhookController::class, 'handle']);

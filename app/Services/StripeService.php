@@ -70,14 +70,4 @@ class StripeService
             config('services.stripe.webhook_secret')
         );
     }
-
-    public function createTestPaymentMethod(): string
-    {
-        $paymentMethod = $this->stripe->paymentMethods->create([
-            'type' => 'card',
-            'card' => ['token' => 'tok_visa'],
-        ]);
-
-        return $paymentMethod->id;
-    }
 }

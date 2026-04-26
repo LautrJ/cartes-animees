@@ -31,9 +31,6 @@ class TherapistPayoutInfolist
                         TextEntry::make('amount')
                             ->label('Montant')
                             ->getStateUsing(fn($record) => number_format($record->amount, 2) . ' €'),
-                        TextEntry::make('commission_rate')
-                            ->label('Taux')
-                            ->getStateUsing(fn($record) => $record->commission_rate . ' €/patient'),
                         TextEntry::make('patient_count')
                             ->label('Nombre de patients'),
                         TextEntry::make('period_start')

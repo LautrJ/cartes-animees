@@ -69,6 +69,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('stripe/webhook', [StripeWebhookController::class, 'handle']);
 
 Route::get('test/payment-method', function () {
-    $service = new \App\Services\StripeService();
+    $service = new \App\Services\StripeTestDataService();
     return response()->json(['payment_method_id' => $service->createTestPaymentMethod()]);
 });

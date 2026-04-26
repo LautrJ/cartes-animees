@@ -4,58 +4,27 @@ namespace Database\Seeders;
 
 use App\Enums\ChildSeriesStatus;
 use App\Enums\ContentValidationStatus;
-use App\Enums\SettingType;
-use App\Enums\SubscriptionStatus;
-use App\Enums\UserRole;
 use App\Models\Card;
 use App\Models\Child;
 use App\Models\CommissionRateHistory;
 use App\Models\ContentValidation;
 use App\Models\Invoice;
 use App\Models\Series;
-use App\Models\Setting;
-use App\Models\Subscription;
 use App\Models\TherapistPaymentInfo;
 use App\Models\TherapistPayout;
 use App\Models\User;
+use App\Services\StripeTestDataService;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class TestDataSeeder extends Seeder
 {
-    public function run(): void
+    public function __construct(protected StripeTestDataService $stripeTestData) {}
+
+    public function run(User $admin, string $priceId): void
     {
-        $admin = User::create([
-            'role'       => UserRole::Admin,
-            'first_name' => 'Admin',
-            'last_name'  => 'Cartes Animées',
-            'email'      => 'admin@cartes-animees.test',
-            'password'   => Hash::make('admin123'),
-            'is_active'  => true,
-        ]);
-
-        Setting::insert([
-            [
-                'key'         => 'commission_rate',
-                'value'       => '2.00',
-                'type'        => SettingType::Float->value,
-                'label'       => 'Taux de commission',
-                'description' => 'Montant en euros versé à l\'orthophoniste par patient actif par mois.',
-                'created_at'  => now(),
-                'updated_at'  => now(),
-            ],
-            [
-                'key'         => 'subscription_price',
-                'value'       => '9.99',
-                'type'        => SettingType::Float->value,
-                'label'       => 'Prix de l\'abonnement',
-                'description' => 'Prix mensuel de l\'abonnement en euros.',
-                'created_at'  => now(),
-                'updated_at'  => now(),
-            ],
-        ]);
-
+        // ----------------------------------------------------------------
+        // Historique des taux de commission (données de démo)
+        // ----------------------------------------------------------------
         CommissionRateHistory::insert([
             ['rate' => 1.50, 'effective_from' => now()->subMonths(12), 'created_by' => $admin->id, 'created_at' => now()->subMonths(12), 'updated_at' => now()->subMonths(12)],
             ['rate' => 2.00, 'effective_from' => now()->subMonths(8),  'created_by' => $admin->id, 'created_at' => now()->subMonths(8),  'updated_at' => now()->subMonths(8)],
@@ -63,128 +32,142 @@ class TestDataSeeder extends Seeder
             ['rate' => 2.00, 'effective_from' => now()->subMonth(),    'created_by' => $admin->id, 'created_at' => now()->subMonth(),    'updated_at' => now()->subMonth()],
         ]);
 
-        // 3 orthophonistes
-        $therapists = User::factory(3)->create([
-            'role'     => UserRole::Therapist,
-            'password' => Hash::make('password'),
-        ]);
+        // ----------------------------------------------------------------
+        // Orthophonistes
+        // ----------------------------------------------------------------
+        $therapists = User::factory(3)->therapist()->create();
 
-        // Infos bancaires des orthophonistes
         $therapists->each(fn($therapist) =>
         TherapistPaymentInfo::factory()->create(['user_id' => $therapist->id])
         );
 
-        // 5 parents avec 2 enfants chacun = 10 enfants
+        // ----------------------------------------------------------------
+        // Parents + enfants + liaisons orthophoniste
+        // ----------------------------------------------------------------
+        $parents  = User::factory(5)->parent()->create();
         $children = collect();
-        User::factory(5)->create([
-            'role'     => UserRole::Parent,
-            'password' => Hash::make('password'),
-        ])->each(function ($parent) use ($therapists, &$children) {
+
+        $parents->each(function ($parent) use ($therapists, &$children) {
             $parentChildren = Child::factory(2)->create(['parent_id' => $parent->id]);
             $children = $children->merge($parentChildren);
-            $parentChildren->each(function ($child) use ($therapists) {
-                // Chaque enfant rattaché à un orthophoniste
-                $child->therapists()->attach(
-                    $therapists->random()->id,
-                    ['assigned_by' => null, 'assigned_at' => now()->subMonths(rand(1, 6)), 'ended_at' => null]
-                );
-            });
+
+            $parentChildren->each(fn($child) =>
+            $child->therapists()->attach(
+                $therapists->random()->id,
+                ['assigned_by' => null, 'assigned_at' => now()->subMonths(rand(1, 6)), 'ended_at' => null]
+            )
+            );
         });
 
-        // Abonnements
+        // ----------------------------------------------------------------
+        // Abonnements via Stripe (vrais appels API sandbox)
+        // 7 actifs, 1 gratuit, 1 past_due, 1 annulé
+        // ----------------------------------------------------------------
         $children->take(7)->each(fn($child) =>
-        Subscription::factory()->create(['child_id' => $child->id])
+        $this->stripeTestData->createActiveSubscription(
+            $child->parent, $child, $priceId
+        )
         );
-        Subscription::factory()->free()->create(['child_id' => $children->get(7)->id, 'overridden_by' => $admin->id]);
-        Subscription::factory()->pastDue()->create(['child_id' => $children->get(8)->id]);
-        Subscription::factory()->create(['child_id' => $children->get(9)->id]);
 
-        // Factures
-        Subscription::where('status', SubscriptionStatus::Active)->get()
-            ->each(fn($sub) => Invoice::factory(rand(2, 4))->create(['subscription_id' => $sub->id]));
-        $pastDue = Subscription::where('status', SubscriptionStatus::PastDue)->first();
-        if ($pastDue) {
-            Invoice::factory()->open()->create(['subscription_id' => $pastDue->id]);
-            Invoice::factory()->uncollectible()->create(['subscription_id' => $pastDue->id]);
+        $this->stripeTestData->createFreeSubscription($children->get(7), $admin);
+
+        $this->stripeTestData->createPastDueSubscription(
+            $children->get(8)->parent, $children->get(8), $priceId
+        );
+
+        $this->stripeTestData->createCanceledSubscription(
+            $children->get(9)->parent, $children->get(9), $priceId
+        );
+
+        // ----------------------------------------------------------------
+        // Factures (miroir local des événements Stripe)
+        // ----------------------------------------------------------------
+        $children->take(7)->each(function ($child) {
+            $sub = $child->subscription;
+            if ($sub) {
+                Invoice::factory(rand(2, 4))->create(['subscription_id' => $sub->id]);
+            }
+        });
+
+        $pastDueSub = $children->get(8)->subscription;
+        if ($pastDueSub) {
+            Invoice::factory()->open()->create(['subscription_id' => $pastDueSub->id]);
+            Invoice::factory()->uncollectible()->create(['subscription_id' => $pastDueSub->id]);
         }
 
+        // ----------------------------------------------------------------
         // Virements orthophonistes
-        $therapists->each(function ($therapist) {
-            TherapistPayout::factory(2)->create(['therapist_id' => $therapist->id]);
-            TherapistPayout::factory()->pending()->create(['therapist_id' => $therapist->id]);
+        // ----------------------------------------------------------------
+        $therapists->each(function ($therapist) use ($admin) {
+            TherapistPayout::factory(2)->create([
+                'therapist_id' => $therapist->id,
+                'processed_by' => $admin->id,
+            ]);
+            TherapistPayout::factory()->pending()->create([
+                'therapist_id' => $therapist->id,
+                'processed_by' => $admin->id,
+            ]);
         });
 
-        // 15 cartes validées par l'admin
-        $cards = Card::factory(15)->create();
+        // ----------------------------------------------------------------
+        // Cartes
+        // ----------------------------------------------------------------
+        $cards = Card::factory(15)->create(['created_by' => $admin->id]);
 
-        // 3 cartes soumises par des orthophonistes (en attente)
-        $therapists->take(2)->each(function ($therapist) use (&$cards) {
-            $pendingCards = Card::factory(2)->unvalidated()->create(['created_by' => $therapist->id]);
-            $pendingCards->each(fn($card) => ContentValidation::factory()->pending()->create([
+        $therapists->take(2)->each(function ($therapist) {
+            $pendingCards = Card::factory(2)->unvalidated()->byTherapist($therapist)->create();
+            $pendingCards->each(fn($card) =>
+            ContentValidation::factory()->pending()->create([
                 'validatable_id'   => $card->id,
                 'validatable_type' => Card::class,
                 'submitted_by'     => $therapist->id,
-            ]));
+            ])
+            );
         });
 
-        // 3 séries de base avec 5 cartes chacune
-        $baseSeries = Series::factory(3)->base()->create();
-        $baseSeries->each(fn($series) => $series->cards()->attach(
-            $cards->random(5)->pluck('id'),
-            ['order' => 0]
-        ));
+        // ----------------------------------------------------------------
+        // Séries
+        // ----------------------------------------------------------------
+        $baseSeries = Series::factory(3)->base()->create(['created_by' => $admin->id]);
+        $baseSeries->each(fn($series) =>
+        $series->cards()->attach(
+            $cards->random(5)->pluck('id')->mapWithKeys(fn($id, $i) => [$id => ['order' => $i + 1]])
+        )
+        );
 
-        // 5 séries normales validées avec 3-5 cartes chacune
-        $normalSeries = Series::factory(5)->create();
-        $normalSeries->each(fn($series) => $series->cards()->attach(
-            $cards->random(rand(3, 5))->pluck('id'),
-            ['order' => 0]
-        ));
+        $normalSeries = Series::factory(5)->create(['created_by' => $admin->id]);
+        $normalSeries->each(fn($series) =>
+        $series->cards()->attach(
+            $cards->random(rand(3, 5))->pluck('id')->mapWithKeys(fn($id, $i) => [$id => ['order' => $i + 1]])
+        )
+        );
 
-        // 1 série soumise par un orthophoniste (en attente)
-        $pendingSeries = Series::factory()->unvalidated()->create(['created_by' => $therapists->last()->id]);
+        $pendingSeries = Series::factory()->byTherapist($therapists->last())->create();
         ContentValidation::factory()->pending()->create([
             'validatable_id'   => $pendingSeries->id,
             'validatable_type' => Series::class,
             'submitted_by'     => $therapists->last()->id,
         ]);
 
-        // Progression des enfants — déblocage de séries
-        $allSeries = $baseSeries->merge($normalSeries);
+        // ----------------------------------------------------------------
+        // Progression des enfants — séries supplémentaires
+        // (les séries de base sont déjà débloquées par le ChildObserver)
+        // ----------------------------------------------------------------
         $now = now();
-
-        $children->each(function ($child) use ($allSeries, $now) {
-            // Chaque enfant a accès aux séries de base automatiquement
-            $baseSeries = $allSeries->where('is_base', true);
-            $baseSeries->each(function ($series) use ($child, $now) {
-                DB::table('child_series')->insertOrIgnore([
-                    'child_id'     => $child->id,
-                    'series_id'    => $series->id,
-                    'unlocked_by'  => null,
-                    'status'       => ChildSeriesStatus::Unlocked->value,
-                    'unlocked_at'  => $now->copy()->subMonths(rand(1, 6)),
-                    'completed_at' => null,
-                    'created_at'   => $now,
-                    'updated_at'   => $now,
-                ]);
-            });
-
-            // 50% des enfants ont des séries supplémentaires débloquées
+        $children->each(function ($child) use ($normalSeries, $now) {
             if (rand(0, 1)) {
-                $extraSeries = $allSeries->where('is_base', false)->random(rand(1, 3));
-                $therapist = $child->therapists()->first();
+                $extraSeries = $normalSeries->random(rand(1, 3));
+                $therapist   = $child->activeTherapists()->first();
+
                 $extraSeries->each(function ($series) use ($child, $now, $therapist) {
-                    $unlockedAt = $now->copy()->subDays(rand(1, 60));
-                    $isCompleted = rand(0, 1);
-                    DB::table('child_series')->insertOrIgnore([
-                        'child_id'     => $child->id,
-                        'series_id'    => $series->id,
+                    $unlockedAt  = $now->copy()->subDays(rand(1, 60));
+                    $isCompleted = (bool) rand(0, 1);
+
+                    $child->series()->attach($series->id, [
                         'unlocked_by'  => $therapist?->id,
                         'status'       => $isCompleted ? ChildSeriesStatus::Completed->value : ChildSeriesStatus::Unlocked->value,
                         'unlocked_at'  => $unlockedAt,
                         'completed_at' => $isCompleted ? $unlockedAt->copy()->addDays(rand(3, 14)) : null,
-                        'created_at'   => $now,
-                        'updated_at'   => $now,
                     ]);
                 });
             }

@@ -26,6 +26,7 @@ class UserFactory extends Factory
             'password'           => static::$password ??= Hash::make('password'),
             'phone'              => fake()->optional()->phoneNumber(),
             'is_active'          => true,
+            'last_login_at' => fake()->dateTimeBetween('-30 days', 'now'),
             'remember_token'     => Str::random(10),
         ];
     }
@@ -47,7 +48,17 @@ class UserFactory extends Factory
 
     public function inactive(): static
     {
-        return $this->state(['is_active' => false]);
+        return $this->state([
+            'is_active' => false,
+            'last_login_at' => fake()->dateTimeBetween('-6 months', '-2 months'),
+        ]);
+    }
+
+    public function noRecentLogin(): static
+    {
+        return $this->state([
+            'last_login_at' => fake()->dateTimeBetween('-3 months', '-15 days'),
+        ]);
     }
 
     public function unverified(): static

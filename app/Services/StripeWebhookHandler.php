@@ -6,6 +6,8 @@ use App\Enums\InvoiceStatus;
 use App\Enums\SubscriptionStatus;
 use App\Models\Invoice;
 use App\Models\Subscription;
+use App\Notifications\PaymentFailedNotification;
+use App\Notifications\PaymentSucceededNotification;
 use Illuminate\Support\Facades\Log;
 use Stripe\Event;
 
@@ -54,6 +56,11 @@ class StripeWebhookHandler
             'current_period_end'   => \Carbon\Carbon::createFromTimestamp($stripeInvoice->period_end),
         ]);
 
+        $subscription->child->parent->notify(new PaymentSucceededNotification(
+            childFirstName: $subscription->child->first_name,
+            amount:         $stripeInvoice->amount_paid / 100,
+        ));
+
         Log::channel('stripe')->info('Facture payée', [
             'stripe_invoice_id' => $stripeInvoice->id,
             'amount'            => $stripeInvoice->amount_paid / 100,
@@ -87,12 +94,14 @@ class StripeWebhookHandler
 
         $subscription->update(['status' => SubscriptionStatus::PastDue]);
 
+        $subscription->child->parent->notify(new PaymentFailedNotification(
+            childFirstName: $subscription->child->first_name,
+        ));
+
         Log::channel('stripe')->warning('Paiement échoué', [
             'stripe_invoice_id' => $stripeInvoice->id,
             'subscription_id'   => $subscription->id,
         ]);
-
-        $subscription->child->parent->notify(new \App\Notifications\PaymentFailedNotification($subscription));
     }
 
     private function handleSubscriptionDeleted(Event $event): void

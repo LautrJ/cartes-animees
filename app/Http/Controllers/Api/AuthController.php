@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
 use App\Models\User;
 use App\Enums\UserRole;
+use App\Notifications\WelcomeParentNotification;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -37,6 +38,10 @@ class AuthController extends Controller
             'is_active'  => true,
         ]);
 
+        $user->notify(new WelcomeParentNotification(
+            firstName: $user->first_name,
+        ));
+
         $token = $user->createToken('api')->plainTextToken;
 
         return ApiResponse::success(['token' => $token, 'user' => $user], 201);
@@ -58,6 +63,8 @@ class AuthController extends Controller
         if (!$user->is_active) {
             return ApiResponse::error('Votre compte est désactivé.', 403);
         }
+
+        $user->update(['last_login_at' => now()]);
 
         $token = $user->createToken('api')->plainTextToken;
 

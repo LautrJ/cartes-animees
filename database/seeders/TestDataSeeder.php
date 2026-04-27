@@ -44,7 +44,8 @@ class TestDataSeeder extends Seeder
         // ----------------------------------------------------------------
         // Parents + enfants + liaisons orthophoniste
         // ----------------------------------------------------------------
-        $parents  = User::factory(5)->parent()->create();
+        $parents = User::factory(5)->parent()->create();
+        $parents = $parents->merge(User::factory(2)->parent()->noRecentLogin()->create());
         $children = collect();
 
         $parents->each(function ($parent) use ($therapists, &$children) {

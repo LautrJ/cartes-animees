@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
 use App\Models\Child;
 use App\Models\User;
+use App\Notifications\FollowUpEndedNotification;
+use App\Notifications\FollowUpStartedNotification;
 use Filament\Notifications\Notification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -59,6 +61,12 @@ class TherapistInvitationController extends Controller
             ->success()
             ->sendToDatabase($therapist);
 
+        $child->parent->notify(new FollowUpStartedNotification(
+            childFirstName:     $child->first_name,
+            therapistFirstName: $therapist->first_name,
+            therapistLastName:  $therapist->last_name,
+        ));
+
         return ApiResponse::success(['message' => 'Orthophoniste affilié avec succès.'], 201);
     }
 
@@ -72,6 +80,12 @@ class TherapistInvitationController extends Controller
         $child->therapists()->updateExistingPivot($therapist->id, [
             'ended_at' => now(),
         ]);
+
+        $child->parent->notify(new FollowUpEndedNotification(
+            childFirstName:     $child->first_name,
+            therapistFirstName: $therapist->first_name,
+            therapistLastName:  $therapist->last_name,
+        ));
 
         return ApiResponse::success(null, 204);
     }

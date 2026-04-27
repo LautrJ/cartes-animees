@@ -13,8 +13,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Filament\Models\Contracts\HasDatabaseNotifications as HasDatabaseNotificationsContract;
-use Filament\Notifications\Concerns\HasDatabaseNotifications;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -34,6 +32,7 @@ class User extends Authenticatable implements FilamentUser, HasName
         'stripe_customer_id',
         'invitation_code',
         'is_active',
+        'last_login_at',
     ];
 
     protected $hidden = [
@@ -48,6 +47,7 @@ class User extends Authenticatable implements FilamentUser, HasName
             'is_active'         => 'boolean',
             'email_verified_at' => 'datetime',
             'password'          => 'hashed',
+            'last_login_at'     => 'datetime',
         ];
     }
 

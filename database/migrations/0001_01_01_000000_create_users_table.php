@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('stripe_customer_id')->nullable();
             $table->string('invitation_code', 64)->nullable()->unique();
             $table->boolean('is_active')->default(true);
+            $table->timestamp('last_login_at')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

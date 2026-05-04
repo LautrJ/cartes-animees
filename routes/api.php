@@ -13,10 +13,10 @@ use App\Http\Controllers\Api\TherapistPatientController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
-    Route::post('register', [AuthController::class, 'register']);
-    Route::post('login',    [AuthController::class, 'login']);
-    Route::post('password/forgot', [AuthController::class, 'forgotPassword']);
-    Route::post('password/reset',  [AuthController::class, 'resetPassword']);
+    Route::post('register', [AuthController::class, 'register'])->middleware('throttle:5,1');
+    Route::post('login',    [AuthController::class, 'login'])->middleware('throttle:5,1');
+    Route::post('password/forgot', [AuthController::class, 'forgotPassword'])->middleware('throttle:3,1');
+    Route::post('password/reset',  [AuthController::class, 'resetPassword'])->middleware('throttle:3,1');
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
@@ -24,7 +24,7 @@ Route::prefix('auth')->group(function () {
     });
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {
 
     Route::apiResource('children', ChildController::class);
     Route::prefix('children')->group(function () {

@@ -16,8 +16,8 @@ class Card extends Model
     protected $fillable = [
         'created_by',
         'name',
-        'gif_path',
-        'video_path',
+        'drawn_animation_path',
+        'real_animation_path',
         'sound_path',
         'width',
         'height',

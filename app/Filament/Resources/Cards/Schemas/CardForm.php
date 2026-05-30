@@ -25,31 +25,34 @@ class CardForm
                             ->required()
                             ->maxLength(255)
                             ->columnSpanFull(),
-                        Select::make('created_by')
-                            ->label('Créé par')
-                            ->options(
-                                User::whereIn('role', [UserRole::Admin, UserRole::Therapist])
-                                    ->get()
-                                    ->mapWithKeys(fn($u) => [$u->id => "{$u->first_name} {$u->last_name}"])
-                            )
-                            ->searchable()
+                        TextInput::make('duration')
+                            ->label('Durée (secondes)')
+                            ->numeric()
                             ->required()
-                            ->columnSpanFull(),
+                            ->minValue(1)
+                            ->maxValue(30)
+                            ->helperText('Durée d\'affichage de chaque animation avant de passer à la suivante'),
                     ]),
 
                 Section::make('Médias')
                     ->columns(3)
                     ->schema([
-                        FileUpload::make('gif_path')
-                            ->label('GIF')
-                            ->acceptedFileTypes(['image/gif'])
+                        FileUpload::make('drawn_animation_path')
+                            ->label('Animation dessinée')
+                            ->disk('cards')
+                            ->directory('drawn')
+                            ->acceptedFileTypes(['image/gif', 'video/mp4'])
                             ->required(),
-                        FileUpload::make('video_path')
-                            ->label('Vidéo')
-                            ->acceptedFileTypes(['video/mp4'])
+                        FileUpload::make('real_animation_path')
+                            ->label('Animation réelle')
+                            ->disk('cards')
+                            ->directory('real')
+                            ->acceptedFileTypes(['image/gif', 'video/mp4'])
                             ->required(),
                         FileUpload::make('sound_path')
                             ->label('Son')
+                            ->disk('cards')
+                            ->directory('sounds')
                             ->acceptedFileTypes(['audio/mpeg', 'audio/mp3'])
                             ->required(),
                     ]),
@@ -58,7 +61,7 @@ class CardForm
                     ->schema([
                         Toggle::make('is_validated')
                             ->label('Validée')
-                            ->default(false),
+                            ->default(true),
                     ]),
             ]);
     }

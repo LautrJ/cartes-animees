@@ -13,8 +13,8 @@ class CardFactory extends Factory
         return [
             'created_by'   => User::factory()->admin(),
             'name'         => ['fr' => $this->faker->word()],
-            'gif_path'     => 'placeholders/placeholder.gif',
-            'video_path'   => 'placeholders/placeholder.mp4',
+            'drawn_animation_path'     => 'placeholders/placeholder.gif',
+            'real_animation_path'   => 'placeholders/placeholder.mp4',
             'sound_path'   => 'placeholders/placeholder.mp3',
             'width'        => 480,
             'height'       => 270,

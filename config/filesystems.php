@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DISK', 'local'),
+    'default' => env('FILESYSTEM_DISK', 'public'),
 
     /*
     |--------------------------------------------------------------------------
@@ -58,6 +58,14 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
             'report' => false,
+        ],
+
+        'cards' => [
+            'driver'     => 'local',
+            'root'       => storage_path('app/public/cards'),
+            'url'        => rtrim(env('APP_URL', 'http://localhost'), '/') . '/storage/cards',
+            'visibility' => 'public',
+            'throw'      => false,
         ],
 
     ],

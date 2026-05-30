@@ -34,15 +34,39 @@ class CardInfolist
                 Section::make('Médias')
                     ->columns(3)
                     ->schema([
-                        TextEntry::make('gif_path')
-                            ->label('GIF')
-                            ->placeholder('-'),
-                        TextEntry::make('video_path')
-                            ->label('Vidéo')
-                            ->placeholder('-'),
+                        TextEntry::make('drawn_animation_path')
+                            ->label('Animation dessinée')
+                            ->html()
+                            ->getStateUsing(fn($record) => $record->drawn_animation_path
+                                ? (str_ends_with($record->drawn_animation_path, '.gif')
+                                    ? '<img src="' . asset('storage/cards/' . $record->drawn_animation_path) . '" style="max-height:200px; border-radius:8px;">'
+                                    : '<video controls style="max-height:200px; border-radius:8px; width:100%">
+                                        <source src="' . asset('storage/cards/' . $record->drawn_animation_path) . '" type="video/mp4">
+                                       </video>')
+                                : '<span class="text-gray-400">Aucun fichier</span>'
+                            ),
+
+                        TextEntry::make('real_animation_path')
+                            ->label('Animation réelle')
+                            ->html()
+                            ->getStateUsing(fn($record) => $record->real_animation_path
+                                ? (str_ends_with($record->real_animation_path, '.gif')
+                                    ? '<img src="' . asset('storage/cards/' . $record->real_animation_path) . '" style="max-height:200px; border-radius:8px;">'
+                                    : '<video controls style="max-height:200px; border-radius:8px; width:100%">
+                                        <source src="' . asset('storage/cards/' . $record->real_animation_path) . '" type="video/mp4">
+                                       </video>')
+                                : '<span class="text-gray-400">Aucun fichier</span>'
+                            ),
+
                         TextEntry::make('sound_path')
                             ->label('Son')
-                            ->placeholder('-'),
+                            ->html()
+                            ->getStateUsing(fn($record) => $record->sound_path
+                                ? '<audio controls style="width:100%">
+                                    <source src="' . asset('storage/cards/' . $record->sound_path) . '" type="audio/mpeg">
+                                   </audio>'
+                                : '<span class="text-gray-400">Aucun fichier</span>'
+                            ),
                     ]),
             ]);
     }

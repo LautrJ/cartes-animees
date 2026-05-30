@@ -20,21 +20,35 @@ class CardForm
                             ->label('Nom')
                             ->required()
                             ->maxLength(255),
+                        TextInput::make('duration')
+                            ->label('Durée (secondes)')
+                            ->numeric()
+                            ->required()
+                            ->minValue(1)
+                            ->maxValue(30)
+                            ->helperText('Durée d\'affichage de chaque animation avant de passer à la suivante'),
                     ]),
+
 
                 Section::make('Médias')
                     ->columns(3)
                     ->schema([
-                        FileUpload::make('gif_path')
-                            ->label('GIF')
-                            ->acceptedFileTypes(['image/gif'])
+                        FileUpload::make('drawn_animation_path')
+                            ->label('Animation dessinée')
+                            ->disk('cards')
+                            ->directory('drawn')
+                            ->acceptedFileTypes(['image/gif', 'video/mp4'])
                             ->required(),
-                        FileUpload::make('video_path')
-                            ->label('Vidéo')
-                            ->acceptedFileTypes(['video/mp4'])
+                        FileUpload::make('real_animation_path')
+                            ->label('Animation réelle')
+                            ->disk('cards')
+                            ->directory('real')
+                            ->acceptedFileTypes(['image/gif', 'video/mp4'])
                             ->required(),
                         FileUpload::make('sound_path')
                             ->label('Son')
+                            ->disk('cards')
+                            ->directory('sounds')
                             ->acceptedFileTypes(['audio/mpeg', 'audio/mp3'])
                             ->required(),
                     ]),

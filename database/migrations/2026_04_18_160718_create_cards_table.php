@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('created_by')->constrained('users')->restrictOnDelete();
             $table->json('name');
-            $table->string('gif_path');
-            $table->string('video_path');
+            $table->string('drawn_animation_path');
+            $table->string('real_animation_path');
             $table->string('sound_path');
             $table->unsignedSmallInteger('width')->nullable();
             $table->unsignedSmallInteger('height')->nullable();

@@ -15,6 +15,7 @@ use App\Models\TherapistPayout;
 use App\Models\User;
 use App\Services\StripeTestDataService;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class TestDataSeeder extends Seeder
 {
@@ -97,18 +98,17 @@ class TestDataSeeder extends Seeder
         }
 
         // ----------------------------------------------------------------
-        // Virements orthophonistes
+        // Calcul des payouts via la commande
         // ----------------------------------------------------------------
-        $therapists->each(function ($therapist) use ($admin) {
-            TherapistPayout::factory(2)->create([
-                'therapist_id' => $therapist->id,
-                'processed_by' => $admin->id,
-            ]);
-            TherapistPayout::factory()->pending()->create([
-                'therapist_id' => $therapist->id,
-                'processed_by' => $admin->id,
-            ]);
-        });
+        Artisan::call('payouts:calculate', [
+            '--month' => now()->subMonth()->format('Y-m'),
+        ]);
+        Artisan::call('payouts:calculate', [
+            '--month' => now()->subMonths(2)->format('Y-m'),
+        ]);
+        Artisan::call('payouts:calculate', [
+            '--month' => now()->subMonths(3)->format('Y-m'),
+        ]);
 
         // ----------------------------------------------------------------
         // Cartes

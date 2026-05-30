@@ -69,11 +69,11 @@ class ContentValidationInfolist
                                 ? "{$record->validatable->creator->first_name} {$record->validatable->creator->last_name}"
                                 : '-'
                             ),
-                        TextEntry::make('validatable.gif_path')
-                            ->label('GIF')
+                        TextEntry::make('validatable.drawn_animation_path')
+                            ->label('Animation dessinée')
                             ->placeholder('-'),
-                        TextEntry::make('validatable.video_path')
-                            ->label('Vidéo')
+                        TextEntry::make('validatable.real_animation_path')
+                            ->label('Animation réelle')
                             ->placeholder('-'),
                         TextEntry::make('validatable.sound_path')
                             ->label('Son')

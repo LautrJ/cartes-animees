@@ -9,3 +9,4 @@ Artisan::command('inspire', function () {
 })->purpose('Gamberge');
 
 Schedule::command('notifications:no-progress')->weeklyOn(1, '9:00');
+Schedule::command('payouts:calculate')->monthlyOn(1, '6:00');

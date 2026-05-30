@@ -44,6 +44,7 @@ class StripeWebhookHandler
                 'subscription_id' => $subscription->id,
                 'amount'          => $stripeInvoice->amount_paid / 100,
                 'status'          => InvoiceStatus::Paid,
+                'invoice_pdf'    => $stripeInvoice->invoice_pdf,
                 'period_start'    => now()->createFromTimestamp($stripeInvoice->period_start),
                 'period_end'      => now()->createFromTimestamp($stripeInvoice->period_end),
                 'paid_at'         => now(),

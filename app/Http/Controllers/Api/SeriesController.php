@@ -53,14 +53,14 @@ class SeriesController extends Controller
             ->orderBy('series_cards.order')
             ->get()
             ->map(fn($card) => [
-                'id'         => $card->id,
-                'name'       => $card->name,
-                'gif_path'   => $card->gif_path,
-                'video_path' => $card->video_path,
-                'sound_path' => $card->sound_path,
-                'width'      => $card->width,
-                'height'     => $card->height,
-                'duration'   => $card->duration,
+                'id'                    => $card->id,
+                'name'                  => $card->name,
+                'drawn_animation_path'  => $card->drawn_animation_path,
+                'real_animation_path'   => $card->real_animation_path,
+                'sound_path'            => $card->sound_path,
+                'width'                 => $card->width,
+                'height'                => $card->height,
+                'duration'              => $card->duration,
             ]);
 
         return ApiResponse::success([

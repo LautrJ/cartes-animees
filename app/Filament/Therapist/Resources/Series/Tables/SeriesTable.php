@@ -15,11 +15,11 @@ class SeriesTable
             ->columns([
                 TextColumn::make('name')
                     ->label('Nom')
-                    ->getStateUsing(fn($record) => $record->name['fr'] ?? '-')
+                    ->getStateUsing(fn ($record) => $record->name['fr'] ?? '-')
                     ->searchable(),
                 TextColumn::make('creator.first_name')
                     ->label('Créé par')
-                    ->getStateUsing(fn($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
+                    ->getStateUsing(fn ($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
                 IconColumn::make('is_base')
                     ->label('Série de base')
                     ->boolean(),

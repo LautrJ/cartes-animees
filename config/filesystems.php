@@ -61,11 +61,11 @@ return [
         ],
 
         'cards' => [
-            'driver'     => 'local',
-            'root'       => storage_path('app/public/cards'),
-            'url'        => rtrim(env('APP_URL', 'http://localhost'), '/') . '/storage/cards',
+            'driver' => 'local',
+            'root' => storage_path('app/public/cards'),
+            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage/cards',
             'visibility' => 'public',
-            'throw'      => false,
+            'throw' => false,
         ],
 
     ],

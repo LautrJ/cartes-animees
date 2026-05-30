@@ -4,6 +4,7 @@ namespace App\Filament\Therapist\Resources\Cards\Pages;
 
 use App\Enums\ContentValidationStatus;
 use App\Filament\Therapist\Resources\Cards\CardResource;
+use App\Models\Card;
 use App\Models\ContentValidation;
 use App\Models\User;
 use Filament\Notifications\Notification;
@@ -17,7 +18,7 @@ class CreateCard extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $data['created_by']   = auth()->id();
+        $data['created_by'] = auth()->id();
         $data['is_validated'] = false;
 
         $slug = Str::slug($data['name']['fr'] ?? 'animation');
@@ -29,19 +30,18 @@ class CreateCard extends CreateRecord
     protected function afterCreate(): void
     {
         ContentValidation::create([
-            'validatable_id'   => $this->record->id,
-            'validatable_type' => \App\Models\Card::class,
-            'submitted_by'     => auth()->id(),
-            'status'           => ContentValidationStatus::Pending,
-            'submitted_at'     => now(),
+            'validatable_id' => $this->record->id,
+            'validatable_type' => Card::class,
+            'submitted_by' => auth()->id(),
+            'status' => ContentValidationStatus::Pending,
+            'submitted_at' => now(),
         ]);
 
-        User::admins()->each(fn($admin) =>
-            Notification::make()
-                ->title(auth()->user()->getFilamentName() . " a soumis une carte en attente de validation.")
-                ->body($this->record->name['fr'] ?? '')
-                ->warning()
-                ->sendToDatabase($admin)
+        User::admins()->each(fn ($admin) => Notification::make()
+            ->title(auth()->user()->getFilamentName().' a soumis une carte en attente de validation.')
+            ->body($this->record->name['fr'] ?? '')
+            ->warning()
+            ->sendToDatabase($admin)
         );
     }
 
@@ -50,15 +50,14 @@ class CreateCard extends CreateRecord
         $disk = Storage::disk('cards');
 
         foreach ([
-                'drawn_animation_path' => 'drawn',
-                'real_animation_path'  => 'real',
-                'sound_path'           => 'sounds',
-             ] as $field => $suffix)
-        {
-            if (!empty($data[$field])) {
+            'drawn_animation_path' => 'drawn',
+            'real_animation_path' => 'real',
+            'sound_path' => 'sounds',
+        ] as $field => $suffix) {
+            if (! empty($data[$field])) {
                 $oldPath = $data[$field];
-                $ext     = pathinfo($oldPath, PATHINFO_EXTENSION);
-                $newName = "{$suffix}/{$slug}_{$suffix}_" . now()->timestamp . ".{$ext}";
+                $ext = pathinfo($oldPath, PATHINFO_EXTENSION);
+                $newName = "{$suffix}/{$slug}_{$suffix}_".now()->timestamp.".{$ext}";
 
                 if ($disk->exists($oldPath) && $oldPath !== $newName) {
                     $disk->move($oldPath, $newName);

@@ -29,7 +29,6 @@ class CardForm
                             ->helperText('Durée d\'affichage de chaque animation avant de passer à la suivante'),
                     ]),
 
-
                 Section::make('Médias')
                     ->columns(3)
                     ->schema([

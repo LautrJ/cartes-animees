@@ -2,8 +2,6 @@
 
 namespace App\Filament\Resources\SubscriptionPriceHistories;
 
-use App\Filament\Resources\SubscriptionPriceHistories\Pages\CreateSubscriptionPriceHistory;
-use App\Filament\Resources\SubscriptionPriceHistories\Pages\EditSubscriptionPriceHistory;
 use App\Filament\Resources\SubscriptionPriceHistories\Pages\ListSubscriptionPriceHistories;
 use App\Filament\Resources\SubscriptionPriceHistories\Pages\ViewSubscriptionPriceHistory;
 use App\Filament\Resources\SubscriptionPriceHistories\Schemas\SubscriptionPriceHistoryForm;
@@ -30,9 +28,10 @@ class SubscriptionPriceHistoryResource extends Resource
     protected static ?int $navigationSort = 4;
 
     protected static ?string $navigationLabel = 'Historique des prix d\'abonnement';
-    protected static ?string $modelLabel = 'Historique des prix d\'abonnement';
-    protected static ?string $pluralModelLabel = 'Historique des prix d\'abonnement';
 
+    protected static ?string $modelLabel = 'Historique des prix d\'abonnement';
+
+    protected static ?string $pluralModelLabel = 'Historique des prix d\'abonnement';
 
     public static function form(Schema $schema): Schema
     {

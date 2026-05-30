@@ -10,7 +10,9 @@ class CommissionRateChart extends ChartWidget
     protected ?string $heading = 'Évolution du taux de commission';
 
     protected int|string|array $columnSpan = 'full';
+
     protected ?string $maxHeight = '300px';
+
     protected function getData(): array
     {
         $history = CommissionRateHistory::orderBy('effective_from', 'asc')->get();
@@ -18,15 +20,15 @@ class CommissionRateChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label'           => 'Taux (€/patient)',
-                    'data'            => $history->pluck('rate')->toArray(),
-                    'borderColor'     => '#7fcfb0',
+                    'label' => 'Taux (€/patient)',
+                    'data' => $history->pluck('rate')->toArray(),
+                    'borderColor' => '#7fcfb0',
                     'backgroundColor' => 'rgba(163, 220, 198, 0.1)',
-                    'fill'            => true,
-                    'tension'         => 0.3,
+                    'fill' => true,
+                    'tension' => 0.3,
                 ],
             ],
-            'labels' => $history->map(fn($h) => $h->effective_from->format('d/m/Y'))->toArray(),
+            'labels' => $history->map(fn ($h) => $h->effective_from->format('d/m/Y'))->toArray(),
         ];
     }
 

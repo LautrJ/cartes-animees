@@ -8,6 +8,7 @@ use App\Filament\Therapist\Widgets\TherapistStatsOverview;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -17,6 +18,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class TherapistPanelProvider extends PanelProvider
@@ -36,9 +38,9 @@ class TherapistPanelProvider extends PanelProvider
             ->login()
             ->renderHook(
                 'panels::topbar.end',
-                fn() => auth()->user()?->canImpersonate()
-                    ? new \Illuminate\Support\HtmlString(
-                    '
+                fn () => auth()->user()?->canImpersonate()
+                    ? new HtmlString(
+                        '
                             <a href="/filament-impersonate/leave"
                                style="margin-right:1rem; font-size:0.875rem; color:#5ab99a; font-weight:500;">
                                ← Retour admin
@@ -49,7 +51,7 @@ class TherapistPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Therapist/Resources'), for: 'App\\Filament\\Therapist\\Resources')
             ->discoverPages(in: app_path('Filament/Therapist/Pages'), for: 'App\\Filament\\Therapist\\Pages')
             ->pages([
-                \Filament\Pages\Dashboard::class,
+                Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Therapist/Widgets'), for: 'App\\Filament\\Therapist\\Widgets')
             ->widgets([

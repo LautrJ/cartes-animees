@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\ChildSeriesStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
-use App\Enums\ChildSeriesStatus;
 use App\Models\Child;
 use App\Models\Series;
 use App\Notifications\SeriesCompletedNotification;
@@ -20,11 +20,11 @@ class ChildSeriesController extends Controller
             ->where('children.id', $child->id)
             ->exists();
 
-        if (!$isPatient) {
+        if (! $isPatient) {
             return ApiResponse::error('Accès refusé.', 403);
         }
 
-        if (!$series->is_validated || !$series->is_active) {
+        if (! $series->is_validated || ! $series->is_active) {
             return ApiResponse::error('Série introuvable.', 404);
         }
 
@@ -38,7 +38,7 @@ class ChildSeriesController extends Controller
 
         $child->series()->attach($series->id, [
             'unlocked_by' => $request->user()->id,
-            'status'      => ChildSeriesStatus::Unlocked,
+            'status' => ChildSeriesStatus::Unlocked,
             'unlocked_at' => now(),
         ]);
 
@@ -55,7 +55,7 @@ class ChildSeriesController extends Controller
             ->where('children.id', $child->id)
             ->exists();
 
-        if (!$isPatient) {
+        if (! $isPatient) {
             return ApiResponse::error('Accès refusé.', 403);
         }
 
@@ -63,7 +63,7 @@ class ChildSeriesController extends Controller
             ->where('series.id', $series->id)
             ->first();
 
-        if (!$childSeries) {
+        if (! $childSeries) {
             return ApiResponse::error('Cette série n\'est pas débloquée pour cet enfant.', 404);
         }
 
@@ -72,7 +72,7 @@ class ChildSeriesController extends Controller
         }
 
         $child->series()->updateExistingPivot($series->id, [
-            'status'       => ChildSeriesStatus::Completed,
+            'status' => ChildSeriesStatus::Completed,
             'completed_at' => now(),
         ]);
 
@@ -89,7 +89,7 @@ class ChildSeriesController extends Controller
             ->where('children.id', $child->id)
             ->exists();
 
-        if (!$isPatient) {
+        if (! $isPatient) {
             return ApiResponse::error('Accès refusé.', 403);
         }
 

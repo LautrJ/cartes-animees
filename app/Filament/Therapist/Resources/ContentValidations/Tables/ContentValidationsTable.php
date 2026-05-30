@@ -20,24 +20,24 @@ class ContentValidationsTable
                 TextColumn::make('validatable_type')
                     ->label('Type')
                     ->badge()
-                    ->getStateUsing(fn($record) => match($record->validatable_type) {
-                        Card::class   => 'Carte',
+                    ->getStateUsing(fn ($record) => match ($record->validatable_type) {
+                        Card::class => 'Carte',
                         Series::class => 'Série',
-                        default       => '-',
+                        default => '-',
                     })
-                    ->color(fn($record) => match($record->validatable_type) {
-                        Card::class   => 'info',
+                    ->color(fn ($record) => match ($record->validatable_type) {
+                        Card::class => 'info',
                         Series::class => 'warning',
-                        default       => 'gray',
+                        default => 'gray',
                     }),
                 TextColumn::make('validatable.name')
                     ->label('Contenu')
-                    ->getStateUsing(fn($record) => $record->validatable?->name['fr'] ?? '-'),
+                    ->getStateUsing(fn ($record) => $record->validatable?->name['fr'] ?? '-'),
                 TextColumn::make('status')
                     ->label('Statut')
                     ->badge()
-                    ->color(fn(ContentValidationStatus $state) => match($state) {
-                        ContentValidationStatus::Pending  => 'warning',
+                    ->color(fn (ContentValidationStatus $state) => match ($state) {
+                        ContentValidationStatus::Pending => 'warning',
                         ContentValidationStatus::Approved => 'success',
                         ContentValidationStatus::Rejected => 'danger',
                     }),
@@ -54,7 +54,7 @@ class ContentValidationsTable
                 SelectFilter::make('status')
                     ->label('Statut')
                     ->options([
-                        'pending'  => 'En attente',
+                        'pending' => 'En attente',
                         'approved' => 'Approuvé',
                         'rejected' => 'Rejeté',
                     ]),

@@ -12,13 +12,14 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 class TherapistStatsOverview extends StatsOverviewWidget
 {
     protected static ?int $sort = 2;
+
     protected int|string|array $columnSpan = 'full';
 
     protected function getStats(): array
     {
         $therapistId = auth()->id();
 
-        $activePatients = Child::whereHas('therapists', fn($q) => $q
+        $activePatients = Child::whereHas('therapists', fn ($q) => $q
             ->where('users.id', $therapistId)
             ->whereNull('child_therapist.ended_at')
         )->count();
@@ -32,10 +33,10 @@ class TherapistStatsOverview extends StatsOverviewWidget
 
         $monthlyRevenue = number_format($activePatients * $currentRate, 2);
 
-        $unlockedThisMonth = Child::whereHas('therapists', fn($q) => $q
+        $unlockedThisMonth = Child::whereHas('therapists', fn ($q) => $q
             ->where('users.id', $therapistId)
             ->whereNull('child_therapist.ended_at')
-        )->whereHas('series', fn($q) => $q
+        )->whereHas('series', fn ($q) => $q
             ->where('child_series.unlocked_at', '>=', now()->startOfMonth())
         )->count();
 
@@ -55,7 +56,7 @@ class TherapistStatsOverview extends StatsOverviewWidget
                 ->color('warning')
                 ->icon('heroicon-o-clock'),
 
-            Stat::make('Revenus estimés', $monthlyRevenue . ' €')
+            Stat::make('Revenus estimés', $monthlyRevenue.' €')
                 ->description('Ce mois-ci')
                 ->color('success')
                 ->icon('heroicon-o-banknotes'),

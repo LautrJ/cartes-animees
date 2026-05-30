@@ -2,10 +2,6 @@
 
 namespace App\Filament\Resources\TherapistPaymentInfos\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
@@ -19,8 +15,8 @@ class TherapistPaymentInfosTable
             ->columns([
                 TextColumn::make('user.first_name')
                     ->label('Orthophoniste')
-                    ->getStateUsing(fn($record) => "{$record->user->first_name} {$record->user->last_name}")
-                    ->searchable(query: fn($query, $search) => $query->whereHas('user', fn($q) => $q
+                    ->getStateUsing(fn ($record) => "{$record->user->first_name} {$record->user->last_name}")
+                    ->searchable(query: fn ($query, $search) => $query->whereHas('user', fn ($q) => $q
                         ->where('first_name', 'like', "%{$search}%")
                         ->orWhere('last_name', 'like', "%{$search}%")
                     )),
@@ -28,7 +24,7 @@ class TherapistPaymentInfosTable
                     ->label('Banque'),
                 TextColumn::make('iban')
                     ->label('IBAN')
-                    ->getStateUsing(fn($record) => '•••• •••• •••• ' . substr($record->iban, -4)),
+                    ->getStateUsing(fn ($record) => '•••• •••• •••• '.substr($record->iban, -4)),
                 TextColumn::make('bic')
                     ->label('BIC'),
                 TextColumn::make('created_at')

@@ -20,7 +20,7 @@ class SeriesInfolist
                             ->label('Nom'),
                         TextEntry::make('creator.first_name')
                             ->label('Créé par')
-                            ->getStateUsing(fn($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
+                            ->getStateUsing(fn ($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
                         TextEntry::make('description.fr')
                             ->label('Description')
                             ->placeholder('Aucune description')

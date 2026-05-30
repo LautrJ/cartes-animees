@@ -18,7 +18,7 @@ class SubscriptionPriceHistoryInfolist
                     ->schema([
                         TextEntry::make('price')
                             ->label('Prix')
-                            ->getStateUsing(fn($record) => number_format($record->price, 2, ',', ' ') . ' €/mois'),
+                            ->getStateUsing(fn ($record) => number_format($record->price, 2, ',', ' ').' €/mois'),
                         TextEntry::make('stripe_price_id')
                             ->label('Stripe Price ID')
                             ->copyable()
@@ -30,7 +30,7 @@ class SubscriptionPriceHistoryInfolist
                             ->dateTime('d/m/Y H:i'),
                         TextEntry::make('creator.first_name')
                             ->label('Modifié par')
-                            ->getStateUsing(fn($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
+                            ->getStateUsing(fn ($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
                         TextEntry::make('created_at')
                             ->label('Créé le')
                             ->dateTime('d/m/Y H:i'),

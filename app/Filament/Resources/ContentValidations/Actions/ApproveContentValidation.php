@@ -21,14 +21,14 @@ class ApproveContentValidation extends Action
         $this->label('Approuver')
             ->color('success')
             ->icon('heroicon-o-check-circle')
-            ->visible(fn($record) => $record->status === ContentValidationStatus::Pending)
+            ->visible(fn ($record) => $record->status === ContentValidationStatus::Pending)
             ->requiresConfirmation()
             ->modalHeading('Approuver ce contenu ?')
             ->modalDescription('Le contenu sera validé et accessible aux orthophonistes.')
             ->modalSubmitActionLabel('Confirmer')
             ->action(function ($record) {
                 $record->update([
-                    'status'      => ContentValidationStatus::Approved,
+                    'status' => ContentValidationStatus::Approved,
                     'reviewed_by' => Auth::id(),
                     'reviewed_at' => now(),
                 ]);

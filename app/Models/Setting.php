@@ -28,10 +28,10 @@ class Setting extends Model
     // Helpers
     public function getTypedValue(): mixed
     {
-        return match($this->type) {
-            SettingType::Integer => (int)$this->value,
-            SettingType::Float => (float)$this->value,
-            SettingType::Boolean => (bool)$this->value,
+        return match ($this->type) {
+            SettingType::Integer => (int) $this->value,
+            SettingType::Float => (float) $this->value,
+            SettingType::Boolean => (bool) $this->value,
             default => $this->value
         };
     }

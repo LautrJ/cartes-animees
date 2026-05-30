@@ -26,11 +26,11 @@ class Series extends Model
     protected function casts(): array
     {
         return [
-            'name'         => 'array',
-            'description'  => 'array',
-            'is_base'      => 'boolean',
+            'name' => 'array',
+            'description' => 'array',
+            'is_base' => 'boolean',
             'is_validated' => 'boolean',
-            'is_active'    => 'boolean',
+            'is_active' => 'boolean',
         ];
     }
 
@@ -54,7 +54,7 @@ class Series extends Model
             ->withPivot(['unlocked_by', 'status', 'unlocked_at', 'completed_at'])
             ->withTimestamps()
             ->withCasts([
-                'unlocked_at'  => 'datetime',
+                'unlocked_at' => 'datetime',
                 'completed_at' => 'datetime',
             ]);
     }
@@ -83,7 +83,6 @@ class Series extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
-
 
     }
 

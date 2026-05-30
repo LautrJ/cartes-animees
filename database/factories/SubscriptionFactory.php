@@ -13,15 +13,15 @@ class SubscriptionFactory extends Factory
         $start = now()->subDays(rand(1, 30));
 
         return [
-            'child_id'              => Child::inRandomOrder()->first()->id,
-            'overridden_by'         => null,
-            'stripe_subscription_id' => 'sub_' . $this->faker->unique()->bothify('??????????'),
-            'stripe_price_id'       => 'price_' . $this->faker->bothify('??????????'),
-            'status'                => SubscriptionStatus::Active,
-            'override_price'        => null,
-            'current_period_start'  => $start,
-            'current_period_end'    => $start->copy()->addMonth(),
-            'canceled_at'           => null,
+            'child_id' => Child::inRandomOrder()->first()->id,
+            'overridden_by' => null,
+            'stripe_subscription_id' => 'sub_'.$this->faker->unique()->bothify('??????????'),
+            'stripe_price_id' => 'price_'.$this->faker->bothify('??????????'),
+            'status' => SubscriptionStatus::Active,
+            'override_price' => null,
+            'current_period_start' => $start,
+            'current_period_end' => $start->copy()->addMonth(),
+            'canceled_at' => null,
         ];
     }
 
@@ -29,9 +29,9 @@ class SubscriptionFactory extends Factory
     {
         return $this->state([
             'stripe_subscription_id' => null,
-            'stripe_price_id'        => null,
-            'status'                 => SubscriptionStatus::Free,
-            'override_price'         => 0.00,
+            'stripe_price_id' => null,
+            'status' => SubscriptionStatus::Free,
+            'override_price' => 0.00,
         ]);
     }
 
@@ -45,7 +45,7 @@ class SubscriptionFactory extends Factory
     public function canceled(): static
     {
         return $this->state([
-            'status'      => SubscriptionStatus::Canceled,
+            'status' => SubscriptionStatus::Canceled,
             'canceled_at' => now(),
         ]);
     }

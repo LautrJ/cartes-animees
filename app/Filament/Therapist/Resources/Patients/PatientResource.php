@@ -2,8 +2,6 @@
 
 namespace App\Filament\Therapist\Resources\Patients;
 
-use App\Filament\Therapist\Resources\Patients\Pages\CreatePatient;
-use App\Filament\Therapist\Resources\Patients\Pages\EditPatient;
 use App\Filament\Therapist\Resources\Patients\Pages\ListPatients;
 use App\Filament\Therapist\Resources\Patients\Pages\ViewPatient;
 use App\Filament\Therapist\Resources\Patients\RelationManagers\SeriesRelationManager;
@@ -31,9 +29,10 @@ class PatientResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-
     protected static ?string $navigationLabel = 'Patients';
+
     protected static ?string $modelLabel = 'Patient';
+
     protected static ?string $pluralModelLabel = 'Patients';
 
     public static function form(Schema $schema): Schema

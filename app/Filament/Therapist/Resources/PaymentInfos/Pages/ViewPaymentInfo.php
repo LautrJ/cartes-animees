@@ -14,7 +14,7 @@ class ViewPaymentInfo extends ViewRecord
     {
         return [
             EditAction::make()
-                ->url(fn() => PaymentInfoResource::getUrl('edit', ['record' => $this->record])),
+                ->url(fn () => PaymentInfoResource::getUrl('edit', ['record' => $this->record])),
         ];
     }
 }

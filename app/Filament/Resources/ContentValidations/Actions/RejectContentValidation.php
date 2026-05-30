@@ -22,7 +22,7 @@ class RejectContentValidation extends Action
         $this->label('Rejeter')
             ->color('danger')
             ->icon('heroicon-o-x-circle')
-            ->visible(fn($record) => $record->status === ContentValidationStatus::Pending)
+            ->visible(fn ($record) => $record->status === ContentValidationStatus::Pending)
             ->form([
                 Textarea::make('rejection_reason')
                     ->label('Motif de rejet')
@@ -34,9 +34,9 @@ class RejectContentValidation extends Action
             ->modalSubmitActionLabel('Rejeter')
             ->action(function ($record, array $data) {
                 $record->update([
-                    'status'           => ContentValidationStatus::Rejected,
-                    'reviewed_by'      => Auth::id(),
-                    'reviewed_at'      => now(),
+                    'status' => ContentValidationStatus::Rejected,
+                    'reviewed_by' => Auth::id(),
+                    'reviewed_at' => now(),
                     'rejection_reason' => $data['rejection_reason'],
                 ]);
 

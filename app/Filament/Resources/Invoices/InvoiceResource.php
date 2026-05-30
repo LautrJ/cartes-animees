@@ -30,9 +30,10 @@ class InvoiceResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-
     protected static ?string $navigationLabel = 'Factures';
+
     protected static ?string $modelLabel = 'Facture';
+
     protected static ?string $pluralModelLabel = 'Factures';
 
     public static function form(Schema $schema): Schema

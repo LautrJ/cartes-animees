@@ -8,8 +8,6 @@ use App\Filament\Resources\ContentValidations\Actions\RejectContentValidation;
 use App\Models\Card;
 use App\Models\Series;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
@@ -27,27 +25,27 @@ class ContentValidationsTable
                 TextColumn::make('validatable_type')
                     ->label('Type')
                     ->badge()
-                    ->getStateUsing(fn($record) => match($record->validatable_type) {
-                        Card::class   => 'Carte',
+                    ->getStateUsing(fn ($record) => match ($record->validatable_type) {
+                        Card::class => 'Carte',
                         Series::class => 'Série',
-                        default       => $record->validatable_type,
+                        default => $record->validatable_type,
                     })
-                    ->color(fn($record) => match($record->validatable_type) {
-                        Card::class   => 'info',
+                    ->color(fn ($record) => match ($record->validatable_type) {
+                        Card::class => 'info',
                         Series::class => 'warning',
-                        default       => 'gray',
+                        default => 'gray',
                     }),
                 TextColumn::make('validatable.name')
                     ->label('Contenu')
-                    ->getStateUsing(fn($record) => $record->validatable?->name['fr'] ?? '-'),
+                    ->getStateUsing(fn ($record) => $record->validatable?->name['fr'] ?? '-'),
                 TextColumn::make('submitter.first_name')
                     ->label('Soumis par')
-                    ->getStateUsing(fn($record) => "{$record->submitter->first_name} {$record->submitter->last_name}"),
+                    ->getStateUsing(fn ($record) => "{$record->submitter->first_name} {$record->submitter->last_name}"),
                 TextColumn::make('status')
                     ->label('Statut')
                     ->badge()
-                    ->color(fn(ContentValidationStatus $state) => match($state) {
-                        ContentValidationStatus::Pending  => 'warning',
+                    ->color(fn (ContentValidationStatus $state) => match ($state) {
+                        ContentValidationStatus::Pending => 'warning',
                         ContentValidationStatus::Approved => 'success',
                         ContentValidationStatus::Rejected => 'danger',
                     }),
@@ -65,7 +63,7 @@ class ContentValidationsTable
                 SelectFilter::make('status')
                     ->label('Statut')
                     ->options([
-                        'pending'  => 'En attente',
+                        'pending' => 'En attente',
                         'approved' => 'Approuvé',
                         'rejected' => 'Rejeté',
                     ])
@@ -73,7 +71,7 @@ class ContentValidationsTable
                 SelectFilter::make('validatable_type')
                     ->label('Type')
                     ->options([
-                        Card::class   => 'Carte',
+                        Card::class => 'Carte',
                         Series::class => 'Série',
                     ]),
                 TrashedFilter::make(),

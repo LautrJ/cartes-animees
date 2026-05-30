@@ -30,9 +30,10 @@ class TherapistPaymentInfoResource extends Resource
 
     protected static ?int $navigationSort = 6;
 
-
     protected static ?string $navigationLabel = 'Infos bancaires Orthophonistes';
+
     protected static ?string $modelLabel = 'Infos bancaires Orthophoniste';
+
     protected static ?string $pluralModelLabel = 'Infos bancaires Orthophonistes';
 
     public static function form(Schema $schema): Schema

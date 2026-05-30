@@ -15,18 +15,18 @@ class ChildObserver
 
         $now = now();
 
-        $rows = $baseSeries->map(fn(Series $series) => [
-            'child_id'     => $child->id,
-            'series_id'    => $series->id,
-            'unlocked_by'  => null,
-            'status'       => ChildSeriesStatus::Unlocked->value,
-            'unlocked_at'  => $now,
+        $rows = $baseSeries->map(fn (Series $series) => [
+            'child_id' => $child->id,
+            'series_id' => $series->id,
+            'unlocked_by' => null,
+            'status' => ChildSeriesStatus::Unlocked->value,
+            'unlocked_at' => $now,
             'completed_at' => null,
-            'created_at'   => $now,
-            'updated_at'   => $now,
+            'created_at' => $now,
+            'updated_at' => $now,
         ])->toArray();
 
-        if (!empty($rows)) {
+        if (! empty($rows)) {
             DB::table('child_series')->insert($rows);
         }
     }

@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\ContentValidations;
 
-use App\Filament\Resources\ContentValidations\Pages\CreateContentValidation;
 use App\Filament\Resources\ContentValidations\Pages\EditContentValidation;
 use App\Filament\Resources\ContentValidations\Pages\ListContentValidations;
 use App\Filament\Resources\ContentValidations\Pages\ViewContentValidation;
@@ -30,9 +29,10 @@ class ContentValidationResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-
     protected static ?string $navigationLabel = 'Validation de contenu';
+
     protected static ?string $modelLabel = 'Validation de contenu';
+
     protected static ?string $pluralModelLabel = 'Validation de contenu';
 
     public static function form(Schema $schema): Schema

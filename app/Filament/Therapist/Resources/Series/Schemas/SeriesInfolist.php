@@ -21,7 +21,7 @@ class SeriesInfolist
                             ->label('Nom'),
                         TextEntry::make('creator.first_name')
                             ->label('Créé par')
-                            ->getStateUsing(fn($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
+                            ->getStateUsing(fn ($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
                         TextEntry::make('description.fr')
                             ->label('Description')
                             ->placeholder('Aucune description')
@@ -36,7 +36,7 @@ class SeriesInfolist
                             ->boolean(),
                         TextEntry::make('cards_count')
                             ->label('Nombre de cartes')
-                            ->getStateUsing(fn($record) => $record->cards()->count()),
+                            ->getStateUsing(fn ($record) => $record->cards()->count()),
                     ]),
 
                 Section::make('Dates')

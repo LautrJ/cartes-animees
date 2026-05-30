@@ -2,8 +2,6 @@
 
 namespace App\Filament\Therapist\Resources\ContentValidations;
 
-use App\Filament\Therapist\Resources\ContentValidations\Pages\CreateContentValidation;
-use App\Filament\Therapist\Resources\ContentValidations\Pages\EditContentValidation;
 use App\Filament\Therapist\Resources\ContentValidations\Pages\ListContentValidations;
 use App\Filament\Therapist\Resources\ContentValidations\Pages\ViewContentValidation;
 use App\Filament\Therapist\Resources\ContentValidations\Schemas\ContentValidationForm;
@@ -30,9 +28,10 @@ class ContentValidationResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-
     protected static ?string $navigationLabel = 'Demandes en attente';
+
     protected static ?string $modelLabel = 'Demande en attente';
+
     protected static ?string $pluralModelLabel = 'Demandes en attente';
 
     public static function form(Schema $schema): Schema

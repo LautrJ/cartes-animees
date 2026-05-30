@@ -8,7 +8,9 @@ use Livewire\Component;
 class CardPreview extends Component
 {
     public int $cardId;
+
     public bool $started = false;
+
     public bool $showReal = false;
 
     public function mount(int $cardId): void

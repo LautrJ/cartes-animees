@@ -13,6 +13,7 @@ class ChildController extends Controller
     public function index(Request $request): JsonResponse
     {
         $children = $request->user()->children;
+
         return ApiResponse::success($children);
     }
 
@@ -20,10 +21,10 @@ class ChildController extends Controller
     {
         $validated = $request->validate([
             'first_name' => ['required', 'string', 'max:100'],
-            'last_name'  => ['required', 'string', 'max:100'],
-            'birthdate'  => ['nullable', 'date'],
-            'avatar'     => ['nullable', 'string', 'max:255'],
-            'notes'      => ['nullable', 'string'],
+            'last_name' => ['required', 'string', 'max:100'],
+            'birthdate' => ['nullable', 'date'],
+            'avatar' => ['nullable', 'string', 'max:255'],
+            'notes' => ['nullable', 'string'],
         ]);
 
         $child = $request->user()->children()->create($validated);
@@ -48,10 +49,10 @@ class ChildController extends Controller
 
         $validated = $request->validate([
             'first_name' => ['sometimes', 'string', 'max:100'],
-            'last_name'  => ['sometimes', 'string', 'max:100'],
-            'birthdate'  => ['nullable', 'date'],
-            'avatar'     => ['nullable', 'string', 'max:255'],
-            'notes'      => ['nullable', 'string'],
+            'last_name' => ['sometimes', 'string', 'max:100'],
+            'birthdate' => ['nullable', 'date'],
+            'avatar' => ['nullable', 'string', 'max:255'],
+            'notes' => ['nullable', 'string'],
         ]);
 
         $child->update($validated);

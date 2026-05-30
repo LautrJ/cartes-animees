@@ -19,7 +19,7 @@ class InvoiceInfolist
                     ->schema([
                         TextEntry::make('subscription.child.first_name')
                             ->label('Enfant')
-                            ->getStateUsing(fn($record) => "{$record->subscription->child->first_name} {$record->subscription->child->last_name}"),
+                            ->getStateUsing(fn ($record) => "{$record->subscription->child->first_name} {$record->subscription->child->last_name}"),
                         TextEntry::make('subscription.stripe_subscription_id')
                             ->label('Abonnement Stripe'),
                     ]),
@@ -32,20 +32,20 @@ class InvoiceInfolist
                             ->columnSpanFull(),
                         TextEntry::make('amount')
                             ->label('Montant')
-                            ->getStateUsing(fn($record) => number_format($record->amount, 2) . ' €'),
+                            ->getStateUsing(fn ($record) => number_format($record->amount, 2).' €'),
                         TextEntry::make('status')
                             ->label('Statut')
                             ->badge()
-                            ->color(fn(InvoiceStatus $state) => match($state) {
-                                InvoiceStatus::Paid          => 'success',
-                                InvoiceStatus::Open          => 'warning',
-                                InvoiceStatus::Draft         => 'gray',
+                            ->color(fn (InvoiceStatus $state) => match ($state) {
+                                InvoiceStatus::Paid => 'success',
+                                InvoiceStatus::Open => 'warning',
+                                InvoiceStatus::Draft => 'gray',
                                 InvoiceStatus::Uncollectible => 'danger',
-                                InvoiceStatus::Void          => 'gray',
+                                InvoiceStatus::Void => 'gray',
                             }),
                         TextEntry::make('period_start')
                             ->label('Période')
-                            ->getStateUsing(fn($record) => $record->period_start->format('d/m/Y') . ' → ' . $record->period_end->format('d/m/Y'))
+                            ->getStateUsing(fn ($record) => $record->period_start->format('d/m/Y').' → '.$record->period_end->format('d/m/Y'))
                             ->columnSpanFull(),
                         TextEntry::make('paid_at')
                             ->label('Payé le')

@@ -28,11 +28,11 @@ class Subscription extends Model
     protected function casts(): array
     {
         return [
-            'status'                => SubscriptionStatus::class,
-            'override_price'        => 'decimal:2',
-            'current_period_start'  => 'datetime',
-            'current_period_end'    => 'datetime',
-            'canceled_at'           => 'datetime',
+            'status' => SubscriptionStatus::class,
+            'override_price' => 'decimal:2',
+            'current_period_start' => 'datetime',
+            'current_period_end' => 'datetime',
+            'canceled_at' => 'datetime',
         ];
     }
 

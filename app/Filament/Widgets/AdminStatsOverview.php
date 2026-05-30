@@ -8,7 +8,6 @@ use App\Models\ContentValidation;
 use App\Models\Subscription;
 use App\Models\TherapistPayout;
 use App\Models\User;
-use App\Enums\UserRole;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 

@@ -78,11 +78,11 @@ class Child extends Model
     // Filament
     public function scopeWithActiveSubscription($query)
     {
-        return $query->whereHas('subscriptions', fn($q) => $q->active());
+        return $query->whereHas('subscriptions', fn ($q) => $q->active());
     }
 
     public function scopeWithAccessibleSubscription($query)
     {
-        return $query->whereHas('subscriptions', fn($q) => $q->accesible());
+        return $query->whereHas('subscriptions', fn ($q) => $q->accesible());
     }
 }

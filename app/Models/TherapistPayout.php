@@ -25,11 +25,11 @@ class TherapistPayout extends Model
     protected function casts(): array
     {
         return [
-            'amount'          => 'decimal:2',
+            'amount' => 'decimal:2',
             'commission_rate' => 'decimal:2',
-            'period_start'    => 'date',
-            'period_end'      => 'date',
-            'paid_at'         => 'datetime',
+            'period_start' => 'date',
+            'period_end' => 'date',
+            'paid_at' => 'datetime',
         ];
     }
 

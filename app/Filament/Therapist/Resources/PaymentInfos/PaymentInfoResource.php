@@ -15,6 +15,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PaymentInfoResource extends Resource
@@ -30,7 +31,9 @@ class PaymentInfoResource extends Resource
     protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationLabel = 'Informations bancaire';
+
     protected static ?string $modelLabel = 'Informations bancaire';
+
     protected static ?string $pluralModelLabel = 'Informations bancaire';
 
     public static function form(Schema $schema): Schema
@@ -72,7 +75,7 @@ class PaymentInfoResource extends Resource
         ];
     }
 
-    public static function getUrl(?string $name = null, array $parameters = [], bool $isAbsolute = true, ?string $panel = null, ?\Illuminate\Database\Eloquent\Model $tenant = null, bool $shouldGuessMissingParameters = false): string
+    public static function getUrl(?string $name = null, array $parameters = [], bool $isAbsolute = true, ?string $panel = null, ?Model $tenant = null, bool $shouldGuessMissingParameters = false): string
     {
         if ($name === 'index' || $name === null) {
             $paymentInfo = TherapistPaymentInfo::where('user_id', auth()->id())->first();

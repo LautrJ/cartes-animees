@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
+use Stripe\Event;
 use Stripe\StripeClient;
+use Stripe\Subscription;
+use Stripe\Webhook;
 
 class StripeService
 {
@@ -17,10 +20,10 @@ class StripeService
     {
         $price = $this->stripe->prices->create([
             'unit_amount' => (int) ($amount * 100),
-            'currency'    => 'eur',
-            'recurring'   => ['interval' => 'month'],
-            'product'     => config('services.stripe.product_id'),
-            'nickname'    => 'Commission variable pour les orthophonistes',
+            'currency' => 'eur',
+            'recurring' => ['interval' => 'month'],
+            'product' => config('services.stripe.product_id'),
+            'nickname' => 'Commission variable pour les orthophonistes',
         ]);
 
         return $price->id;
@@ -30,7 +33,7 @@ class StripeService
     {
         $customer = $this->stripe->customers->create([
             'email' => $email,
-            'name'  => $name,
+            'name' => $name,
         ]);
 
         return $customer->id;
@@ -47,13 +50,13 @@ class StripeService
         ]);
     }
 
-    public function createSubscription(string $customerId, string $priceId): \Stripe\Subscription
+    public function createSubscription(string $customerId, string $priceId): Subscription
     {
         return $this->stripe->subscriptions->create([
             'customer' => $customerId,
-            'items'    => [['price' => $priceId]],
+            'items' => [['price' => $priceId]],
             'payment_behavior' => 'default_incomplete',
-            'expand'   => ['latest_invoice.payment_intent'],
+            'expand' => ['latest_invoice.payment_intent'],
         ]);
     }
 
@@ -62,9 +65,9 @@ class StripeService
         $this->stripe->subscriptions->cancel($subscriptionId);
     }
 
-    public function constructWebhookEvent(string $payload, string $signature): \Stripe\Event
+    public function constructWebhookEvent(string $payload, string $signature): Event
     {
-        return \Stripe\Webhook::constructEvent(
+        return Webhook::constructEvent(
             $payload,
             $signature,
             config('services.stripe.webhook_secret')

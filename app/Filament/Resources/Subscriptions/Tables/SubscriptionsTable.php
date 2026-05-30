@@ -4,9 +4,7 @@ namespace App\Filament\Resources\Subscriptions\Tables;
 
 use App\Enums\SubscriptionStatus;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
@@ -23,25 +21,25 @@ class SubscriptionsTable
             ->columns([
                 TextColumn::make('child.first_name')
                     ->label('Enfant')
-                    ->getStateUsing(fn($record) => "{$record->child->first_name} {$record->child->last_name}"),
+                    ->getStateUsing(fn ($record) => "{$record->child->first_name} {$record->child->last_name}"),
                 TextColumn::make('child.parent.first_name')
                     ->label('Parent')
-                    ->getStateUsing(fn($record) => "{$record->child->parent->first_name} {$record->child->parent->last_name}"),
+                    ->getStateUsing(fn ($record) => "{$record->child->parent->first_name} {$record->child->parent->last_name}"),
                 TextColumn::make('status')
                     ->label('Statut')
                     ->badge()
-                    ->color(fn(SubscriptionStatus $state) => match($state) {
-                        SubscriptionStatus::Active   => 'success',
-                        SubscriptionStatus::PastDue  => 'danger',
+                    ->color(fn (SubscriptionStatus $state) => match ($state) {
+                        SubscriptionStatus::Active => 'success',
+                        SubscriptionStatus::PastDue => 'danger',
                         SubscriptionStatus::Canceled => 'gray',
-                        SubscriptionStatus::Free     => 'info',
+                        SubscriptionStatus::Free => 'info',
                     }),
                 TextColumn::make('override_price')
                     ->label('Prix')
-                    ->getStateUsing(fn($record) => match(true) {
-                        $record->override_price === null        => 'Normal',
-                        (float)$record->override_price === 0.0 => 'Gratuit',
-                        default                                => number_format($record->override_price, 2) . ' €',
+                    ->getStateUsing(fn ($record) => match (true) {
+                        $record->override_price === null => 'Normal',
+                        (float) $record->override_price === 0.0 => 'Gratuit',
+                        default => number_format($record->override_price, 2).' €',
                     }),
                 TextColumn::make('current_period_end')
                     ->label('Renouvellement')
@@ -57,10 +55,10 @@ class SubscriptionsTable
                 SelectFilter::make('status')
                     ->label('Statut')
                     ->options([
-                        'active'   => 'Actif',
+                        'active' => 'Actif',
                         'past_due' => 'En retard',
                         'canceled' => 'Annulé',
-                        'free'     => 'Gratuit',
+                        'free' => 'Gratuit',
                     ]),
                 TrashedFilter::make(),
             ])

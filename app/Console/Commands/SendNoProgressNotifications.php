@@ -9,14 +9,15 @@ use Illuminate\Console\Command;
 class SendNoProgressNotifications extends Command
 {
     protected $signature = 'notifications:no-progress';
+
     protected $description = 'Envoie un mail aux parents dont l\'enfant n\'a pas eu d\'activité depuis 7 jours';
 
     public function handle(): int
     {
         $children = Child::query()
-            ->whereHas('subscriptions', fn($q) => $q->accessible())
-            ->whereHas('parent', fn($q) => $q
-                ->where(fn($q) => $q
+            ->whereHas('subscriptions', fn ($q) => $q->accessible())
+            ->whereHas('parent', fn ($q) => $q
+                ->where(fn ($q) => $q
                     ->whereNull('last_login_at')
                     ->orWhere('last_login_at', '<', now()->subDays(7))
                 )

@@ -22,7 +22,7 @@ class PaymentInfoInfolist
                             ->label('BIC'),
                         TextEntry::make('iban')
                             ->label('IBAN')
-                            ->getStateUsing(fn($record) => '•••• •••• •••• ' . substr($record->iban, -4))
+                            ->getStateUsing(fn ($record) => '•••• •••• •••• '.substr($record->iban, -4))
                             ->columnSpanFull(),
                     ]),
 

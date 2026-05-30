@@ -21,7 +21,7 @@ class EditNotesAction extends Action
         $this->label('Modifier les notes')
             ->icon(Heroicon::OutlinedPencilSquare)
             ->color('gray')
-            ->fillForm(fn($record) => ['notes' => $record->notes])
+            ->fillForm(fn ($record) => ['notes' => $record->notes])
             ->form([
                 Textarea::make('notes')
                     ->label('Notes')

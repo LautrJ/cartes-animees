@@ -26,15 +26,14 @@ class CreateCard extends CreateRecord
         $disk = Storage::disk('cards');
 
         foreach ([
-                'drawn_animation_path' => 'drawn',
-                'real_animation_path'  => 'real',
-                'sound_path'           => 'sounds',
-             ] as $field => $suffix)
-        {
-            if (!empty($data[$field])) {
-                $oldPath  = $data[$field];
-                $ext      = pathinfo($oldPath, PATHINFO_EXTENSION);
-                $newName = "{$suffix}/{$slug}_{$suffix}_" . now()->timestamp . ".{$ext}";
+            'drawn_animation_path' => 'drawn',
+            'real_animation_path' => 'real',
+            'sound_path' => 'sounds',
+        ] as $field => $suffix) {
+            if (! empty($data[$field])) {
+                $oldPath = $data[$field];
+                $ext = pathinfo($oldPath, PATHINFO_EXTENSION);
+                $newName = "{$suffix}/{$slug}_{$suffix}_".now()->timestamp.".{$ext}";
 
                 if ($disk->exists($oldPath) && $oldPath !== $newName) {
                     $disk->move($oldPath, $newName);

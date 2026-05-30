@@ -37,7 +37,7 @@ class TherapistInvitationController extends Controller
 
         $therapist = User::where('invitation_code', $validated['invitation_code'])->first();
 
-        if (!$therapist) {
+        if (! $therapist) {
             return ApiResponse::error('Code d\'invitation invalide.', 404);
         }
 
@@ -53,7 +53,7 @@ class TherapistInvitationController extends Controller
         $child->therapists()->attach($therapist->id, [
             'assigned_by' => $request->user()->id,
             'assigned_at' => now(),
-            'ended_at'    => null,
+            'ended_at' => null,
         ]);
 
         Notification::make()
@@ -62,9 +62,9 @@ class TherapistInvitationController extends Controller
             ->sendToDatabase($therapist);
 
         $child->parent->notify(new FollowUpStartedNotification(
-            childFirstName:     $child->first_name,
+            childFirstName: $child->first_name,
             therapistFirstName: $therapist->first_name,
-            therapistLastName:  $therapist->last_name,
+            therapistLastName: $therapist->last_name,
         ));
 
         return ApiResponse::success(['message' => 'Orthophoniste affilié avec succès.'], 201);
@@ -82,9 +82,9 @@ class TherapistInvitationController extends Controller
         ]);
 
         $child->parent->notify(new FollowUpEndedNotification(
-            childFirstName:     $child->first_name,
+            childFirstName: $child->first_name,
             therapistFirstName: $therapist->first_name,
-            therapistLastName:  $therapist->last_name,
+            therapistLastName: $therapist->last_name,
         ));
 
         return ApiResponse::success(null, 204);

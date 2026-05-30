@@ -19,8 +19,8 @@ class ViewCard extends ViewRecord
                 ->label('Prévisualiser')
                 ->icon('heroicon-o-play')
                 ->color('success')
-                ->modalHeading('Prévisualisation — ' . ($this->getRecord()->name['fr'] ?? ''))
-                ->modalContent(fn() => view('livewire.card-preview-modal', [
+                ->modalHeading('Prévisualisation — '.($this->getRecord()->name['fr'] ?? ''))
+                ->modalContent(fn () => view('livewire.card-preview-modal', [
                     'cardId' => $this->getRecord()->id,
                 ]))
                 ->modalSubmitAction(false)
@@ -30,6 +30,6 @@ class ViewCard extends ViewRecord
 
     public function getTitle(): string
     {
-        return 'Afficher ' . ($this->getRecord()->name['fr'] ?? 'Animation');
+        return 'Afficher '.($this->getRecord()->name['fr'] ?? 'Animation');
     }
 }

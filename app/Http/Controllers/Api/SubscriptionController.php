@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\SubscriptionStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
-use App\Enums\SubscriptionStatus;
 use App\Models\Child;
-use App\Models\Setting;
 use App\Models\Subscription;
 use App\Models\SubscriptionPriceHistory;
 use App\Services\StripeService;
@@ -20,10 +19,6 @@ class SubscriptionController extends Controller
 
     /**
      * Créer un abonnement
-     *
-     * @param Request $request
-     * @param Child $child
-     * @return JsonResponse
      */
     public function store(Request $request, Child $child): JsonResponse
     {
@@ -48,7 +43,7 @@ class SubscriptionController extends Controller
 
         try {
             // Créer ou récupérer le customer Stripe
-            if (!$user->stripe_customer_id) {
+            if (! $user->stripe_customer_id) {
                 $customerId = $this->stripeService->createCustomer(
                     $user->email,
                     "{$user->first_name} {$user->last_name}"
@@ -65,7 +60,7 @@ class SubscriptionController extends Controller
             // Récupérer le stripe_price_id actif
             $latestPrice = SubscriptionPriceHistory::orderBy('effective_from', 'desc')->first();
 
-            if (!$latestPrice) {
+            if (! $latestPrice) {
                 return ApiResponse::error('Aucun tarif configuré.', 500);
             }
 
@@ -77,39 +72,36 @@ class SubscriptionController extends Controller
 
             // Stocker la subscription en base
             $subscription = Subscription::create([
-                'child_id'               => $child->id,
+                'child_id' => $child->id,
                 'stripe_subscription_id' => $stripeSubscription->id,
-                'stripe_price_id'        => $latestPrice->stripe_price_id,
-                'status'                 => SubscriptionStatus::Active,
-                'current_period_start'   => $stripeSubscription->current_period_start
+                'stripe_price_id' => $latestPrice->stripe_price_id,
+                'status' => SubscriptionStatus::Active,
+                'current_period_start' => $stripeSubscription->current_period_start
                     ? now()->createFromTimestamp($stripeSubscription->current_period_start)
                     : now(),
-                'current_period_end'     => $stripeSubscription->current_period_end
+                'current_period_end' => $stripeSubscription->current_period_end
                     ? now()->createFromTimestamp($stripeSubscription->current_period_end)
                     : now()->addMonth(),
             ]);
 
             return ApiResponse::success([
-                'subscription'          => $subscription,
-                'client_secret'         => $stripeSubscription->latest_invoice->payment_intent->client_secret ?? null,
+                'subscription' => $subscription,
+                'client_secret' => $stripeSubscription->latest_invoice->payment_intent->client_secret ?? null,
             ], 201);
 
         } catch (\Exception $e) {
             Log::error('Erreur création abonnement Stripe', [
-                'user_id'  => $user->id,
+                'user_id' => $user->id,
                 'child_id' => $child->id,
-                'error'    => $e->getMessage(),
+                'error' => $e->getMessage(),
             ]);
+
             return ApiResponse::error('Erreur lors de la création de l\'abonnement.', 500);
         }
     }
 
     /**
      * Annuler un abonnement
-     *
-     * @param Request $request
-     * @param Child $child
-     * @return JsonResponse
      */
     public function destroy(Request $request, Child $child): JsonResponse
     {
@@ -121,7 +113,7 @@ class SubscriptionController extends Controller
             ->whereIn('status', [SubscriptionStatus::Active, SubscriptionStatus::PastDue])
             ->first();
 
-        if (!$subscription) {
+        if (! $subscription) {
             return ApiResponse::error('Aucun abonnement actif pour cet enfant.', 404);
         }
 
@@ -129,7 +121,7 @@ class SubscriptionController extends Controller
             $this->stripeService->cancelSubscription($subscription->stripe_subscription_id);
 
             $subscription->update([
-                'status'      => SubscriptionStatus::Canceled,
+                'status' => SubscriptionStatus::Canceled,
                 'canceled_at' => now(),
             ]);
 
@@ -138,18 +130,15 @@ class SubscriptionController extends Controller
         } catch (\Exception $e) {
             Log::error('Erreur annulation abonnement Stripe', [
                 'subscription_id' => $subscription->id,
-                'error'           => $e->getMessage(),
+                'error' => $e->getMessage(),
             ]);
+
             return ApiResponse::error('Erreur lors de l\'annulation de l\'abonnement.', 500);
         }
     }
 
     /**
      * Voir l'abonnement d'un enfant
-     *
-     * @param Request $request
-     * @param Child $child
-     * @return JsonResponse
      */
     public function show(Request $request, Child $child): JsonResponse
     {
@@ -161,7 +150,7 @@ class SubscriptionController extends Controller
             ->latest()
             ->first();
 
-        if (!$subscription) {
+        if (! $subscription) {
             return ApiResponse::error('Aucun abonnement trouvé.', 404);
         }
 

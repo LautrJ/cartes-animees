@@ -28,7 +28,7 @@ class Card extends Model
     protected function casts(): array
     {
         return [
-            'name'         => 'array',
+            'name' => 'array',
             'is_validated' => 'boolean',
         ];
     }

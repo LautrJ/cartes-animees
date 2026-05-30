@@ -3,7 +3,6 @@
 namespace App\Filament\Therapist\Resources\ContentValidations\Pages;
 
 use App\Filament\Therapist\Resources\ContentValidations\ContentValidationResource;
-use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewContentValidation extends ViewRecord

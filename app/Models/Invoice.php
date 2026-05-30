@@ -26,11 +26,11 @@ class Invoice extends Model
     protected function casts(): array
     {
         return [
-            'status'       => InvoiceStatus::class,
-            'amount'       => 'decimal:2',
+            'status' => InvoiceStatus::class,
+            'amount' => 'decimal:2',
             'period_start' => 'datetime',
-            'period_end'   => 'datetime',
-            'paid_at'      => 'datetime',
+            'period_end' => 'datetime',
+            'paid_at' => 'datetime',
         ];
     }
 

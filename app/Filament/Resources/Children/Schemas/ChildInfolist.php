@@ -25,15 +25,15 @@ class ChildInfolist
                             ->placeholder('Non renseignée'),
                         TextEntry::make('parent.first_name')
                             ->label('Parent')
-                            ->getStateUsing(fn($record) => "{$record->parent->first_name} {$record->parent->last_name}"),
+                            ->getStateUsing(fn ($record) => "{$record->parent->first_name} {$record->parent->last_name}"),
                     ]),
 
                 Section::make('Orthophonistes')
                     ->schema([
                         TextEntry::make('activeTherapists')
                             ->label('Orthophonistes actifs')
-                            ->getStateUsing(fn($record) => $record->activeTherapists
-                                ->map(fn($t) => "{$t->first_name} {$t->last_name}")
+                            ->getStateUsing(fn ($record) => $record->activeTherapists
+                                ->map(fn ($t) => "{$t->first_name} {$t->last_name}")
                                 ->join(', ') ?: '-'
                             ),
                     ]),

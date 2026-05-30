@@ -24,7 +24,7 @@ class UsersTable
             ->columns([
                 TextColumn::make('full_name')
                     ->label('Nom complet')
-                    ->getStateUsing(fn($record) => "{$record->first_name} {$record->last_name}")
+                    ->getStateUsing(fn ($record) => "{$record->first_name} {$record->last_name}")
                     ->searchable(query: function ($query, $search) {
                         $query->where('first_name', 'like', "%{$search}%")
                             ->orWhere('last_name', 'like', "%{$search}%");
@@ -36,10 +36,10 @@ class UsersTable
                 TextColumn::make('role')
                     ->label('Rôle')
                     ->badge()
-                    ->color(fn(UserRole $state) => match($state) {
-                        UserRole::Admin     => 'danger',
+                    ->color(fn (UserRole $state) => match ($state) {
+                        UserRole::Admin => 'danger',
                         UserRole::Therapist => 'warning',
-                        UserRole::Parent    => 'success',
+                        UserRole::Parent => 'success',
                     }),
                 TextColumn::make('phone')
                     ->label('Téléphone')
@@ -62,10 +62,10 @@ class UsersTable
             ->recordActions([
                 Impersonate::make()
                     ->label('')
-                    ->redirectTo(fn($record) => match(true) {
+                    ->redirectTo(fn ($record) => match (true) {
                         $record->isTherapist() => '/therapist',
-                        $record->isParent()    => '/',
-                        default                => '/admin',
+                        $record->isParent() => '/',
+                        default => '/admin',
                     }),
                 ViewAction::make(),
                 EditAction::make(),

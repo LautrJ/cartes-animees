@@ -15,7 +15,7 @@ class SubscriptionPriceHistory extends Model
     ];
 
     protected $casts = [
-        'price'          => 'decimal:2',
+        'price' => 'decimal:2',
         'effective_from' => 'datetime',
     ];
 

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Enums\ChildSeriesStatus;
-use App\Enums\ContentValidationStatus;
 use App\Models\Card;
 use App\Models\Child;
 use App\Models\CommissionRateHistory;
@@ -11,7 +10,6 @@ use App\Models\ContentValidation;
 use App\Models\Invoice;
 use App\Models\Series;
 use App\Models\TherapistPaymentInfo;
-use App\Models\TherapistPayout;
 use App\Models\User;
 use App\Services\StripeTestDataService;
 use Illuminate\Database\Seeder;
@@ -38,8 +36,7 @@ class TestDataSeeder extends Seeder
         // ----------------------------------------------------------------
         $therapists = User::factory(3)->therapist()->create();
 
-        $therapists->each(fn($therapist) =>
-        TherapistPaymentInfo::factory()->create(['user_id' => $therapist->id])
+        $therapists->each(fn ($therapist) => TherapistPaymentInfo::factory()->create(['user_id' => $therapist->id])
         );
 
         // ----------------------------------------------------------------
@@ -53,8 +50,7 @@ class TestDataSeeder extends Seeder
             $parentChildren = Child::factory(2)->create(['parent_id' => $parent->id]);
             $children = $children->merge($parentChildren);
 
-            $parentChildren->each(fn($child) =>
-            $child->therapists()->attach(
+            $parentChildren->each(fn ($child) => $child->therapists()->attach(
                 $therapists->random()->id,
                 ['assigned_by' => null, 'assigned_at' => now()->subMonths(rand(1, 6)), 'ended_at' => null]
             )
@@ -65,8 +61,7 @@ class TestDataSeeder extends Seeder
         // Abonnements via Stripe (vrais appels API sandbox)
         // 7 actifs, 1 gratuit, 1 past_due, 1 annulé
         // ----------------------------------------------------------------
-        $children->take(7)->each(fn($child) =>
-        $this->stripeTestData->createActiveSubscription(
+        $children->take(7)->each(fn ($child) => $this->stripeTestData->createActiveSubscription(
             $child->parent, $child, $priceId
         )
         );
@@ -117,11 +112,10 @@ class TestDataSeeder extends Seeder
 
         $therapists->take(2)->each(function ($therapist) {
             $pendingCards = Card::factory(2)->unvalidated()->byTherapist($therapist)->create();
-            $pendingCards->each(fn($card) =>
-            ContentValidation::factory()->pending()->create([
-                'validatable_id'   => $card->id,
+            $pendingCards->each(fn ($card) => ContentValidation::factory()->pending()->create([
+                'validatable_id' => $card->id,
                 'validatable_type' => Card::class,
-                'submitted_by'     => $therapist->id,
+                'submitted_by' => $therapist->id,
             ])
             );
         });
@@ -130,24 +124,22 @@ class TestDataSeeder extends Seeder
         // Séries
         // ----------------------------------------------------------------
         $baseSeries = Series::factory(3)->base()->create(['created_by' => $admin->id]);
-        $baseSeries->each(fn($series) =>
-        $series->cards()->attach(
-            $cards->random(5)->pluck('id')->mapWithKeys(fn($id, $i) => [$id => ['order' => $i + 1]])
+        $baseSeries->each(fn ($series) => $series->cards()->attach(
+            $cards->random(5)->pluck('id')->mapWithKeys(fn ($id, $i) => [$id => ['order' => $i + 1]])
         )
         );
 
         $normalSeries = Series::factory(5)->create(['created_by' => $admin->id]);
-        $normalSeries->each(fn($series) =>
-        $series->cards()->attach(
-            $cards->random(rand(3, 5))->pluck('id')->mapWithKeys(fn($id, $i) => [$id => ['order' => $i + 1]])
+        $normalSeries->each(fn ($series) => $series->cards()->attach(
+            $cards->random(rand(3, 5))->pluck('id')->mapWithKeys(fn ($id, $i) => [$id => ['order' => $i + 1]])
         )
         );
 
         $pendingSeries = Series::factory()->byTherapist($therapists->last())->create();
         ContentValidation::factory()->pending()->create([
-            'validatable_id'   => $pendingSeries->id,
+            'validatable_id' => $pendingSeries->id,
             'validatable_type' => Series::class,
-            'submitted_by'     => $therapists->last()->id,
+            'submitted_by' => $therapists->last()->id,
         ]);
 
         // ----------------------------------------------------------------
@@ -158,16 +150,16 @@ class TestDataSeeder extends Seeder
         $children->each(function ($child) use ($normalSeries, $now) {
             if (rand(0, 1)) {
                 $extraSeries = $normalSeries->random(rand(1, 3));
-                $therapist   = $child->activeTherapists()->first();
+                $therapist = $child->activeTherapists()->first();
 
                 $extraSeries->each(function ($series) use ($child, $now, $therapist) {
-                    $unlockedAt  = $now->copy()->subDays(rand(1, 60));
+                    $unlockedAt = $now->copy()->subDays(rand(1, 60));
                     $isCompleted = (bool) rand(0, 1);
 
                     $child->series()->attach($series->id, [
-                        'unlocked_by'  => $therapist?->id,
-                        'status'       => $isCompleted ? ChildSeriesStatus::Completed->value : ChildSeriesStatus::Unlocked->value,
-                        'unlocked_at'  => $unlockedAt,
+                        'unlocked_by' => $therapist?->id,
+                        'status' => $isCompleted ? ChildSeriesStatus::Completed->value : ChildSeriesStatus::Unlocked->value,
+                        'unlocked_at' => $unlockedAt,
                         'completed_at' => $isCompleted ? $unlockedAt->copy()->addDays(rand(3, 14)) : null,
                     ]);
                 });

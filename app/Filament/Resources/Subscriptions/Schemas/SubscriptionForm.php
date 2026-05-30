@@ -2,12 +2,10 @@
 
 namespace App\Filament\Resources\Subscriptions\Schemas;
 
-use App\Enums\SubscriptionStatus;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Illuminate\Support\Facades\Auth;
 
 class SubscriptionForm
 {
@@ -20,10 +18,10 @@ class SubscriptionForm
                         Select::make('status')
                             ->label('Statut')
                             ->options([
-                                'active'   => 'Actif',
+                                'active' => 'Actif',
                                 'past_due' => 'En retard',
                                 'canceled' => 'Annulé',
-                                'free'     => 'Gratuit',
+                                'free' => 'Gratuit',
                             ])
                             ->required(),
                     ]),

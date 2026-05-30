@@ -28,7 +28,7 @@ class PatientInfolist
                             ->placeholder('Non renseignée'),
                         TextEntry::make('parent.first_name')
                             ->label('Parent')
-                            ->getStateUsing(fn($record) => "{$record->parent->first_name} {$record->parent->last_name}"),
+                            ->getStateUsing(fn ($record) => "{$record->parent->first_name} {$record->parent->last_name}"),
                     ]),
 
                 Section::make('Notes')
@@ -37,7 +37,7 @@ class PatientInfolist
                             ->label('')
                             ->icon('heroicon-s-pencil-square')
                             ->color('gray')
-                            ->fillForm(fn($record) => ['notes' => $record->notes])
+                            ->fillForm(fn ($record) => ['notes' => $record->notes])
                             ->form([
                                 Textarea::make('notes')
                                     ->label('Notes')

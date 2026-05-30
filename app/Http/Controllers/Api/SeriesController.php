@@ -21,14 +21,14 @@ class SeriesController extends Controller
             ->where('is_active', true)
             ->withPivot(['status', 'unlocked_at', 'completed_at'])
             ->get()
-            ->map(fn($series) => [
-                'id'           => $series->id,
-                'name'         => $series->name,
-                'description'  => $series->description,
-                'thumbnail'    => $series->thumbnail_path,
-                'is_base'      => $series->is_base,
-                'status'       => $series->pivot->status,
-                'unlocked_at'  => $series->pivot->unlocked_at,
+            ->map(fn ($series) => [
+                'id' => $series->id,
+                'name' => $series->name,
+                'description' => $series->description,
+                'thumbnail' => $series->thumbnail_path,
+                'is_base' => $series->is_base,
+                'status' => $series->pivot->status,
+                'unlocked_at' => $series->pivot->unlocked_at,
                 'completed_at' => $series->pivot->completed_at,
             ]);
 
@@ -45,31 +45,31 @@ class SeriesController extends Controller
             ->where('series.id', $series->id)
             ->exists();
 
-        if (!$hasAccess) {
+        if (! $hasAccess) {
             return ApiResponse::error('Cette série n\'est pas débloquée pour cet enfant.', 403);
         }
 
         $cards = $series->cards()
             ->orderBy('series_cards.order')
             ->get()
-            ->map(fn($card) => [
-                'id'                    => $card->id,
-                'name'                  => $card->name,
-                'drawn_animation_path'  => $card->drawn_animation_path,
-                'real_animation_path'   => $card->real_animation_path,
-                'sound_path'            => $card->sound_path,
-                'width'                 => $card->width,
-                'height'                => $card->height,
-                'duration'              => $card->duration,
+            ->map(fn ($card) => [
+                'id' => $card->id,
+                'name' => $card->name,
+                'drawn_animation_path' => $card->drawn_animation_path,
+                'real_animation_path' => $card->real_animation_path,
+                'sound_path' => $card->sound_path,
+                'width' => $card->width,
+                'height' => $card->height,
+                'duration' => $card->duration,
             ]);
 
         return ApiResponse::success([
-            'id'          => $series->id,
-            'name'        => $series->name,
+            'id' => $series->id,
+            'name' => $series->name,
             'description' => $series->description,
-            'thumbnail'   => $series->thumbnail_path,
-            'is_base'     => $series->is_base,
-            'cards'       => $cards,
+            'thumbnail' => $series->thumbnail_path,
+            'is_base' => $series->is_base,
+            'cards' => $cards,
         ]);
     }
 }

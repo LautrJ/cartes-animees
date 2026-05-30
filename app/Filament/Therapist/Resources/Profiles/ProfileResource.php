@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProfileResource extends Resource
@@ -25,9 +26,10 @@ class ProfileResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-
     protected static ?string $navigationLabel = 'Mon profil';
+
     protected static ?string $modelLabel = 'Mon profil';
+
     protected static ?string $pluralModelLabel = 'Mon profil';
 
     public static function form(Schema $schema): Schema
@@ -47,7 +49,7 @@ class ProfileResource extends Resource
         ];
     }
 
-    public static function getUrl(?string $name = null, array $parameters = [], bool $isAbsolute = true, ?string $panel = null, ?\Illuminate\Database\Eloquent\Model $tenant = null, bool $shouldGuessMissingParameters = false): string
+    public static function getUrl(?string $name = null, array $parameters = [], bool $isAbsolute = true, ?string $panel = null, ?Model $tenant = null, bool $shouldGuessMissingParameters = false): string
     {
         if ($name === 'index' || $name === null) {
             return parent::getUrl('view', ['record' => auth()->id()], $isAbsolute, $panel, $tenant, $shouldGuessMissingParameters);
@@ -59,7 +61,7 @@ class ProfileResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'=> ListProfiles::route('/'),
+            'index' => ListProfiles::route('/'),
             'view' => ViewProfile::route('/{record}'),
             'edit' => EditProfile::route('/{record}/edit'),
         ];

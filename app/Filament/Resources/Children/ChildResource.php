@@ -30,9 +30,10 @@ class ChildResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-
     protected static ?string $navigationLabel = 'Enfants';
+
     protected static ?string $modelLabel = 'Enfant';
+
     protected static ?string $pluralModelLabel = 'Enfants';
 
     public static function form(Schema $schema): Schema

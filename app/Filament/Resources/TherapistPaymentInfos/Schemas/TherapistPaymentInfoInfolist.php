@@ -17,7 +17,7 @@ class TherapistPaymentInfoInfolist
                     ->schema([
                         TextEntry::make('user.first_name')
                             ->label('Nom')
-                            ->getStateUsing(fn($record) => "{$record->user->first_name} {$record->user->last_name}"),
+                            ->getStateUsing(fn ($record) => "{$record->user->first_name} {$record->user->last_name}"),
                         TextEntry::make('user.email')
                             ->label('Email'),
                     ]),
@@ -31,7 +31,7 @@ class TherapistPaymentInfoInfolist
                             ->label('BIC'),
                         TextEntry::make('iban')
                             ->label('IBAN')
-                            ->getStateUsing(fn($record) => '•••• •••• •••• ' . substr($record->iban, -4))
+                            ->getStateUsing(fn ($record) => '•••• •••• •••• '.substr($record->iban, -4))
                             ->columnSpanFull(),
                     ]),
 

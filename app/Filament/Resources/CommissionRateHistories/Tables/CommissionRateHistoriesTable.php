@@ -15,14 +15,14 @@ class CommissionRateHistoriesTable
             ->columns([
                 TextColumn::make('rate')
                     ->label('Taux')
-                    ->getStateUsing(fn($record) => $record->rate . ' €/patient'),
+                    ->getStateUsing(fn ($record) => $record->rate.' €/patient'),
                 TextColumn::make('effective_from')
                     ->label('En vigueur depuis')
                     ->dateTime('d/m/Y H:i')
                     ->sortable(),
                 TextColumn::make('creator.first_name')
                     ->label('Modifié par')
-                    ->getStateUsing(fn($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
+                    ->getStateUsing(fn ($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
                 TextColumn::make('created_at')
                     ->label('Créé le')
                     ->dateTime('d/m/Y H:i')

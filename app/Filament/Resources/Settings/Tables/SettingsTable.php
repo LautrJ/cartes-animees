@@ -3,10 +3,7 @@
 namespace App\Filament\Resources\Settings\Tables;
 
 use App\Enums\SettingType;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -24,10 +21,10 @@ class SettingsTable
                 TextColumn::make('type')
                     ->label('Type')
                     ->badge()
-                    ->color(fn(SettingType $state) => match($state) {
-                        SettingType::String  => 'gray',
+                    ->color(fn (SettingType $state) => match ($state) {
+                        SettingType::String => 'gray',
                         SettingType::Integer => 'info',
-                        SettingType::Float   => 'warning',
+                        SettingType::Float => 'warning',
                         SettingType::Boolean => 'success',
                     }),
                 TextColumn::make('description')

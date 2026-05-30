@@ -10,17 +10,18 @@ use App\Http\Controllers\Api\StripeWebhookController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\TherapistInvitationController;
 use App\Http\Controllers\Api\TherapistPatientController;
+use App\Services\StripeTestDataService;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register'])->middleware('throttle:5,1');
-    Route::post('login',    [AuthController::class, 'login'])->middleware('throttle:5,1');
+    Route::post('login', [AuthController::class, 'login'])->middleware('throttle:5,1');
     Route::post('password/forgot', [AuthController::class, 'forgotPassword'])->middleware('throttle:3,1');
-    Route::post('password/reset',  [AuthController::class, 'resetPassword'])->middleware('throttle:3,1');
+    Route::post('password/reset', [AuthController::class, 'resetPassword'])->middleware('throttle:3,1');
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
-        Route::get('me',      [AuthController::class, 'me']);
+        Route::get('me', [AuthController::class, 'me']);
     });
 });
 
@@ -41,7 +42,6 @@ Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {
         Route::post('{child}/subscription', [SubscriptionController::class, 'store']);
         Route::delete('{child}/subscription', [SubscriptionController::class, 'destroy']);
     });
-
 
     // Orthophoniste
     Route::prefix('therapist')->group(function () {
@@ -69,6 +69,7 @@ Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {
 Route::post('stripe/webhook', [StripeWebhookController::class, 'handle']);
 
 Route::get('test/payment-method', function () {
-    $service = new \App\Services\StripeTestDataService();
+    $service = new StripeTestDataService;
+
     return response()->json(['payment_method_id' => $service->createTestPaymentMethod()]);
 });

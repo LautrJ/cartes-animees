@@ -22,11 +22,11 @@ class SeriesTable
             ->columns([
                 TextColumn::make('name')
                     ->label('Nom')
-                    ->getStateUsing(fn($record) => $record->name['fr'] ?? '-')
+                    ->getStateUsing(fn ($record) => $record->name['fr'] ?? '-')
                     ->searchable(),
                 TextColumn::make('creator.first_name')
                     ->label('Créé par')
-                    ->getStateUsing(fn($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
+                    ->getStateUsing(fn ($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
                 IconColumn::make('is_base')
                     ->label('Série de base')
                     ->boolean(),
@@ -48,13 +48,13 @@ class SeriesTable
             ->filters([
                 Filter::make('is_base')
                     ->label('Séries de base')
-                    ->query(fn($query) => $query->where('is_base', true)),
+                    ->query(fn ($query) => $query->where('is_base', true)),
                 Filter::make('is_validated')
                     ->label('Validées')
-                    ->query(fn($query) => $query->where('is_validated', true)),
+                    ->query(fn ($query) => $query->where('is_validated', true)),
                 Filter::make('is_active')
                     ->label('Actives')
-                    ->query(fn($query) => $query->where('is_active', true)),
+                    ->query(fn ($query) => $query->where('is_active', true)),
                 TrashedFilter::make(),
             ])
             ->recordActions([

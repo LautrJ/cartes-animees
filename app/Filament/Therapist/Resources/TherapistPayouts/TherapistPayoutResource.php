@@ -28,9 +28,10 @@ class TherapistPayoutResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-
     protected static ?string $navigationLabel = 'Paies';
+
     protected static ?string $modelLabel = 'Paie';
+
     protected static ?string $pluralModelLabel = 'Paies';
 
     public static function form(Schema $schema): Schema
@@ -66,7 +67,7 @@ class TherapistPayoutResource extends Resource
     {
         return [
             'index' => ListTherapistPayouts::route('/'),
-            'view'  => ViewTherapistPayout::route('/{record}'),
+            'view' => ViewTherapistPayout::route('/{record}'),
         ];
     }
 

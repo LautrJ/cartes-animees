@@ -15,7 +15,7 @@ class SubscriptionPriceHistoriesTable
             ->columns([
                 TextColumn::make('price')
                     ->label('Prix')
-                    ->getStateUsing(fn($record) => number_format($record->price, 2, ',', ' ') . ' €/mois'),
+                    ->getStateUsing(fn ($record) => number_format($record->price, 2, ',', ' ').' €/mois'),
                 TextColumn::make('stripe_price_id')
                     ->label('Stripe Price ID')
                     ->copyable()
@@ -28,7 +28,7 @@ class SubscriptionPriceHistoriesTable
                     ->sortable(),
                 TextColumn::make('creator.first_name')
                     ->label('Modifié par')
-                    ->getStateUsing(fn($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
+                    ->getStateUsing(fn ($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
                 TextColumn::make('created_at')
                     ->label('Créé le')
                     ->dateTime('d/m/Y H:i')

@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Subscriptions;
 
-use App\Filament\Resources\Subscriptions\Pages\CreateSubscription;
 use App\Filament\Resources\Subscriptions\Pages\EditSubscription;
 use App\Filament\Resources\Subscriptions\Pages\ListSubscriptions;
 use App\Filament\Resources\Subscriptions\Pages\ViewSubscription;
@@ -30,9 +29,10 @@ class SubscriptionResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-
     protected static ?string $navigationLabel = 'Abonnements';
+
     protected static ?string $modelLabel = 'Abonnement';
+
     protected static ?string $pluralModelLabel = 'Abonnements';
 
     public static function form(Schema $schema): Schema

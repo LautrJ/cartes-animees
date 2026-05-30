@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\SubscriptionStatus;
 use App\Models\CommissionRateHistory;
 use App\Models\TherapistPayout;
 use App\Models\User;
-use App\Enums\SubscriptionStatus;
 use Filament\Notifications\Notification;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
@@ -28,8 +28,8 @@ class CalculateMonthlyPayouts extends Command
             : now()->subMonth()->startOfMonth();
 
         $periodStart = $month->copy()->startOfMonth();
-        $periodEnd   = $month->copy()->endOfMonth();
-        $isDryRun    = $this->option('dry-run');
+        $periodEnd = $month->copy()->endOfMonth();
+        $isDryRun = $this->option('dry-run');
 
         $this->info("Période : {$periodStart->format('d/m/Y')} → {$periodEnd->format('d/m/Y')}");
 
@@ -44,8 +44,9 @@ class CalculateMonthlyPayouts extends Command
             ->orderBy('effective_from', 'desc')
             ->first();
 
-        if (!$commissionRate) {
+        if (! $commissionRate) {
             $this->error('Aucun taux de commission trouvé.');
+
             return self::FAILURE;
         }
 
@@ -56,8 +57,9 @@ class CalculateMonthlyPayouts extends Command
         // ----------------------------------------------------------------
         $admin = User::admins()->first();
 
-        if (!$admin) {
+        if (! $admin) {
             $this->error('Aucun administrateur trouvé.');
+
             return self::FAILURE;
         }
 
@@ -89,6 +91,7 @@ class CalculateMonthlyPayouts extends Command
 
             if ($patientCount === 0) {
                 $this->line("{$therapist->getFilamentName()} — 0 patient rémunérateur, ignoré.");
+
                 continue;
             }
 
@@ -96,7 +99,7 @@ class CalculateMonthlyPayouts extends Command
 
             $this->line("{$therapist->getFilamentName()} — {$patientCount} patient(s) × {$commissionRate->rate} € = {$amount} €");
 
-            if (!$isDryRun) {
+            if (! $isDryRun) {
                 // Vérifier si un payout existe déjà pour cette période
                 $existingPayout = TherapistPayout::where('therapist_id', $therapist->id)
                     ->whereDate('period_start', $periodStart->format('Y-m-d'))
@@ -104,18 +107,19 @@ class CalculateMonthlyPayouts extends Command
                     ->first();
 
                 if ($existingPayout) {
-                    $this->warn("Payout déjà existant pour cette période, ignoré.");
+                    $this->warn('Payout déjà existant pour cette période, ignoré.');
+
                     continue;
                 }
 
                 $payout = TherapistPayout::create([
-                    'therapist_id'  => $therapist->id,
-                    'processed_by'  => $admin->id,
-                    'amount'        => $amount,
+                    'therapist_id' => $therapist->id,
+                    'processed_by' => $admin->id,
+                    'amount' => $amount,
                     'patient_count' => $patientCount,
-                    'period_start'  => $periodStart,
-                    'period_end'    => $periodEnd,
-                    'paid_at'       => null,
+                    'period_start' => $periodStart,
+                    'period_end' => $periodEnd,
+                    'paid_at' => null,
                 ]);
 
                 // Notification in-app à l'orthophoniste

@@ -15,11 +15,11 @@ class NotificationController extends Controller
             ->notifications()
             ->orderBy('created_at', 'desc')
             ->get()
-            ->map(fn($notification) => [
-                'id'         => $notification->id,
-                'type'       => $notification->type,
-                'data'       => $notification->data,
-                'read_at'    => $notification->read_at,
+            ->map(fn ($notification) => [
+                'id' => $notification->id,
+                'type' => $notification->type,
+                'data' => $notification->data,
+                'read_at' => $notification->read_at,
                 'created_at' => $notification->created_at,
             ]);
 
@@ -33,7 +33,7 @@ class NotificationController extends Controller
             ->where('id', $id)
             ->first();
 
-        if (!$notification) {
+        if (! $notification) {
             return ApiResponse::error('Notification introuvable.', 404);
         }
 

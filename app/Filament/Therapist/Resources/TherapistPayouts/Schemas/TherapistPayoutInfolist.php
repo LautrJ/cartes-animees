@@ -19,15 +19,15 @@ class TherapistPayoutInfolist
                     ->schema([
                         TextEntry::make('amount')
                             ->label('Montant')
-                            ->getStateUsing(fn($record) => number_format($record->amount, 2) . ' €'),
+                            ->getStateUsing(fn ($record) => number_format($record->amount, 2).' €'),
                         TextEntry::make('commission_rate')
                             ->label('Taux appliqué')
-                            ->getStateUsing(fn($record) => $record->commission_rate . ' €/patient'),
+                            ->getStateUsing(fn ($record) => $record->commission_rate.' €/patient'),
                         TextEntry::make('patient_count')
                             ->label('Nombre de patients'),
                         TextEntry::make('period_start')
                             ->label('Période')
-                            ->getStateUsing(fn($record) => $record->period_start->format('d/m/Y') . ' → ' . $record->period_end->format('d/m/Y')),
+                            ->getStateUsing(fn ($record) => $record->period_start->format('d/m/Y').' → '.$record->period_end->format('d/m/Y')),
                         TextEntry::make('note')
                             ->label('Note')
                             ->placeholder('Aucune note')
@@ -40,7 +40,7 @@ class TherapistPayoutInfolist
                         IconEntry::make('paid_at')
                             ->label('Payé')
                             ->boolean()
-                            ->getStateUsing(fn($record) => !is_null($record->paid_at)),
+                            ->getStateUsing(fn ($record) => ! is_null($record->paid_at)),
                         TextEntry::make('paid_at')
                             ->label('Payé le')
                             ->dateTime('d/m/Y H:i')

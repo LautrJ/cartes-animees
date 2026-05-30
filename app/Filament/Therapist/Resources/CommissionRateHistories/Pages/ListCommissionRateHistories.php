@@ -2,8 +2,8 @@
 
 namespace App\Filament\Therapist\Resources\CommissionRateHistories\Pages;
 
-use App\Filament\Therapist\Resources\CommissionRateHistories\Widgets\CommissionRateChart;
 use App\Filament\Therapist\Resources\CommissionRateHistories\CommissionRateHistoryResource;
+use App\Filament\Therapist\Resources\CommissionRateHistories\Widgets\CommissionRateChart;
 use Filament\Resources\Pages\ListRecords;
 
 class ListCommissionRateHistories extends ListRecords

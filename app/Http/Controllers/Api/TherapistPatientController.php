@@ -13,6 +13,7 @@ class TherapistPatientController extends Controller
     public function index(Request $request): JsonResponse
     {
         $patients = $request->user()->activePatients()->get();
+
         return ApiResponse::success($patients);
     }
 
@@ -22,7 +23,7 @@ class TherapistPatientController extends Controller
             ->where('children.id', $child->id)
             ->exists();
 
-        if (!$isPatient) {
+        if (! $isPatient) {
             return ApiResponse::error('Accès refusé.', 403);
         }
 

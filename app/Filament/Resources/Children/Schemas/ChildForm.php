@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Children\Schemas;
 
-use App\Models\User;
 use App\Enums\UserRole;
+use App\Models\User;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -37,7 +37,7 @@ class ChildForm
                             ->options(
                                 User::where('role', UserRole::Parent)
                                     ->get()
-                                    ->mapWithKeys(fn($u) => [$u->id => "{$u->first_name} {$u->last_name}"])
+                                    ->mapWithKeys(fn ($u) => [$u->id => "{$u->first_name} {$u->last_name}"])
                             )
                             ->searchable()
                             ->required(),
@@ -50,11 +50,11 @@ class ChildForm
                             ->relationship(
                                 'therapists',
                                 'first_name',
-                                fn($query) => $query->where('role', UserRole::Therapist)
+                                fn ($query) => $query->where('role', UserRole::Therapist)
                             )
                             ->multiple()
                             ->preload()
-                            ->getOptionLabelFromRecordUsing(fn($record) => "{$record->first_name} {$record->last_name}")
+                            ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->first_name} {$record->last_name}")
                             ->columnSpanFull(),
                         Textarea::make('notes')
                             ->label('Notes')

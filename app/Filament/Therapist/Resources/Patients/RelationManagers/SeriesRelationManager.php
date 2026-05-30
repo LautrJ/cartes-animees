@@ -9,12 +9,11 @@ use App\Notifications\SeriesUnlockedNotification;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Forms\Components\Select;
+use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
-use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Notifications\Notification;
 
 class SeriesRelationManager extends RelationManager
 {
@@ -38,15 +37,15 @@ class SeriesRelationManager extends RelationManager
                 TextColumn::make('pivot.status')
                     ->label('Statut')
                     ->badge()
-                    ->color(fn($state) => match($state) {
+                    ->color(fn ($state) => match ($state) {
                         'completed' => 'success',
-                        'unlocked'  => 'warning',
-                        default     => 'gray',
+                        'unlocked' => 'warning',
+                        default => 'gray',
                     })
-                    ->formatStateUsing(fn($state) => match($state) {
+                    ->formatStateUsing(fn ($state) => match ($state) {
                         'completed' => 'Complétée',
-                        'unlocked'  => 'En cours',
-                        default     => $state,
+                        'unlocked' => 'En cours',
+                        default => $state,
                     }),
                 TextColumn::make('pivot.unlocked_at')
                     ->label('Débloquée le')
@@ -76,7 +75,7 @@ class SeriesRelationManager extends RelationManager
                                         ->active()
                                         ->whereNotIn('id', $unlockedIds)
                                         ->get()
-                                        ->mapWithKeys(fn($s) => [$s->id => $s->name['fr'] ?? '-'])
+                                        ->mapWithKeys(fn ($s) => [$s->id => $s->name['fr'] ?? '-'])
                                 )
                                 ->required()
                                 ->searchable(),
@@ -85,12 +84,12 @@ class SeriesRelationManager extends RelationManager
                     ->modalHeading('Débloquer une série')
                     ->modalSubmitActionLabel('Débloquer')
                     ->action(function (array $data) {
-                        $child  = $this->getOwnerRecord();
+                        $child = $this->getOwnerRecord();
                         $series = Series::findOrFail($data['series_id']);
 
                         $child->series()->attach($series->id, [
                             'unlocked_by' => auth()->id(),
-                            'status'      => ChildSeriesStatus::Unlocked,
+                            'status' => ChildSeriesStatus::Unlocked,
                             'unlocked_at' => now(),
                         ]);
 
@@ -107,7 +106,7 @@ class SeriesRelationManager extends RelationManager
                     ->label('Marquer complétée')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
-                    ->visible(fn($record) => $record->pivot->status === ChildSeriesStatus::Unlocked->value)
+                    ->visible(fn ($record) => $record->pivot->status === ChildSeriesStatus::Unlocked->value)
                     ->requiresConfirmation()
                     ->modalHeading('Marquer cette série comme complétée ?')
                     ->modalSubmitActionLabel('Confirmer')
@@ -115,7 +114,7 @@ class SeriesRelationManager extends RelationManager
                         $child = $this->getOwnerRecord();
 
                         $child->series()->updateExistingPivot($record->id, [
-                            'status'       => ChildSeriesStatus::Completed,
+                            'status' => ChildSeriesStatus::Completed,
                             'completed_at' => now(),
                         ]);
 
@@ -131,7 +130,7 @@ class SeriesRelationManager extends RelationManager
                     ->label('Retirer')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
-                    ->visible(fn($record) => !$record->is_base)
+                    ->visible(fn ($record) => ! $record->is_base)
                     ->requiresConfirmation()
                     ->modalHeading('Retirer cette série ?')
                     ->modalDescription('L\'enfant n\'aura plus accès à cette série.')

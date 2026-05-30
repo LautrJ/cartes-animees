@@ -7,7 +7,6 @@ use App\Models\Child;
 use App\Models\Subscription;
 use App\Models\SubscriptionPriceHistory;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use Stripe\StripeClient;
 
 class StripeTestDataService
@@ -83,23 +82,23 @@ class StripeTestDataService
         $this->stripeService->attachPaymentMethod($customerId, $pmId);
 
         $stripeSub = $this->stripe->subscriptions->create([
-            'customer'         => $customerId,
-            'items'            => [['price' => $priceId]],
+            'customer' => $customerId,
+            'items' => [['price' => $priceId]],
             'default_payment_method' => $pmId,
         ]);
 
         $periodStart = now()->subDays(rand(5, 25))->startOfDay();
-        $periodEnd   = $periodStart->copy()->addMonth();
+        $periodEnd = $periodStart->copy()->addMonth();
 
         Subscription::create([
-            'child_id'               => $child->id,
+            'child_id' => $child->id,
             'stripe_subscription_id' => $stripeSub->id,
-            'stripe_price_id'        => $priceId,
-            'status'                 => SubscriptionStatus::Active,
-            'override_price'         => null,
-            'overridden_by'          => null,
-            'current_period_start'   => $periodStart,
-            'current_period_end'     => $periodEnd,
+            'stripe_price_id' => $priceId,
+            'status' => SubscriptionStatus::Active,
+            'override_price' => null,
+            'overridden_by' => null,
+            'current_period_start' => $periodStart,
+            'current_period_end' => $periodEnd,
         ]);
     }
 
@@ -116,25 +115,25 @@ class StripeTestDataService
         $this->stripeService->attachPaymentMethod($customerId, $pmId);
 
         $stripeSub = $this->stripe->subscriptions->create([
-            'customer'               => $customerId,
-            'items'                  => [['price' => $priceId]],
+            'customer' => $customerId,
+            'items' => [['price' => $priceId]],
             'default_payment_method' => $pmId,
         ]);
 
         $periodStart = now()->subDays(rand(5, 25))->startOfDay();
-        $periodEnd   = $periodStart->copy()->addMonth();
+        $periodEnd = $periodStart->copy()->addMonth();
 
         // Statut forcé en BDD pour la démo — past_due réel nécessiterait
         // un vrai cycle de renouvellement échoué via webhook Stripe
         Subscription::create([
-            'child_id'               => $child->id,
+            'child_id' => $child->id,
             'stripe_subscription_id' => $stripeSub->id,
-            'stripe_price_id'        => $priceId,
-            'status'                 => SubscriptionStatus::PastDue,
-            'override_price'         => null,
-            'overridden_by'          => null,
-            'current_period_start'   => $periodStart,
-            'current_period_end'     => $periodEnd,
+            'stripe_price_id' => $priceId,
+            'status' => SubscriptionStatus::PastDue,
+            'override_price' => null,
+            'overridden_by' => null,
+            'current_period_start' => $periodStart,
+            'current_period_end' => $periodEnd,
         ]);
     }
 
@@ -143,7 +142,7 @@ class StripeTestDataService
         $customerId = $parent->stripe_customer_id
             ?? $this->stripeService->createCustomer($parent->email, $parent->getFilamentName());
 
-        if (!$parent->stripe_customer_id) {
+        if (! $parent->stripe_customer_id) {
             $parent->update(['stripe_customer_id' => $customerId]);
         }
 
@@ -151,43 +150,43 @@ class StripeTestDataService
         $this->stripeService->attachPaymentMethod($customerId, $pmId);
 
         $stripeSub = $this->stripe->subscriptions->create([
-            'customer'               => $customerId,
-            'items'                  => [['price' => $priceId]],
+            'customer' => $customerId,
+            'items' => [['price' => $priceId]],
             'default_payment_method' => $pmId,
         ]);
 
         $this->stripeService->cancelSubscription($stripeSub->id);
 
         $periodStart = now()->subDays(rand(5, 25))->startOfDay();
-        $periodEnd   = $periodStart->copy()->addMonth();
+        $periodEnd = $periodStart->copy()->addMonth();
 
         Subscription::create([
-            'child_id'               => $child->id,
+            'child_id' => $child->id,
             'stripe_subscription_id' => $stripeSub->id,
-            'stripe_price_id'        => $priceId,
-            'status'                 => SubscriptionStatus::Canceled,
-            'override_price'         => null,
-            'overridden_by'          => null,
-            'current_period_start'   => $periodStart,
-            'current_period_end'     => $periodEnd,
-            'canceled_at'            => now(),
+            'stripe_price_id' => $priceId,
+            'status' => SubscriptionStatus::Canceled,
+            'override_price' => null,
+            'overridden_by' => null,
+            'current_period_start' => $periodStart,
+            'current_period_end' => $periodEnd,
+            'canceled_at' => now(),
         ]);
     }
 
     public function createFreeSubscription(Child $child, User $admin): void
     {
         $periodStart = now()->subDays(rand(5, 25))->startOfDay();
-        $periodEnd   = $periodStart->copy()->addMonth();
+        $periodEnd = $periodStart->copy()->addMonth();
 
         Subscription::create([
-            'child_id'               => $child->id,
+            'child_id' => $child->id,
             'stripe_subscription_id' => null,
-            'stripe_price_id'        => null,
-            'status'                 => SubscriptionStatus::Free,
-            'override_price'         => 0.00,
-            'overridden_by'          => $admin->id,
-            'current_period_start'   => $periodStart,
-            'current_period_end'     => $periodEnd,
+            'stripe_price_id' => null,
+            'status' => SubscriptionStatus::Free,
+            'override_price' => 0.00,
+            'overridden_by' => $admin->id,
+            'current_period_start' => $periodStart,
+            'current_period_end' => $periodEnd,
         ]);
     }
 
@@ -211,17 +210,17 @@ class StripeTestDataService
     {
         $price = $this->stripe->prices->create([
             'unit_amount' => (int) ($amount * 100),
-            'currency'    => 'eur',
-            'recurring'   => ['interval' => 'month'],
-            'product'     => $productId,
-            'nickname'    => 'Commission variable pour les orthophonistes'
+            'currency' => 'eur',
+            'recurring' => ['interval' => 'month'],
+            'product' => $productId,
+            'nickname' => 'Commission variable pour les orthophonistes',
         ]);
 
         SubscriptionPriceHistory::create([
-            'price'          => $amount,
-            'stripe_price_id'=> $price->id,
+            'price' => $amount,
+            'stripe_price_id' => $price->id,
             'effective_from' => now(),
-            'created_by'     => $admin->id,
+            'created_by' => $admin->id,
         ]);
 
         return $price->id;
@@ -229,13 +228,13 @@ class StripeTestDataService
 
     private function writeEnv(string $key, string $value): void
     {
-        $path    = base_path('.env');
+        $path = base_path('.env');
         $content = file_get_contents($path);
 
         if (preg_match("/^{$key}=.*/m", $content)) {
             $content = preg_replace("/^{$key}=.*/m", "{$key}={$value}", $content);
         } else {
-            $content .= PHP_EOL . "{$key}={$value}";
+            $content .= PHP_EOL."{$key}={$value}";
         }
 
         file_put_contents($path, $content);

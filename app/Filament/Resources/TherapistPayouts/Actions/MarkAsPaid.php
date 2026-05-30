@@ -19,7 +19,7 @@ class MarkAsPaid extends Action
         $this->label('Marquer comme payé')
             ->color('success')
             ->icon('heroicon-o-check-circle')
-            ->visible(fn($record) => is_null($record->paid_at))
+            ->visible(fn ($record) => is_null($record->paid_at))
             ->requiresConfirmation()
             ->modalHeading('Confirmer le paiement')
             ->modalDescription('Confirmer que ce virement a bien été effectué ?')

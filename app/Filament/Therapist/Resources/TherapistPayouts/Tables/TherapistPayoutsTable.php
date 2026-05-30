@@ -17,19 +17,19 @@ class TherapistPayoutsTable
             ->columns([
                 TextColumn::make('amount')
                     ->label('Montant')
-                    ->getStateUsing(fn($record) => number_format($record->amount, 2) . ' €'),
+                    ->getStateUsing(fn ($record) => number_format($record->amount, 2).' €'),
                 TextColumn::make('patient_count')
                     ->label('Patients'),
                 TextColumn::make('commission_rate')
                     ->label('Taux')
-                    ->getStateUsing(fn($record) => $record->commission_rate . ' €/patient'),
+                    ->getStateUsing(fn ($record) => $record->commission_rate.' €/patient'),
                 TextColumn::make('period_start')
                     ->label('Période')
-                    ->getStateUsing(fn($record) => $record->period_start->format('d/m/Y') . ' → ' . $record->period_end->format('d/m/Y')),
+                    ->getStateUsing(fn ($record) => $record->period_start->format('d/m/Y').' → '.$record->period_end->format('d/m/Y')),
                 IconColumn::make('paid_at')
                     ->label('Payé')
                     ->boolean()
-                    ->getStateUsing(fn($record) => !is_null($record->paid_at)),
+                    ->getStateUsing(fn ($record) => ! is_null($record->paid_at)),
                 TextColumn::make('paid_at')
                     ->label('Payé le')
                     ->dateTime('d/m/Y')
@@ -38,7 +38,7 @@ class TherapistPayoutsTable
             ->filters([
                 Filter::make('pending')
                     ->label('En attente')
-                    ->query(fn($query) => $query->whereNull('paid_at'))
+                    ->query(fn ($query) => $query->whereNull('paid_at'))
                     ->default(),
             ])
             ->recordActions([

@@ -30,10 +30,10 @@ class UserInfolist
                         TextEntry::make('role')
                             ->label('Rôle')
                             ->badge()
-                            ->color(fn(UserRole $state) => match($state) {
-                                UserRole::Admin     => 'danger',
+                            ->color(fn (UserRole $state) => match ($state) {
+                                UserRole::Admin => 'danger',
                                 UserRole::Therapist => 'warning',
-                                UserRole::Parent    => 'success',
+                                UserRole::Parent => 'success',
                             }),
                     ]),
 

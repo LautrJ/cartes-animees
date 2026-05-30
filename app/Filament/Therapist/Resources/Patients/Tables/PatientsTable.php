@@ -2,10 +2,6 @@
 
 namespace App\Filament\Therapist\Resources\Patients\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
@@ -19,8 +15,8 @@ class PatientsTable
             ->columns([
                 TextColumn::make('full_name')
                     ->label('Nom complet')
-                    ->getStateUsing(fn($record) => "{$record->first_name} {$record->last_name}")
-                    ->searchable(query: fn($query, $search) => $query
+                    ->getStateUsing(fn ($record) => "{$record->first_name} {$record->last_name}")
+                    ->searchable(query: fn ($query, $search) => $query
                         ->where('first_name', 'like', "%{$search}%")
                         ->orWhere('last_name', 'like', "%{$search}%")
                     ),
@@ -30,10 +26,10 @@ class PatientsTable
                     ->placeholder('-'),
                 TextColumn::make('parent.first_name')
                     ->label('Parent')
-                    ->getStateUsing(fn($record) => "{$record->parent->first_name} {$record->parent->last_name}"),
+                    ->getStateUsing(fn ($record) => "{$record->parent->first_name} {$record->parent->last_name}"),
                 TextColumn::make('series_count')
                     ->label('Séries débloquées')
-                    ->getStateUsing(fn($record) => $record->series()->count()),
+                    ->getStateUsing(fn ($record) => $record->series()->count()),
                 TextColumn::make('created_at')
                     ->label('Suivi depuis')
                     ->dateTime('d/m/Y')

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
 use App\Models\User;
-use App\Enums\UserRole;
 use App\Notifications\WelcomeParentNotification;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;
@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password as PasswordRule;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -22,20 +21,20 @@ class AuthController extends Controller
     {
         $validated = $request->validate([
             'first_name' => ['required', 'string', 'max:100'],
-            'last_name'  => ['required', 'string', 'max:100'],
-            'email'      => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password'   => ['required', 'confirmed', PasswordRule::min(8)],
-            'phone'      => ['nullable', 'string', 'max:20'],
+            'last_name' => ['required', 'string', 'max:100'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'confirmed', PasswordRule::min(8)],
+            'phone' => ['nullable', 'string', 'max:20'],
         ]);
 
         $user = User::create([
-            'role'       => UserRole::Parent,
+            'role' => UserRole::Parent,
             'first_name' => $validated['first_name'],
-            'last_name'  => $validated['last_name'],
-            'email'      => $validated['email'],
-            'password'   => $validated['password'],
-            'phone'      => $validated['phone'] ?? null,
-            'is_active'  => true,
+            'last_name' => $validated['last_name'],
+            'email' => $validated['email'],
+            'password' => $validated['password'],
+            'phone' => $validated['phone'] ?? null,
+            'is_active' => true,
         ]);
 
         $user->notify(new WelcomeParentNotification(
@@ -50,17 +49,17 @@ class AuthController extends Controller
     public function login(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'email'    => ['required', 'email'],
+            'email' => ['required', 'email'],
             'password' => ['required', 'string'],
         ]);
 
         $user = User::where('email', $validated['email'])->first();
 
-        if (!$user || !Hash::check($validated['password'], $user->password)) {
+        if (! $user || ! Hash::check($validated['password'], $user->password)) {
             return ApiResponse::error('Identifiants invalides.', 401);
         }
 
-        if (!$user->is_active) {
+        if (! $user->is_active) {
             return ApiResponse::error('Votre compte est désactivé.', 403);
         }
 
@@ -93,7 +92,7 @@ class AuthController extends Controller
             $request->only('email'),
             function ($user, $token) {
                 // URL vers le frontend Vue.js (à adapter)
-                $url = config('app.frontend_url') . '/reset-password?token=' . $token . '&email=' . urlencode($user->email);
+                $url = config('app.frontend_url').'/reset-password?token='.$token.'&email='.urlencode($user->email);
 
                 $user->sendPasswordResetNotification($token);
             }
@@ -105,8 +104,8 @@ class AuthController extends Controller
     public function resetPassword(Request $request): JsonResponse
     {
         $request->validate([
-            'token'    => ['required'],
-            'email'    => ['required', 'email'],
+            'token' => ['required'],
+            'email' => ['required', 'email'],
             'password' => ['required', 'confirmed', PasswordRule::min(8)],
         ]);
 

@@ -19,7 +19,7 @@ class PaymentInfosTable
                     ->label('BIC'),
                 TextColumn::make('iban')
                     ->label('IBAN')
-                    ->getStateUsing(fn($record) => '•••• •••• •••• ' . substr($record->iban, -4)),
+                    ->getStateUsing(fn ($record) => '•••• •••• •••• '.substr($record->iban, -4)),
                 TextColumn::make('updated_at')
                     ->label('Mis à jour le')
                     ->dateTime('d/m/Y')

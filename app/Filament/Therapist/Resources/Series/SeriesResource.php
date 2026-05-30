@@ -3,7 +3,6 @@
 namespace App\Filament\Therapist\Resources\Series;
 
 use App\Filament\Therapist\Resources\Series\Pages\CreateSeries;
-use App\Filament\Therapist\Resources\Series\Pages\EditSeries;
 use App\Filament\Therapist\Resources\Series\Pages\ListSeries;
 use App\Filament\Therapist\Resources\Series\Pages\ViewSeries;
 use App\Filament\Therapist\Resources\Series\Schemas\SeriesForm;
@@ -30,9 +29,10 @@ class SeriesResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-
     protected static ?string $navigationLabel = 'Séries';
+
     protected static ?string $modelLabel = 'Série';
+
     protected static ?string $pluralModelLabel = 'Séries';
 
     public static function form(Schema $schema): Schema

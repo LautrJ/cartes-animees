@@ -2,8 +2,6 @@
 
 namespace App\Filament\Resources\TherapistPayouts;
 
-use App\Filament\Resources\TherapistPayouts\Pages\CreateTherapistPayout;
-use App\Filament\Resources\TherapistPayouts\Pages\EditTherapistPayout;
 use App\Filament\Resources\TherapistPayouts\Pages\ListTherapistPayouts;
 use App\Filament\Resources\TherapistPayouts\Pages\ViewTherapistPayout;
 use App\Filament\Resources\TherapistPayouts\Schemas\TherapistPayoutForm;
@@ -30,9 +28,10 @@ class TherapistPayoutResource extends Resource
 
     protected static ?int $navigationSort = 5;
 
-
     protected static ?string $navigationLabel = 'Paies Orthophonistes';
+
     protected static ?string $modelLabel = 'Paie Orthophoniste';
+
     protected static ?string $pluralModelLabel = 'Paies Orthophonistes';
 
     public static function form(Schema $schema): Schema

@@ -17,9 +17,9 @@ class SettingObserver
     public function updated(Setting $setting): void
     {
         match ($setting->key) {
-            'commission_rate'    => $this->handleCommissionRateChange($setting),
+            'commission_rate' => $this->handleCommissionRateChange($setting),
             'subscription_price' => $this->handleSubscriptionPriceChange($setting),
-            default              => null,
+            default => null,
         };
     }
 
@@ -28,9 +28,9 @@ class SettingObserver
         $adminId = Auth::id() ?? User::where('role', 'admin')->first()?->id;
 
         CommissionRateHistory::create([
-            'rate'           => $setting->value,
+            'rate' => $setting->value,
             'effective_from' => now(),
-            'created_by'     => $adminId,
+            'created_by' => $adminId,
         ]);
     }
 
@@ -42,13 +42,13 @@ class SettingObserver
             $stripePriceId = $this->stripeService->createPrice((float) $setting->value);
 
             SubscriptionPriceHistory::create([
-                'price'          => $setting->value,
+                'price' => $setting->value,
                 'stripe_price_id' => $stripePriceId,
                 'effective_from' => now(),
-                'created_by'     => $adminId,
+                'created_by' => $adminId,
             ]);
         } catch (\Exception $e) {
-            Log::error('Erreur création Price Stripe : ' . $e->getMessage());
+            Log::error('Erreur création Price Stripe : '.$e->getMessage());
         }
     }
 }

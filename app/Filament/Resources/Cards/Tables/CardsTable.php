@@ -22,11 +22,11 @@ class CardsTable
             ->columns([
                 TextColumn::make('name')
                     ->label('Nom')
-                    ->getStateUsing(fn($record) => $record->name['fr'] ?? '-')
+                    ->getStateUsing(fn ($record) => $record->name['fr'] ?? '-')
                     ->searchable(),
                 TextColumn::make('creator.first_name')
                     ->label('Créé par')
-                    ->getStateUsing(fn($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
+                    ->getStateUsing(fn ($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
                 TextColumn::make('duration')
                     ->label('Durée')
                     ->suffix(' sec')
@@ -46,7 +46,7 @@ class CardsTable
             ->filters([
                 Filter::make('is_validated')
                     ->label('Validées')
-                    ->query(fn($query) => $query->where('is_validated', true)),
+                    ->query(fn ($query) => $query->where('is_validated', true)),
                 TrashedFilter::make(),
             ])
             ->recordActions([

@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -39,7 +38,7 @@ class PaymentFailedNotification extends Notification
             ->error()
             ->line("Le renouvellement de l'abonnement de **{$this->childFirstName}** a échoué.")
             ->line('L\'accès aux séries payantes a été suspendu temporairement.')
-            ->action('Mettre à jour mes informations de paiement', config('app.frontend_url') . '/subscription')
+            ->action('Mettre à jour mes informations de paiement', config('app.frontend_url').'/subscription')
             ->line('L\'accès sera automatiquement restauré après régularisation du paiement.');
     }
 }

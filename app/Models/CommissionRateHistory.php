@@ -19,7 +19,7 @@ class CommissionRateHistory extends Model
     protected function casts(): array
     {
         return [
-            'rate'           => 'decimal:2',
+            'rate' => 'decimal:2',
             'effective_from' => 'datetime',
         ];
     }

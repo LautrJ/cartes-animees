@@ -8,7 +8,6 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use App\Models\Card;
 
 class SeriesForm
 {
@@ -41,7 +40,7 @@ class SeriesForm
                         Select::make('cards')
                             ->label('Cartes à inclure')
                             ->relationship('cards', 'id')
-                            ->getOptionLabelFromRecordUsing(fn($record) => $record->name['fr'] ?? '-')
+                            ->getOptionLabelFromRecordUsing(fn ($record) => $record->name['fr'] ?? '-')
                             ->multiple()
                             ->preload()
                             ->searchable(),

@@ -24,12 +24,12 @@ class CreateUser extends CreateRecord
             ]);
 
             $token = Password::createToken($user);
-            $resetUrl = config('app.frontend_url') . '/reset-password?token=' . $token . '&email=' . urlencode($user->email);
+            $resetUrl = config('app.frontend_url').'/reset-password?token='.$token.'&email='.urlencode($user->email);
 
             $user->notify(new WelcomeTherapistNotification(
-                firstName:      $user->first_name,
+                firstName: $user->first_name,
                 invitationCode: $user->invitation_code,
-                resetUrl:       $resetUrl,
+                resetUrl: $resetUrl,
             ));
         }
 

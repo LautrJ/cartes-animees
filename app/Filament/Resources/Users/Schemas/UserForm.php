@@ -48,8 +48,8 @@ class UserForm
                         TextInput::make('password')
                             ->label('Mot de passe')
                             ->password()
-                            ->required(fn(string $operation) => $operation === 'create')
-                            ->dehydrated(fn($state) => filled($state))
+                            ->required(fn (string $operation) => $operation === 'create')
+                            ->dehydrated(fn ($state) => filled($state))
                             ->confirmed()
                             ->minLength(8),
                         TextInput::make('password_confirmation')

@@ -11,7 +11,6 @@ use App\Services\StripeTestDataService;
 use Database\Seeders\TestDataSeeder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AppInit extends Command
@@ -20,14 +19,16 @@ class AppInit extends Command
 
     protected $description = 'Initialise l\'application : reset BDD, setup Stripe, création admin';
 
-    public function __construct(protected StripeTestDataService $stripeTestData) {
+    public function __construct(protected StripeTestDataService $stripeTestData)
+    {
         parent::__construct();
     }
 
     public function handle(): int
     {
-        if (!$this->confirm('⚠️  Cette commande va effacer toutes les données existantes. Continuer ?', false)) {
+        if (! $this->confirm('⚠️  Cette commande va effacer toutes les données existantes. Continuer ?', false)) {
             $this->info('Annulé.');
+
             return self::SUCCESS;
         }
 
@@ -61,21 +62,22 @@ class AppInit extends Command
         // 4. Création du compte admin
         // ----------------------------------------------------------------
         $this->info('👤 Création du compte administrateur...');
-        $adminEmail    = 'admin@cartes-animees.test';
+        $adminEmail = 'admin@cartes-animees.test';
         $adminPassword = $this->secret('Mot de passe administrateur');
 
-        if (!$adminPassword) {
+        if (! $adminPassword) {
             $this->error('Le mot de passe est obligatoire.');
+
             return self::FAILURE;
         }
 
         $admin = User::create([
-            'role'       => UserRole::Admin,
+            'role' => UserRole::Admin,
             'first_name' => 'Admin',
-            'last_name'  => 'Cartes Animées',
-            'email'      => $adminEmail,
-            'password'   => Hash::make($adminPassword),
-            'is_active'  => true,
+            'last_name' => 'Cartes Animées',
+            'email' => $adminEmail,
+            'password' => Hash::make($adminPassword),
+            'is_active' => true,
         ]);
 
         $this->info("✅ Admin créé : {$adminEmail}");
@@ -89,30 +91,30 @@ class AppInit extends Command
 
         Setting::insert([
             [
-                'key'         => 'commission_rate',
-                'value'       => (string) $commissionRate,
-                'type'        => SettingType::Float->value,
-                'label'       => 'Taux de commission',
+                'key' => 'commission_rate',
+                'value' => (string) $commissionRate,
+                'type' => SettingType::Float->value,
+                'label' => 'Taux de commission',
                 'description' => 'Montant en euros versé à l\'orthophoniste par patient actif par mois.',
-                'created_at'  => now(),
-                'updated_at'  => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-                'key'         => 'subscription_price',
-                'value'       => (string) $subscriptionPrice,
-                'type'        => SettingType::Float->value,
-                'label'       => 'Prix de l\'abonnement',
+                'key' => 'subscription_price',
+                'value' => (string) $subscriptionPrice,
+                'type' => SettingType::Float->value,
+                'label' => 'Prix de l\'abonnement',
                 'description' => 'Prix mensuel de l\'abonnement en euros.',
-                'created_at'  => now(),
-                'updated_at'  => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
 
         // Première ligne CommissionRateHistory
         CommissionRateHistory::create([
-            'rate'           => $commissionRate,
+            'rate' => $commissionRate,
             'effective_from' => now(),
-            'created_by'     => $admin->id,
+            'created_by' => $admin->id,
         ]);
 
         $this->info('✅ Paramètres initialisés.');
@@ -138,8 +140,8 @@ class AppInit extends Command
             ['Paramètre', 'Valeur'],
             [
                 ['Admin',              $adminEmail],
-                ['Prix abonnement',    $subscriptionPrice . ' €/mois'],
-                ['Taux commission',    $commissionRate . ' €/patient/mois'],
+                ['Prix abonnement',    $subscriptionPrice.' €/mois'],
+                ['Taux commission',    $commissionRate.' €/patient/mois'],
                 ['Stripe Product ID',  $productId],
                 ['Stripe Price ID',    $priceId],
             ]

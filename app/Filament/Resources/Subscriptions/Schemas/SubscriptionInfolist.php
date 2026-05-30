@@ -19,10 +19,10 @@ class SubscriptionInfolist
                     ->schema([
                         TextEntry::make('child.first_name')
                             ->label('Enfant')
-                            ->getStateUsing(fn($record) => "{$record->child->first_name} {$record->child->last_name}"),
+                            ->getStateUsing(fn ($record) => "{$record->child->first_name} {$record->child->last_name}"),
                         TextEntry::make('child.parent.first_name')
                             ->label('Parent')
-                            ->getStateUsing(fn($record) => "{$record->child->parent->first_name} {$record->child->parent->last_name}"),
+                            ->getStateUsing(fn ($record) => "{$record->child->parent->first_name} {$record->child->parent->last_name}"),
                     ]),
 
                 Section::make('Abonnement')
@@ -31,18 +31,18 @@ class SubscriptionInfolist
                         TextEntry::make('status')
                             ->label('Statut')
                             ->badge()
-                            ->color(fn(SubscriptionStatus $state) => match($state) {
-                                SubscriptionStatus::Active   => 'success',
-                                SubscriptionStatus::PastDue  => 'danger',
+                            ->color(fn (SubscriptionStatus $state) => match ($state) {
+                                SubscriptionStatus::Active => 'success',
+                                SubscriptionStatus::PastDue => 'danger',
                                 SubscriptionStatus::Canceled => 'gray',
-                                SubscriptionStatus::Free     => 'info',
+                                SubscriptionStatus::Free => 'info',
                             }),
                         TextEntry::make('override_price')
                             ->label('Prix')
-                            ->getStateUsing(fn($record) => match(true) {
-                                $record->override_price === null        => 'Prix normal',
-                                (float)$record->override_price === 0.0 => 'Gratuit',
-                                default => number_format($record->override_price, 2) . ' €',
+                            ->getStateUsing(fn ($record) => match (true) {
+                                $record->override_price === null => 'Prix normal',
+                                (float) $record->override_price === 0.0 => 'Gratuit',
+                                default => number_format($record->override_price, 2).' €',
                             }),
                         TextEntry::make('stripe_subscription_id')
                             ->label('ID Stripe')
@@ -60,7 +60,7 @@ class SubscriptionInfolist
                             ->placeholder('-'),
                         TextEntry::make('overriddenBy.first_name')
                             ->label('Remise appliquée par')
-                            ->getStateUsing(fn($record) => $record->overriddenBy
+                            ->getStateUsing(fn ($record) => $record->overriddenBy
                                 ? "{$record->overriddenBy->first_name} {$record->overriddenBy->last_name}"
                                 : '-'
                             ),

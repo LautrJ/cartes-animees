@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\TherapistPaymentInfos\Pages;
 
 use App\Filament\Resources\TherapistPaymentInfos\TherapistPaymentInfoResource;
-use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewTherapistPaymentInfo extends ViewRecord

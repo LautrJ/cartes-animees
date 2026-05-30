@@ -3,7 +3,6 @@
 namespace App\Filament\Therapist\Resources\Cards;
 
 use App\Filament\Therapist\Resources\Cards\Pages\CreateCard;
-use App\Filament\Therapist\Resources\Cards\Pages\EditCard;
 use App\Filament\Therapist\Resources\Cards\Pages\ListCards;
 use App\Filament\Therapist\Resources\Cards\Pages\ViewCard;
 use App\Filament\Therapist\Resources\Cards\Schemas\CardForm;
@@ -30,9 +29,10 @@ class CardResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-
     protected static ?string $navigationLabel = 'Animations';
+
     protected static ?string $modelLabel = 'Animation';
+
     protected static ?string $pluralModelLabel = 'Animations';
 
     public static function form(Schema $schema): Schema

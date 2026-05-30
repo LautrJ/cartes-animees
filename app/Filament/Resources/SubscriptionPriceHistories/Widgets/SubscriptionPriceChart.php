@@ -10,6 +10,7 @@ class SubscriptionPriceChart extends ChartWidget
     protected ?string $heading = 'Évolution du prix d\'abonnement';
 
     protected int|string|array $columnSpan = 'full';
+
     protected ?string $maxHeight = '300px';
 
     protected function getData(): array
@@ -19,15 +20,15 @@ class SubscriptionPriceChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label'           => 'Prix (€/mois)',
-                    'data'            => $history->pluck('price')->toArray(),
-                    'borderColor'     => '#a896d8',
+                    'label' => 'Prix (€/mois)',
+                    'data' => $history->pluck('price')->toArray(),
+                    'borderColor' => '#a896d8',
                     'backgroundColor' => 'rgba(193, 175, 228, 0.1)',
-                    'fill'            => true,
-                    'tension'         => 0.3,
+                    'fill' => true,
+                    'tension' => 0.3,
                 ],
             ],
-            'labels' => $history->map(fn($h) => $h->effective_from->format('d/m/Y'))->toArray(),
+            'labels' => $history->map(fn ($h) => $h->effective_from->format('d/m/Y'))->toArray(),
         ];
     }
 

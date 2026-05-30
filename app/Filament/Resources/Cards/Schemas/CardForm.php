@@ -2,10 +2,7 @@
 
 namespace App\Filament\Resources\Cards\Schemas;
 
-use App\Enums\UserRole;
-use App\Models\User;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;

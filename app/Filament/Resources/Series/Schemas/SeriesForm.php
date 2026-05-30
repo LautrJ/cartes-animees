@@ -5,10 +5,10 @@ namespace App\Filament\Resources\Series\Schemas;
 use App\Enums\UserRole;
 use App\Models\User;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -35,7 +35,7 @@ class SeriesForm
                             ->options(
                                 User::whereIn('role', [UserRole::Admin, UserRole::Therapist])
                                     ->get()
-                                    ->mapWithKeys(fn($u) => [$u->id => "{$u->first_name} {$u->last_name}"])
+                                    ->mapWithKeys(fn ($u) => [$u->id => "{$u->first_name} {$u->last_name}"])
                             )
                             ->searchable()
                             ->required()

@@ -4,7 +4,6 @@ namespace App\Filament\Resources\SubscriptionPriceHistories\Pages;
 
 use App\Filament\Resources\SubscriptionPriceHistories\SubscriptionPriceHistoryResource;
 use App\Filament\Resources\SubscriptionPriceHistories\Widgets\SubscriptionPriceChart;
-use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListSubscriptionPriceHistories extends ListRecords
@@ -22,5 +21,4 @@ class ListSubscriptionPriceHistories extends ListRecords
             SubscriptionPriceChart::class,
         ];
     }
-
 }

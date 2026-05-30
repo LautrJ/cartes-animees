@@ -54,9 +54,9 @@ return [
 
         'stripe' => [
             'driver' => 'daily',
-            'path'   => storage_path('logs/stripe.log'),
-            'level'  => 'debug',
-            'days'   => 30,
+            'path' => storage_path('logs/stripe.log'),
+            'level' => 'debug',
+            'days' => 30,
         ],
 
         'stack' => [

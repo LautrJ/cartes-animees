@@ -10,17 +10,17 @@ use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Log;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-
 
 class User extends Authenticatable implements FilamentUser, HasName
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, SoftDeletes, HasApiTokens;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'role',
@@ -43,11 +43,11 @@ class User extends Authenticatable implements FilamentUser, HasName
     protected function casts(): array
     {
         return [
-            'role'              => UserRole::class,
-            'is_active'         => 'boolean',
+            'role' => UserRole::class,
+            'is_active' => 'boolean',
             'email_verified_at' => 'datetime',
-            'password'          => 'hashed',
-            'last_login_at'     => 'datetime',
+            'password' => 'hashed',
+            'last_login_at' => 'datetime',
         ];
     }
 
@@ -95,21 +95,32 @@ class User extends Authenticatable implements FilamentUser, HasName
     }
 
     // Helpers
-    public function isAdmin(): bool     { return $this->role === UserRole::Admin; }
-    public function isTherapist(): bool { return $this->role === UserRole::Therapist; }
-    public function isParent(): bool    { return $this->role === UserRole::Parent; }
+    public function isAdmin(): bool
+    {
+        return $this->role === UserRole::Admin;
+    }
+
+    public function isTherapist(): bool
+    {
+        return $this->role === UserRole::Therapist;
+    }
+
+    public function isParent(): bool
+    {
+        return $this->role === UserRole::Parent;
+    }
 
     public function sendPasswordResetNotification($token): void
     {
-        $url = config('app.frontend_url') . '/reset-password?token=' . $token . '&email=' . urlencode($this->email);
+        $url = config('app.frontend_url').'/reset-password?token='.$token.'&email='.urlencode($this->email);
 
-        \Illuminate\Support\Facades\Log::info('Password reset link: ' . $url);
+        Log::info('Password reset link: '.$url);
     }
 
     // Filament
     public function canAccessPanel(Panel $panel): bool
     {
-        return match($panel->getId()) {
+        return match ($panel->getId()) {
             'admin' => $this->isAdmin(),
             'therapist' => $this->isTherapist() || $this->isAdmin(),
             default => false,
@@ -128,7 +139,7 @@ class User extends Authenticatable implements FilamentUser, HasName
 
     public function canBeImpersonated(): bool
     {
-        return !$this->isAdmin();
+        return ! $this->isAdmin();
     }
 
     public function scopeAdmins($query)

@@ -30,9 +30,10 @@ class CardResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-
     protected static ?string $navigationLabel = 'Animations';
+
     protected static ?string $modelLabel = 'Animation';
+
     protected static ?string $pluralModelLabel = 'Animations';
 
     public static function form(Schema $schema): Schema

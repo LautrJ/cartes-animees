@@ -9,6 +9,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Str;
+use Livewire\Component;
 
 class ProfileForm
 {
@@ -44,7 +45,7 @@ class ProfileForm
                         TextInput::make('password')
                             ->label('Nouveau mot de passe')
                             ->password()
-                            ->dehydrated(fn($state) => filled($state))
+                            ->dehydrated(fn ($state) => filled($state))
                             ->confirmed()
                             ->minLength(8),
                         TextInput::make('password_confirmation')
@@ -65,7 +66,7 @@ class ProfileForm
                                     ->requiresConfirmation()
                                     ->modalHeading('Régénérer le code ?')
                                     ->modalDescription('L\'ancien code ne fonctionnera plus.')
-                                    ->action(function ($record, \Livewire\Component $livewire) {
+                                    ->action(function ($record, Component $livewire) {
                                         $code = Str::upper(Str::random(8));
                                         $record->update(['invitation_code' => $code]);
 

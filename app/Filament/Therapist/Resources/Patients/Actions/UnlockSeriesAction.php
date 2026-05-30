@@ -35,7 +35,7 @@ class UnlockSeriesAction extends Action
                                 ->active()
                                 ->whereNotIn('id', $unlockedSeriesIds)
                                 ->get()
-                                ->mapWithKeys(fn($s) => [$s->id => $s->name['fr'] ?? '-'])
+                                ->mapWithKeys(fn ($s) => [$s->id => $s->name['fr'] ?? '-'])
                         )
                         ->required()
                         ->searchable(),
@@ -48,7 +48,7 @@ class UnlockSeriesAction extends Action
 
                 $record->series()->attach($series->id, [
                     'unlocked_by' => auth()->id(),
-                    'status'      => ChildSeriesStatus::Unlocked,
+                    'status' => ChildSeriesStatus::Unlocked,
                     'unlocked_at' => now(),
                 ]);
 

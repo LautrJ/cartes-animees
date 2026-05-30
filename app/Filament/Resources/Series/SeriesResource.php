@@ -30,9 +30,10 @@ class SeriesResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
-
     protected static ?string $navigationLabel = 'Séries';
+
     protected static ?string $modelLabel = 'Série';
+
     protected static ?string $pluralModelLabel = 'Séries';
 
     public static function form(Schema $schema): Schema

@@ -8,6 +8,7 @@ use App\Models\Invoice;
 use App\Models\Subscription;
 use App\Notifications\PaymentFailedNotification;
 use App\Notifications\PaymentSucceededNotification;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Stripe\Event;
 
@@ -16,12 +17,12 @@ class StripeWebhookHandler
     public function handle(Event $event): void
     {
         match ($event->type) {
-            'invoice.payment_succeeded'        => $this->handleInvoicePaymentSucceeded($event),
-            'invoice.payment_failed'           => $this->handleInvoicePaymentFailed($event),
-            'customer.subscription.deleted'    => $this->handleSubscriptionDeleted($event),
-            'customer.subscription.updated'    => $this->handleSubscriptionUpdated($event),
-            'invoice.finalized'                => $this->handleInvoiceFinalized($event),
-            default => Log::channel('stripe')->info('Event Stripe non géré : ' . $event->type),
+            'invoice.payment_succeeded' => $this->handleInvoicePaymentSucceeded($event),
+            'invoice.payment_failed' => $this->handleInvoicePaymentFailed($event),
+            'customer.subscription.deleted' => $this->handleSubscriptionDeleted($event),
+            'customer.subscription.updated' => $this->handleSubscriptionUpdated($event),
+            'invoice.finalized' => $this->handleInvoiceFinalized($event),
+            default => Log::channel('stripe')->info('Event Stripe non géré : '.$event->type),
         };
     }
 
@@ -31,10 +32,11 @@ class StripeWebhookHandler
 
         $subscription = Subscription::where('stripe_subscription_id', $stripeInvoice->subscription)->first();
 
-        if (!$subscription) {
+        if (! $subscription) {
             Log::channel('stripe')->warning('Subscription introuvable pour invoice.payment_succeeded', [
                 'stripe_subscription_id' => $stripeInvoice->subscription,
             ]);
+
             return;
         }
 
@@ -42,29 +44,29 @@ class StripeWebhookHandler
             ['stripe_invoice_id' => $stripeInvoice->id],
             [
                 'subscription_id' => $subscription->id,
-                'amount'          => $stripeInvoice->amount_paid / 100,
-                'status'          => InvoiceStatus::Paid,
-                'invoice_pdf'    => $stripeInvoice->invoice_pdf,
-                'period_start'    => now()->createFromTimestamp($stripeInvoice->period_start),
-                'period_end'      => now()->createFromTimestamp($stripeInvoice->period_end),
-                'paid_at'         => now(),
+                'amount' => $stripeInvoice->amount_paid / 100,
+                'status' => InvoiceStatus::Paid,
+                'invoice_pdf' => $stripeInvoice->invoice_pdf,
+                'period_start' => now()->createFromTimestamp($stripeInvoice->period_start),
+                'period_end' => now()->createFromTimestamp($stripeInvoice->period_end),
+                'paid_at' => now(),
             ]
         );
 
         $subscription->update([
             'status' => SubscriptionStatus::Active,
-            'current_period_start' => \Carbon\Carbon::createFromTimestamp($stripeInvoice->period_start),
-            'current_period_end'   => \Carbon\Carbon::createFromTimestamp($stripeInvoice->period_end),
+            'current_period_start' => Carbon::createFromTimestamp($stripeInvoice->period_start),
+            'current_period_end' => Carbon::createFromTimestamp($stripeInvoice->period_end),
         ]);
 
         $subscription->child->parent->notify(new PaymentSucceededNotification(
             childFirstName: $subscription->child->first_name,
-            amount:         $stripeInvoice->amount_paid / 100,
+            amount: $stripeInvoice->amount_paid / 100,
         ));
 
         Log::channel('stripe')->info('Facture payée', [
             'stripe_invoice_id' => $stripeInvoice->id,
-            'amount'            => $stripeInvoice->amount_paid / 100,
+            'amount' => $stripeInvoice->amount_paid / 100,
         ]);
     }
 
@@ -74,10 +76,11 @@ class StripeWebhookHandler
 
         $subscription = Subscription::where('stripe_subscription_id', $stripeInvoice->subscription)->first();
 
-        if (!$subscription) {
+        if (! $subscription) {
             Log::channel('stripe')->warning('Subscription introuvable pour invoice.payment_failed', [
                 'stripe_subscription_id' => $stripeInvoice->subscription,
             ]);
+
             return;
         }
 
@@ -85,11 +88,11 @@ class StripeWebhookHandler
             ['stripe_invoice_id' => $stripeInvoice->id],
             [
                 'subscription_id' => $subscription->id,
-                'amount'          => $stripeInvoice->amount_due / 100,
-                'status'          => InvoiceStatus::Open,
-                'period_start'    => now()->createFromTimestamp($stripeInvoice->period_start),
-                'period_end'      => now()->createFromTimestamp($stripeInvoice->period_end),
-                'paid_at'         => null,
+                'amount' => $stripeInvoice->amount_due / 100,
+                'status' => InvoiceStatus::Open,
+                'period_start' => now()->createFromTimestamp($stripeInvoice->period_start),
+                'period_end' => now()->createFromTimestamp($stripeInvoice->period_end),
+                'paid_at' => null,
             ]
         );
 
@@ -101,7 +104,7 @@ class StripeWebhookHandler
 
         Log::channel('stripe')->warning('Paiement échoué', [
             'stripe_invoice_id' => $stripeInvoice->id,
-            'subscription_id'   => $subscription->id,
+            'subscription_id' => $subscription->id,
         ]);
     }
 
@@ -111,15 +114,16 @@ class StripeWebhookHandler
 
         $subscription = Subscription::where('stripe_subscription_id', $stripeSubscription->id)->first();
 
-        if (!$subscription) {
+        if (! $subscription) {
             Log::channel('stripe')->warning('Subscription introuvable pour customer.subscription.deleted', [
                 'stripe_subscription_id' => $stripeSubscription->id,
             ]);
+
             return;
         }
 
         $subscription->update([
-            'status'      => SubscriptionStatus::Canceled,
+            'status' => SubscriptionStatus::Canceled,
             'canceled_at' => now(),
         ]);
 
@@ -134,23 +138,24 @@ class StripeWebhookHandler
 
         $subscription = Subscription::where('stripe_subscription_id', $stripeSubscription->id)->first();
 
-        if (!$subscription) {
+        if (! $subscription) {
             Log::channel('stripe')->warning('Subscription introuvable pour customer.subscription.updated', [
                 'stripe_subscription_id' => $stripeSubscription->id,
             ]);
+
             return;
         }
 
-        $stripeStatus = match($stripeSubscription->status) {
-            'active'   => SubscriptionStatus::Active,
+        $stripeStatus = match ($stripeSubscription->status) {
+            'active' => SubscriptionStatus::Active,
             'past_due' => SubscriptionStatus::PastDue,
             'canceled' => SubscriptionStatus::Canceled,
-            default    => null,
+            default => null,
         };
 
         $data = [
-            'current_period_start' => \Carbon\Carbon::createFromTimestamp($stripeSubscription->current_period_start),
-            'current_period_end'   => \Carbon\Carbon::createFromTimestamp($stripeSubscription->current_period_end),
+            'current_period_start' => Carbon::createFromTimestamp($stripeSubscription->current_period_start),
+            'current_period_end' => Carbon::createFromTimestamp($stripeSubscription->current_period_end),
         ];
 
         if ($stripeStatus) {
@@ -170,10 +175,11 @@ class StripeWebhookHandler
 
         $subscription = Subscription::where('stripe_subscription_id', $stripeInvoice->parent?->subscription_details?->subscription)->first();
 
-        if (!$subscription) {
+        if (! $subscription) {
             Log::channel('stripe')->warning('Subscription introuvable pour invoice.finalized', [
                 'stripe_invoice_id' => $stripeInvoice->id,
             ]);
+
             return;
         }
 
@@ -181,12 +187,12 @@ class StripeWebhookHandler
             ['stripe_invoice_id' => $stripeInvoice->id],
             [
                 'subscription_id' => $subscription->id,
-                'amount'          => $stripeInvoice->amount_due / 100,
-                'status'          => InvoiceStatus::Open,
-                'invoice_pdf'     => $stripeInvoice->invoice_pdf,
-                'period_start'    => now()->createFromTimestamp($stripeInvoice->period_start),
-                'period_end'      => now()->createFromTimestamp($stripeInvoice->period_end),
-                'paid_at'         => null,
+                'amount' => $stripeInvoice->amount_due / 100,
+                'status' => InvoiceStatus::Open,
+                'invoice_pdf' => $stripeInvoice->invoice_pdf,
+                'period_start' => now()->createFromTimestamp($stripeInvoice->period_start),
+                'period_end' => now()->createFromTimestamp($stripeInvoice->period_end),
+                'paid_at' => null,
             ]
         );
 

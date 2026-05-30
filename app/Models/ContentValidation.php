@@ -27,9 +27,9 @@ class ContentValidation extends Model
     protected function casts(): array
     {
         return [
-            'status'       => ContentValidationStatus::class,
+            'status' => ContentValidationStatus::class,
             'submitted_at' => 'datetime',
-            'reviewed_at'  => 'datetime',
+            'reviewed_at' => 'datetime',
         ];
     }
 
@@ -50,7 +50,18 @@ class ContentValidation extends Model
     }
 
     // Filament
-    public function scopePending($query)  { return $query->where('status', ContentValidationStatus::Pending); }
-    public function scopeApproved($query) { return $query->where('status', ContentValidationStatus::Approved); }
-    public function scopeRejected($query) { return $query->where('status', ContentValidationStatus::Rejected); }
+    public function scopePending($query)
+    {
+        return $query->where('status', ContentValidationStatus::Pending);
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('status', ContentValidationStatus::Approved);
+    }
+
+    public function scopeRejected($query)
+    {
+        return $query->where('status', ContentValidationStatus::Rejected);
+    }
 }

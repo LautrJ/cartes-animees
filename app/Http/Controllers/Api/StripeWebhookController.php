@@ -13,7 +13,7 @@ class StripeWebhookController extends Controller
 {
     public function handle(Request $request): Response
     {
-        $payload   = $request->getContent();
+        $payload = $request->getContent();
         $signature = $request->header('Stripe-Signature');
 
         try {
@@ -22,24 +22,26 @@ class StripeWebhookController extends Controller
             Log::warning('Stripe webhook signature invalide', [
                 'error' => $e->getMessage(),
             ]);
+
             return response('Signature invalide.', 400);
         }
 
         Log::channel('stripe')->info('Stripe event reçu', [
-            'type'    => $event->type,
-            'id'      => $event->id,
+            'type' => $event->type,
+            'id' => $event->id,
             'created' => $event->created,
-            'data'    => $event->data->toArray(),
+            'data' => $event->data->toArray(),
         ]);
 
         try {
             (new StripeWebhookHandler)->handle($event);
         } catch (\Exception $e) {
             Log::channel('stripe')->error('Erreur traitement webhook Stripe', [
-                'type'  => $event->type,
-                'id'    => $event->id,
+                'type' => $event->type,
+                'id' => $event->id,
                 'error' => $e->getMessage(),
             ]);
+
             return response('Erreur traitement.', 500);
         }
 

@@ -27,9 +27,10 @@ class CommissionRateHistoryResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
-
     protected static ?string $navigationLabel = 'Historique des taux de commission';
+
     protected static ?string $modelLabel = 'Historique des taux de commission';
+
     protected static ?string $pluralModelLabel = 'Historique des taux de commission';
 
     public static function form(Schema $schema): Schema

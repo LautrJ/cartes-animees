@@ -1,0 +1,65 @@
+<?php
+
+return [
+    'common' => [
+        'greeting' => 'Hello!',
+        'action_open_app' => 'Open the app',
+    ],
+    'follow_up_ended' => [
+        'subject' => 'Speech therapy follow-up ended — :child_first_name',
+        'greeting' => 'Hello!',
+        'line_1' => 'The follow-up of **:child_first_name** by **:therapist_first_name :therapist_last_name** has ended.',
+        'line_2' => 'Your child\'s subscription remains active and their access to unlocked series is maintained.',
+        'action' => 'Open the app',
+        'line_3' => 'You can link a new speech therapist from your personal space if needed.',
+    ],
+    'follow_up_started' => [
+        'subject' => 'New speech therapy follow-up — :child_first_name',
+        'greeting' => 'Hello!',
+        'line_1' => '**:therapist_first_name :therapist_last_name** is now following **:child_first_name** on Cartes Animées.',
+        'line_2' => 'They will be able to unlock series tailored to your child\'s progress.',
+        'action' => 'Open the app',
+        'line_3' => 'You can find follow-up information from your personal space.',
+    ],
+    'no_progress' => [
+        'subject' => 'No recent activity — :child_first_name',
+        'greeting' => 'Hello!',
+        'line_1' => 'We have not detected any activity from **:child_first_name** on Cartes Animées for more than a week.',
+        'line_2' => 'Regularity is important for your child\'s progress.',
+        'action' => 'Resume exercises',
+        'line_3' => 'Your referring speech therapist can also unlock new series to keep motivation high.',
+    ],
+    'payment_failed' => [
+        'subject' => 'Payment failed — Cartes Animées',
+        'greeting' => 'Hello!',
+        'line_1' => 'The subscription renewal for **:child_first_name** has failed.',
+        'line_2' => 'Access to paid series has been temporarily suspended.',
+        'action' => 'Update my payment information',
+        'line_3' => 'Access will be automatically restored once payment is settled.',
+    ],
+    'payment_succeeded' => [
+        'subject' => 'Payment confirmed — Cartes Animées',
+        'greeting' => 'Hello!',
+        'line_1' => 'The subscription payment for **:child_first_name** has been successfully processed.',
+        'line_2' => 'Amount charged: **:amount €**',
+        'action' => 'Open the app',
+        'line_3' => 'Thank you for your trust!',
+    ],
+    'welcome_parent' => [
+        'subject' => 'Welcome to Cartes Animées!',
+        'greeting' => 'Hello :first_name!',
+        'line_1' => 'We are delighted to welcome you to Cartes Animées, the educational app for hearing-impaired children.',
+        'line_2' => 'You can now create your child\'s profile and discover our free animation series.',
+        'action' => 'Open the app',
+        'line_3' => 'If you have any questions, feel free to contact us.',
+    ],
+    'welcome_therapist' => [
+        'subject' => 'Welcome to Cartes Animées!',
+        'greeting' => 'Hello :first_name!',
+        'line_1' => 'Your speech therapist account has been successfully created on Cartes Animées.',
+        'line_2' => 'You can now manage your patients, create content, and track their progress.',
+        'line_3' => 'Your invitation code to share with your patients: **:invitation_code**',
+        'action' => 'Set my password',
+        'line_4' => 'This link is valid for 60 minutes.',
+    ],
+];

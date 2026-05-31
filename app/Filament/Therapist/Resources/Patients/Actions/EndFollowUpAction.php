@@ -17,20 +17,20 @@ class EndFollowUpAction extends Action
     {
         parent::setUp();
 
-        $this->label('Terminer le suivi')
+        $this->label(__('filament.therapist.patients.actions.end_follow_up.label'))
             ->icon(Heroicon::OutlinedXCircle)
             ->color('danger')
             ->requiresConfirmation()
-            ->modalHeading('Terminer le suivi ?')
-            ->modalDescription('Vous ne pourrez plus accéder à ce patient. Cette action est irréversible.')
-            ->modalSubmitActionLabel('Terminer le suivi')
+            ->modalHeading(__('filament.therapist.patients.actions.end_follow_up.modal_heading'))
+            ->modalDescription(__('filament.therapist.patients.actions.end_follow_up.modal_description'))
+            ->modalSubmitActionLabel(__('filament.therapist.patients.actions.end_follow_up.modal_submit'))
             ->action(function ($record) {
                 $record->therapists()->updateExistingPivot(auth()->id(), [
                     'ended_at' => now(),
                 ]);
 
                 Notification::make()
-                    ->title('Suivi terminé')
+                    ->title(__('filament.therapist.patients.actions.end_follow_up.notification'))
                     ->success()
                     ->send();
 

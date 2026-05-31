@@ -12,21 +12,23 @@ class ProfileInfolist
     {
         return $schema
             ->components([
-                Section::make('Informations personnelles')
+                Section::make(__('filament.therapist.profiles.infolist.section_personal'))
                     ->columns(2)
                     ->schema([
-                        TextEntry::make('first_name')->label('Prénom'),
-                        TextEntry::make('last_name')->label('Nom'),
-                        TextEntry::make('email')->label('Email'),
-                        TextEntry::make('phone')->label('Téléphone')->placeholder('Non renseigné'),
+                        TextEntry::make('first_name')->label(__('filament.therapist.profiles.infolist.first_name')),
+                        TextEntry::make('last_name')->label(__('filament.therapist.profiles.infolist.last_name')),
+                        TextEntry::make('email')->label(__('filament.therapist.profiles.infolist.email')),
+                        TextEntry::make('phone')
+                            ->label(__('filament.therapist.profiles.infolist.phone'))
+                            ->placeholder(__('filament.therapist.profiles.infolist.phone_placeholder')),
                     ]),
 
-                Section::make('Code d\'invitation')
+                Section::make(__('filament.therapist.profiles.infolist.section_invitation'))
                     ->schema([
                         TextEntry::make('invitation_code')
-                            ->label('Code d\'invitation')
+                            ->label(__('filament.therapist.profiles.infolist.invitation_code'))
                             ->copyable()
-                            ->copyMessage('Code copié !')
+                            ->copyMessage(__('filament.therapist.profiles.infolist.copy_message'))
                             ->fontFamily('mono'),
                     ]),
             ]);

@@ -56,11 +56,11 @@ class AuthController extends Controller
         $user = User::where('email', $validated['email'])->first();
 
         if (! $user || ! Hash::check($validated['password'], $user->password)) {
-            return ApiResponse::error('Identifiants invalides.', 401);
+            return ApiResponse::error(__('api.auth.invalid_credentials'), 401);
         }
 
         if (! $user->is_active) {
-            return ApiResponse::error('Votre compte est désactivé.', 403);
+            return ApiResponse::error(__('api.auth.account_disabled'), 403);
         }
 
         $user->update(['last_login_at' => now()]);
@@ -74,7 +74,7 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
 
-        return ApiResponse::success(['message' => 'Déconnecté avec succès.']);
+        return ApiResponse::success(['message' => __('api.auth.logout_success')]);
     }
 
     public function me(Request $request): JsonResponse
@@ -98,7 +98,7 @@ class AuthController extends Controller
             }
         );
 
-        return ApiResponse::success(['message' => 'Si cet email existe, un lien de réinitialisation a été envoyé.']);
+        return ApiResponse::success(['message' => __('api.auth.reset_link_sent')]);
     }
 
     public function resetPassword(Request $request): JsonResponse
@@ -120,9 +120,9 @@ class AuthController extends Controller
         );
 
         if ($status !== Password::PASSWORD_RESET) {
-            return ApiResponse::error('Token invalide ou expiré.', 422);
+            return ApiResponse::error(__('api.auth.invalid_token'), 422);
         }
 
-        return ApiResponse::success(['message' => 'Mot de passe réinitialisé avec succès.']);
+        return ApiResponse::success(['message' => __('api.auth.password_reset_success')]);
     }
 }

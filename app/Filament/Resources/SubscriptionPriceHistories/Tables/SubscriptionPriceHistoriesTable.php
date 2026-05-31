@@ -14,23 +14,23 @@ class SubscriptionPriceHistoriesTable
             ->defaultSort('effective_from', 'desc')
             ->columns([
                 TextColumn::make('price')
-                    ->label('Prix')
+                    ->label(__('filament.subscription_price_histories.table.price'))
                     ->getStateUsing(fn ($record) => number_format($record->price, 2, ',', ' ').' €/mois'),
                 TextColumn::make('stripe_price_id')
-                    ->label('Stripe Price ID')
+                    ->label(__('filament.subscription_price_histories.table.stripe_price_id'))
                     ->copyable()
-                    ->copyMessage('ID copié')
+                    ->copyMessage(__('filament.subscription_price_histories.table.copy_message'))
                     ->fontFamily('mono')
                     ->color('gray'),
                 TextColumn::make('effective_from')
-                    ->label('En vigueur depuis')
+                    ->label(__('filament.subscription_price_histories.table.effective_from'))
                     ->dateTime('d/m/Y H:i')
                     ->sortable(),
                 TextColumn::make('creator.first_name')
-                    ->label('Modifié par')
+                    ->label(__('filament.subscription_price_histories.table.creator'))
                     ->getStateUsing(fn ($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
                 TextColumn::make('created_at')
-                    ->label('Créé le')
+                    ->label(__('filament.subscription_price_histories.table.created_at'))
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

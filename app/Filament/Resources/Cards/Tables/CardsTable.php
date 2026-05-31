@@ -21,31 +21,31 @@ class CardsTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label('Nom')
+                    ->label(__('filament.cards.table.columns.name'))
                     ->getStateUsing(fn ($record) => $record->name['fr'] ?? '-')
                     ->searchable(),
                 TextColumn::make('creator.first_name')
-                    ->label('Créé par')
+                    ->label(__('filament.cards.table.columns.creator'))
                     ->getStateUsing(fn ($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
                 TextColumn::make('duration')
-                    ->label('Durée')
+                    ->label(__('filament.cards.table.columns.duration'))
                     ->suffix(' sec')
                     ->default('-'),
                 IconColumn::make('is_validated')
-                    ->label('Validée')
+                    ->label(__('filament.cards.table.columns.is_validated'))
                     ->boolean(),
                 TextColumn::make('series_count')
-                    ->label('Séries')
+                    ->label(__('filament.cards.table.columns.series_count'))
                     ->counts('series'),
                 TextColumn::make('created_at')
-                    ->label('Créée le')
+                    ->label(__('filament.cards.table.columns.created_at'))
                     ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Filter::make('is_validated')
-                    ->label('Validées')
+                    ->label(__('filament.cards.table.filters.is_validated'))
                     ->query(fn ($query) => $query->where('is_validated', true)),
                 TrashedFilter::make(),
             ])

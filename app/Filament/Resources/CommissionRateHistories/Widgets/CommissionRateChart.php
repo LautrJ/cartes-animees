@@ -7,7 +7,12 @@ use Filament\Widgets\ChartWidget;
 
 class CommissionRateChart extends ChartWidget
 {
-    protected ?string $heading = 'Évolution du taux de commission';
+    protected ?string $heading = null;
+
+    public function getHeading(): string|\Illuminate\Contracts\Support\Htmlable|null
+    {
+        return __('filament.commission_rate_histories.widgets.chart.heading');
+    }
 
     protected int|string|array $columnSpan = 'full';
 
@@ -20,7 +25,7 @@ class CommissionRateChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Taux (€/patient)',
+                    'label' => __('filament.commission_rate_histories.widgets.chart.dataset_label'),
                     'data' => $history->pluck('rate')->toArray(),
                     'borderColor' => '#a896d8',
                     'backgroundColor' => 'rgba(193, 175, 228, 0.1)',

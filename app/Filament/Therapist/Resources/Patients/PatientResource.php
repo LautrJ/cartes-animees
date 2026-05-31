@@ -25,15 +25,27 @@ class PatientResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'first_name';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Suivi';
-
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationLabel = 'Patients';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.therapist.patients.navigation_group');
+    }
 
-    protected static ?string $modelLabel = 'Patient';
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.therapist.patients.navigation_label');
+    }
 
-    protected static ?string $pluralModelLabel = 'Patients';
+    public static function getModelLabel(): string
+    {
+        return __('filament.therapist.patients.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.therapist.patients.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

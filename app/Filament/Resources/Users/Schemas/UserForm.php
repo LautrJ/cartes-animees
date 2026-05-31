@@ -15,53 +15,53 @@ class UserForm
     {
         return $schema
             ->components([
-                Section::make('Informations personnelles')
+                Section::make(__('filament.users.form.sections.personal_info'))
                     ->columns(2)
                     ->schema([
                         TextInput::make('first_name')
-                            ->label('Prénom')
+                            ->label(__('filament.users.form.fields.first_name'))
                             ->required()
                             ->maxLength(100),
                         TextInput::make('last_name')
-                            ->label('Nom')
+                            ->label(__('filament.users.form.fields.last_name'))
                             ->required()
                             ->maxLength(100),
                         TextInput::make('email')
-                            ->label('Email')
+                            ->label(__('filament.users.form.fields.email'))
                             ->email()
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->columnSpanFull(),
                         TextInput::make('phone')
-                            ->label('Téléphone')
+                            ->label(__('filament.users.form.fields.phone'))
                             ->tel()
                             ->maxLength(20),
                         Select::make('role')
-                            ->label('Rôle')
+                            ->label(__('filament.users.form.fields.role'))
                             ->options(UserRole::class)
                             ->default(UserRole::Parent)
                             ->required(),
                     ]),
 
-                Section::make('Sécurité')
+                Section::make(__('filament.users.form.sections.security'))
                     ->schema([
                         TextInput::make('password')
-                            ->label('Mot de passe')
+                            ->label(__('filament.users.form.fields.password'))
                             ->password()
                             ->required(fn (string $operation) => $operation === 'create')
                             ->dehydrated(fn ($state) => filled($state))
                             ->confirmed()
                             ->minLength(8),
                         TextInput::make('password_confirmation')
-                            ->label('Confirmation du mot de passe')
+                            ->label(__('filament.users.form.fields.password_confirmation'))
                             ->password()
                             ->dehydrated(false),
                     ]),
 
-                Section::make('Statut')
+                Section::make(__('filament.users.form.sections.status'))
                     ->schema([
                         Toggle::make('is_active')
-                            ->label('Compte actif')
+                            ->label(__('filament.users.form.fields.is_active'))
                             ->default(true),
                     ]),
             ]);

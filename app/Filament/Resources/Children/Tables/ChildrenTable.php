@@ -19,14 +19,14 @@ class ChildrenTable
         return $table
             ->columns([
                 TextColumn::make('full_name')
-                    ->label('Nom complet')
+                    ->label(__('filament.children.table.columns.full_name'))
                     ->getStateUsing(fn ($record) => "{$record->first_name} {$record->last_name}")
                     ->searchable(query: function ($query, $search) {
                         $query->where('first_name', 'like', "%{$search}%")
                             ->orWhere('last_name', 'like', "%{$search}%");
                     }),
                 TextColumn::make('parent.first_name')
-                    ->label('Parent')
+                    ->label(__('filament.children.table.columns.parent'))
                     ->getStateUsing(fn ($record) => "{$record->parent->first_name} {$record->parent->last_name}")
                     ->searchable(query: function ($query, $search) {
                         $query->whereHas('parent', fn ($q) => $q
@@ -35,17 +35,17 @@ class ChildrenTable
                         );
                     }),
                 TextColumn::make('birthdate')
-                    ->label('Date de naissance')
+                    ->label(__('filament.children.table.columns.birthdate'))
                     ->date('d/m/Y')
                     ->default('-'),
                 TextColumn::make('activeTherapists.first_name')
-                    ->label('Orthophonistes')
+                    ->label(__('filament.children.table.columns.therapists'))
                     ->getStateUsing(fn ($record) => $record->activeTherapists
                         ->map(fn ($t) => "{$t->first_name} {$t->last_name}")
                         ->join(', ') ?: '-'
                     ),
                 TextColumn::make('created_at')
-                    ->label('Créé le')
+                    ->label(__('filament.children.table.columns.created_at'))
                     ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -26,15 +26,27 @@ class ChildResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'first_name';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Gérer les utilisateurs';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.navigation_groups.users');
+    }
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $navigationLabel = 'Enfants';
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.children.navigation_label');
+    }
 
-    protected static ?string $modelLabel = 'Enfant';
+    public static function getModelLabel(): string
+    {
+        return __('filament.children.model_label');
+    }
 
-    protected static ?string $pluralModelLabel = 'Enfants';
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.children.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

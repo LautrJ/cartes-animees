@@ -35,11 +35,15 @@ class FollowUpEndedNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject("Fin de suivi orthophoniste — {$this->childFirstName}")
-            ->greeting('Bonjour !')
-            ->line("Le suivi de **{$this->childFirstName}** par **{$this->therapistFirstName} {$this->therapistLastName}** a pris fin.")
-            ->line('L\'abonnement de votre enfant reste actif et son accès aux séries débloquées est maintenu.')
-            ->action('Accéder à l\'application', config('app.frontend_url'))
-            ->line('Vous pouvez rattacher un nouvel orthophoniste depuis votre espace personnel si besoin.');
+            ->subject(__('notifications.follow_up_ended.subject'))
+            ->greeting(__('notifications.follow_up_ended.greeting'))
+            ->line(__('notifications.follow_up_ended.line_1', [
+                'child_first_name' => $this->childFirstName,
+                'therapist_first_name' => $this->therapistFirstName,
+                'therapist_last_name' => $this->therapistLastName,
+            ]))
+            ->line(__('notifications.follow_up_ended.line_2'))
+            ->action(__('notifications.follow_up_ended.action'), config('app.frontend_url'))
+            ->line(__('notifications.follow_up_ended.line_3'));
     }
 }

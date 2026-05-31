@@ -34,7 +34,7 @@ class NotificationController extends Controller
             ->first();
 
         if (! $notification) {
-            return ApiResponse::error('Notification introuvable.', 404);
+            return ApiResponse::error(__('api.notification.not_found'), 404);
         }
 
         $notification->markAsRead();
@@ -46,6 +46,6 @@ class NotificationController extends Controller
     {
         $request->user()->unreadNotifications->markAsRead();
 
-        return ApiResponse::success(['message' => 'Toutes les notifications ont été lues.']);
+        return ApiResponse::success(['message' => __('api.notification.all_read_success')]);
     }
 }

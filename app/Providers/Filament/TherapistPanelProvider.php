@@ -29,7 +29,7 @@ class TherapistPanelProvider extends PanelProvider
             ->id('therapist')
             ->path('therapist')
             ->viteTheme('resources/css/filament/therapist/theme.css')
-            ->brandName('Cartes Animées')
+            ->brandName(__('filament.panels.therapist.brand_name'))
             ->colors([
                 'primary' => Color::hex('#449b7f'),
             ])
@@ -40,12 +40,11 @@ class TherapistPanelProvider extends PanelProvider
                 'panels::topbar.end',
                 fn () => auth()->user()?->canImpersonate()
                     ? new HtmlString(
-                        '
-                            <a href="/filament-impersonate/leave"
-                               style="margin-right:1rem; font-size:0.875rem; color:#5ab99a; font-weight:500;">
-                               ← Retour admin
-                            </a>
-                        ')
+                        '<a href="/filament-impersonate/leave"
+                               style="margin-right:1rem; font-size:0.875rem; color:#5ab99a; font-weight:500;">' .
+                               __('filament.panels.therapist.back_to_admin') .
+                        '</a>'
+                    )
                     : ''
             )
             ->discoverResources(in: app_path('Filament/Therapist/Resources'), for: 'App\\Filament\\Therapist\\Resources')

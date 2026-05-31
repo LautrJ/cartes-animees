@@ -26,15 +26,27 @@ class TherapistPaymentInfoResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'therapist_name';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
-
     protected static ?int $navigationSort = 6;
 
-    protected static ?string $navigationLabel = 'Infos bancaires Orthophonistes';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.navigation_groups.payroll');
+    }
 
-    protected static ?string $modelLabel = 'Infos bancaires Orthophoniste';
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.therapist_payment_infos.navigation_label');
+    }
 
-    protected static ?string $pluralModelLabel = 'Infos bancaires Orthophonistes';
+    public static function getModelLabel(): string
+    {
+        return __('filament.therapist_payment_infos.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.therapist_payment_infos.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

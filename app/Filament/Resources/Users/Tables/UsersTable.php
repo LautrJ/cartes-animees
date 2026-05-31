@@ -23,7 +23,7 @@ class UsersTable
         return $table
             ->columns([
                 TextColumn::make('full_name')
-                    ->label('Nom complet')
+                    ->label(__('filament.users.table.columns.full_name'))
                     ->getStateUsing(fn ($record) => "{$record->first_name} {$record->last_name}")
                     ->searchable(query: function ($query, $search) {
                         $query->where('first_name', 'like', "%{$search}%")
@@ -31,10 +31,10 @@ class UsersTable
                     })
                     ->sortable(),
                 TextColumn::make('email')
-                    ->label('Email')
+                    ->label(__('filament.users.table.columns.email'))
                     ->searchable(),
                 TextColumn::make('role')
-                    ->label('Rôle')
+                    ->label(__('filament.users.table.columns.role'))
                     ->badge()
                     ->color(fn (UserRole $state) => match ($state) {
                         UserRole::Admin => 'danger',
@@ -42,20 +42,20 @@ class UsersTable
                         UserRole::Parent => 'success',
                     }),
                 TextColumn::make('phone')
-                    ->label('Téléphone')
+                    ->label(__('filament.users.table.columns.phone'))
                     ->default('-'),
                 IconColumn::make('is_active')
-                    ->label('Actif')
+                    ->label(__('filament.users.table.columns.is_active'))
                     ->boolean(),
                 TextColumn::make('created_at')
-                    ->label('Créé le')
+                    ->label(__('filament.users.table.columns.created_at'))
                     ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('role')
-                    ->label('Rôle')
+                    ->label(__('filament.users.table.filters.role'))
                     ->options(UserRole::class),
                 TrashedFilter::make(),
             ])

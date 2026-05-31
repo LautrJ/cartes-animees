@@ -7,7 +7,12 @@ use Filament\Widgets\ChartWidget;
 
 class SubscriptionPriceChart extends ChartWidget
 {
-    protected ?string $heading = 'Évolution du prix d\'abonnement';
+    protected ?string $heading = null;
+
+    public function getHeading(): string|\Illuminate\Contracts\Support\Htmlable|null
+    {
+        return __('filament.widgets.subscription_price_chart.heading');
+    }
 
     protected int|string|array $columnSpan = 'full';
 
@@ -20,7 +25,7 @@ class SubscriptionPriceChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Prix (€/mois)',
+                    'label' => __('filament.widgets.subscription_price_chart.dataset_label'),
                     'data' => $history->pluck('price')->toArray(),
                     'borderColor' => '#a896d8',
                     'backgroundColor' => 'rgba(193, 175, 228, 0.1)',

@@ -25,15 +25,27 @@ class ContentValidationResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'submitted_at';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Gérer le contenu';
-
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationLabel = 'Validation de contenu';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.navigation_groups.content');
+    }
 
-    protected static ?string $modelLabel = 'Validation de contenu';
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.content_validations.navigation_label');
+    }
 
-    protected static ?string $pluralModelLabel = 'Validation de contenu';
+    public static function getModelLabel(): string
+    {
+        return __('filament.content_validations.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.content_validations.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

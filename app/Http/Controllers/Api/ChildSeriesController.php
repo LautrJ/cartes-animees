@@ -21,11 +21,11 @@ class ChildSeriesController extends Controller
             ->exists();
 
         if (! $isPatient) {
-            return ApiResponse::error('Accès refusé.', 403);
+            return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
         if (! $series->is_validated || ! $series->is_active) {
-            return ApiResponse::error('Série introuvable.', 404);
+            return ApiResponse::error(__('api.child_series.series_not_found'), 404);
         }
 
         $alreadyUnlocked = $child->series()
@@ -33,7 +33,7 @@ class ChildSeriesController extends Controller
             ->exists();
 
         if ($alreadyUnlocked) {
-            return ApiResponse::error('Cette série est déjà débloquée pour cet enfant.', 409);
+            return ApiResponse::error(__('api.child_series.already_unlocked'), 409);
         }
 
         $child->series()->attach($series->id, [
@@ -46,7 +46,7 @@ class ChildSeriesController extends Controller
             new SeriesUnlockedNotification($child, $series)
         );
 
-        return ApiResponse::success(['message' => 'Série débloquée avec succès.'], 201);
+        return ApiResponse::success(['message' => __('api.child_series.unlocked_success')], 201);
     }
 
     public function update(Request $request, Child $child, Series $series): JsonResponse
@@ -56,7 +56,7 @@ class ChildSeriesController extends Controller
             ->exists();
 
         if (! $isPatient) {
-            return ApiResponse::error('Accès refusé.', 403);
+            return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
         $childSeries = $child->series()
@@ -64,11 +64,11 @@ class ChildSeriesController extends Controller
             ->first();
 
         if (! $childSeries) {
-            return ApiResponse::error('Cette série n\'est pas débloquée pour cet enfant.', 404);
+            return ApiResponse::error(__('api.common.series_not_unlocked_for_child'), 404);
         }
 
         if ($childSeries->pivot->status === ChildSeriesStatus::Completed->value) {
-            return ApiResponse::error('Cette série est déjà complétée.', 409);
+            return ApiResponse::error(__('api.child_series.already_completed'), 409);
         }
 
         $child->series()->updateExistingPivot($series->id, [
@@ -80,7 +80,7 @@ class ChildSeriesController extends Controller
             new SeriesCompletedNotification($child, $series)
         );
 
-        return ApiResponse::success(['message' => 'Série marquée comme complétée.']);
+        return ApiResponse::success(['message' => __('api.child_series.completed_success')]);
     }
 
     public function destroy(Request $request, Child $child, Series $series): JsonResponse
@@ -90,7 +90,7 @@ class ChildSeriesController extends Controller
             ->exists();
 
         if (! $isPatient) {
-            return ApiResponse::error('Accès refusé.', 403);
+            return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
         $child->series()->detach($series->id);

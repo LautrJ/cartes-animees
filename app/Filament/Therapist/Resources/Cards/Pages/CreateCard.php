@@ -38,7 +38,7 @@ class CreateCard extends CreateRecord
         ]);
 
         User::admins()->each(fn ($admin) => Notification::make()
-            ->title(auth()->user()->getFilamentName().' a soumis une carte en attente de validation.')
+            ->title(__('filament.therapist.cards.notifications.card_submitted', ['name' => auth()->user()->getFilamentName()]))
             ->body($this->record->name['fr'] ?? '')
             ->warning()
             ->sendToDatabase($admin)

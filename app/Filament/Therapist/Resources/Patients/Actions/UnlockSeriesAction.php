@@ -21,7 +21,7 @@ class UnlockSeriesAction extends Action
     {
         parent::setUp();
 
-        $this->label('Débloquer une série')
+        $this->label(__('filament.therapist.patients.actions.unlock_series.label'))
             ->icon(Heroicon::OutlinedLockOpen)
             ->color('success')
             ->form(function ($record) {
@@ -29,7 +29,7 @@ class UnlockSeriesAction extends Action
 
                 return [
                     Select::make('series_id')
-                        ->label('Série à débloquer')
+                        ->label(__('filament.therapist.patients.actions.unlock_series.series_label'))
                         ->options(
                             Series::validated()
                                 ->active()
@@ -41,8 +41,8 @@ class UnlockSeriesAction extends Action
                         ->searchable(),
                 ];
             })
-            ->modalHeading('Débloquer une série')
-            ->modalSubmitActionLabel('Débloquer')
+            ->modalHeading(__('filament.therapist.patients.actions.unlock_series.modal_heading'))
+            ->modalSubmitActionLabel(__('filament.therapist.patients.actions.unlock_series.modal_submit'))
             ->action(function ($record, array $data) {
                 $series = Series::findOrFail($data['series_id']);
 
@@ -55,7 +55,7 @@ class UnlockSeriesAction extends Action
                 $record->parent->notify(new SeriesUnlockedNotification($record, $series));
 
                 Notification::make()
-                    ->title('Série débloquée avec succès')
+                    ->title(__('filament.therapist.patients.actions.unlock_series.notification'))
                     ->success()
                     ->send();
             });

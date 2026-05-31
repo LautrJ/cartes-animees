@@ -14,21 +14,21 @@ class UserInfolist
     {
         return $schema
             ->components([
-                Section::make('Informations personnelles')
+                Section::make(__('filament.users.infolist.sections.personal_info'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('first_name')
-                            ->label('Prénom'),
+                            ->label(__('filament.users.infolist.fields.first_name')),
                         TextEntry::make('last_name')
-                            ->label('Nom'),
+                            ->label(__('filament.users.infolist.fields.last_name')),
                         TextEntry::make('email')
-                            ->label('Email')
+                            ->label(__('filament.users.infolist.fields.email'))
                             ->columnSpanFull(),
                         TextEntry::make('phone')
-                            ->label('Téléphone')
+                            ->label(__('filament.users.infolist.fields.phone'))
                             ->default('-'),
                         TextEntry::make('role')
-                            ->label('Rôle')
+                            ->label(__('filament.users.infolist.fields.role'))
                             ->badge()
                             ->color(fn (UserRole $state) => match ($state) {
                                 UserRole::Admin => 'danger',
@@ -37,26 +37,26 @@ class UserInfolist
                             }),
                     ]),
 
-                Section::make('Statut')
+                Section::make(__('filament.users.infolist.sections.status'))
                     ->columns(2)
                     ->schema([
                         IconEntry::make('is_active')
-                            ->label('Compte actif')
+                            ->label(__('filament.users.infolist.fields.is_active'))
                             ->boolean(),
                         TextEntry::make('email_verified_at')
-                            ->label('Email vérifié le')
+                            ->label(__('filament.users.infolist.fields.email_verified_at'))
                             ->dateTime('d/m/Y H:i')
-                            ->placeholder('Non vérifié'),
+                            ->placeholder(__('filament.users.infolist.fields.email_verified_at_placeholder')),
                     ]),
 
-                Section::make('Dates')
+                Section::make(__('filament.users.infolist.sections.dates'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label('Créé le')
+                            ->label(__('filament.users.infolist.fields.created_at'))
                             ->dateTime('d/m/Y H:i'),
                         TextEntry::make('updated_at')
-                            ->label('Mis à jour le')
+                            ->label(__('filament.users.infolist.fields.updated_at'))
                             ->dateTime('d/m/Y H:i'),
                     ]),
             ]);

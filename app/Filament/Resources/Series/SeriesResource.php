@@ -26,15 +26,27 @@ class SeriesResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name->fr';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Gérer le contenu';
-
     protected static ?int $navigationSort = 3;
 
-    protected static ?string $navigationLabel = 'Séries';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.navigation_groups.content');
+    }
 
-    protected static ?string $modelLabel = 'Série';
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.series.navigation_label');
+    }
 
-    protected static ?string $pluralModelLabel = 'Séries';
+    public static function getModelLabel(): string
+    {
+        return __('filament.series.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.series.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

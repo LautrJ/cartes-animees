@@ -16,20 +16,20 @@ class ViewCard extends ViewRecord
         return [
             EditAction::make('Modifier'),
             Action::make('preview')
-                ->label('Prévisualiser')
+                ->label(__('filament.cards.pages.view.action_preview_label'))
                 ->icon('heroicon-o-play')
                 ->color('success')
-                ->modalHeading('Prévisualisation — '.($this->getRecord()->name['fr'] ?? ''))
+                ->modalHeading(__('filament.cards.pages.view.action_preview_label').' — '.($this->getRecord()->name['fr'] ?? ''))
                 ->modalContent(fn () => view('livewire.card-preview-modal', [
                     'cardId' => $this->getRecord()->id,
                 ]))
                 ->modalSubmitAction(false)
-                ->modalCancelActionLabel('Fermer'),
+                ->modalCancelActionLabel(__('filament.cards.pages.view.action_preview_modal_cancel_label')),
         ];
     }
 
     public function getTitle(): string
     {
-        return 'Afficher '.($this->getRecord()->name['fr'] ?? 'Animation');
+        return __('filament.cards.pages.view.title_prefix').' '.($this->getRecord()->name['fr'] ?? __('filament.cards.model_label'));
     }
 }

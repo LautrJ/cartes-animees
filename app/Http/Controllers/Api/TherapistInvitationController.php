@@ -28,7 +28,7 @@ class TherapistInvitationController extends Controller
     public function attach(Request $request, Child $child): JsonResponse
     {
         if ($child->parent_id !== $request->user()->id) {
-            return ApiResponse::error('Accès refusé.', 403);
+            return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
         $validated = $request->validate([
@@ -38,7 +38,7 @@ class TherapistInvitationController extends Controller
         $therapist = User::where('invitation_code', $validated['invitation_code'])->first();
 
         if (! $therapist) {
-            return ApiResponse::error('Code d\'invitation invalide.', 404);
+            return ApiResponse::error(__('api.therapist_invitation.invalid_code'), 404);
         }
 
         $alreadyLinked = $child->therapists()
@@ -47,7 +47,7 @@ class TherapistInvitationController extends Controller
             ->exists();
 
         if ($alreadyLinked) {
-            return ApiResponse::error('Cet enfant est déjà suivi par cet orthophoniste.', 409);
+            return ApiResponse::error(__('api.therapist_invitation.already_linked'), 409);
         }
 
         $child->therapists()->attach($therapist->id, [
@@ -67,14 +67,14 @@ class TherapistInvitationController extends Controller
             therapistLastName: $therapist->last_name,
         ));
 
-        return ApiResponse::success(['message' => 'Orthophoniste affilié avec succès.'], 201);
+        return ApiResponse::success(['message' => __('api.therapist_invitation.attach_success')], 201);
     }
 
     // Parent retire un orthophoniste du suivi d'un enfant
     public function detach(Request $request, Child $child, User $therapist): JsonResponse
     {
         if ($child->parent_id !== $request->user()->id) {
-            return ApiResponse::error('Accès refusé.', 403);
+            return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
         $child->therapists()->updateExistingPivot($therapist->id, [

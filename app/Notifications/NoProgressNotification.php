@@ -33,11 +33,11 @@ class NoProgressNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject("Pas d'activité récente — {$this->childFirstName}")
-            ->greeting('Bonjour !')
-            ->line("Nous n'avons pas détecté d'activité de **{$this->childFirstName}** sur Cartes Animées depuis plus d'une semaine.")
-            ->line('La régularité est importante pour la progression de votre enfant.')
-            ->action('Reprendre les exercices', config('app.frontend_url'))
-            ->line('Votre orthophoniste référent peut également débloquer de nouvelles séries pour maintenir la motivation.');
+            ->subject(__('notifications.no_progress.subject', ['child_first_name' => $this->childFirstName]))
+            ->greeting(__('notifications.no_progress.greeting'))
+            ->line(__('notifications.no_progress.line_1', ['child_first_name' => $this->childFirstName]))
+            ->line(__('notifications.no_progress.line_2'))
+            ->action(__('notifications.no_progress.action'), config('app.frontend_url'))
+            ->line(__('notifications.no_progress.line_3'));
     }
 }

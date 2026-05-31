@@ -16,29 +16,29 @@ class SeriesForm
         return $schema
             ->columns(1)
             ->components([
-                Section::make('Informations générales')
+                Section::make(__('filament.therapist.series.form.section_general'))
                     ->schema([
                         TextInput::make('name.fr')
-                            ->label('Nom')
+                            ->label(__('filament.therapist.series.form.name'))
                             ->required()
                             ->maxLength(255),
                         Textarea::make('description.fr')
-                            ->label('Description')
+                            ->label(__('filament.therapist.series.form.description'))
                             ->rows(3),
                     ]),
 
-                Section::make('Médias')
+                Section::make(__('filament.therapist.series.form.section_media'))
                     ->schema([
                         FileUpload::make('thumbnail_path')
-                            ->label('Miniature')
+                            ->label(__('filament.therapist.series.form.thumbnail'))
                             ->image()
                             ->nullable(),
                     ]),
 
-                Section::make('Cartes')
+                Section::make(__('filament.therapist.series.form.section_cards'))
                     ->schema([
                         Select::make('cards')
-                            ->label('Cartes à inclure')
+                            ->label(__('filament.therapist.series.form.cards_to_include'))
                             ->relationship('cards', 'id')
                             ->getOptionLabelFromRecordUsing(fn ($record) => $record->name['fr'] ?? '-')
                             ->multiple()

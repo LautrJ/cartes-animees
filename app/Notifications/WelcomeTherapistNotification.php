@@ -35,12 +35,12 @@ class WelcomeTherapistNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Bienvenue sur Cartes Animées !')
-            ->greeting("Bonjour {$this->firstName} !")
-            ->line('Votre compte orthophoniste a bien été créé sur Cartes Animées.')
-            ->line('Vous pouvez dès maintenant gérer vos patients, créer du contenu et suivre leur progression.')
-            ->line("Votre code d'invitation à partager à vos patients : **{$this->invitationCode}**")
-            ->action('Définir mon mot de passe', $this->resetUrl)
-            ->line('Ce lien est valable 60 minutes.');
+            ->subject(__('notifications.welcome_therapist.subject'))
+            ->greeting(__('notifications.welcome_therapist.greeting', ['first_name' => $this->firstName]))
+            ->line(__('notifications.welcome_therapist.line_1'))
+            ->line(__('notifications.welcome_therapist.line_2'))
+            ->line(__('notifications.welcome_therapist.line_3', ['invitation_code' => $this->invitationCode]))
+            ->action(__('notifications.welcome_therapist.action'), $this->resetUrl)
+            ->line(__('notifications.welcome_therapist.line_4'));
     }
 }

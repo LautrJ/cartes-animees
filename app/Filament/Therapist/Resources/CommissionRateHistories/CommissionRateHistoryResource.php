@@ -23,15 +23,27 @@ class CommissionRateHistoryResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'effective_from';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
-
     protected static ?int $navigationSort = 3;
 
-    protected static ?string $navigationLabel = 'Historique des taux de commission';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.therapist.commission_rate_histories.navigation.group');
+    }
 
-    protected static ?string $modelLabel = 'Historique des taux de commission';
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.therapist.commission_rate_histories.navigation.label');
+    }
 
-    protected static ?string $pluralModelLabel = 'Historique des taux de commission';
+    public static function getModelLabel(): string
+    {
+        return __('filament.therapist.commission_rate_histories.navigation.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.therapist.commission_rate_histories.navigation.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

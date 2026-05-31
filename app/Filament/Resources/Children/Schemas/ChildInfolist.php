@@ -12,48 +12,48 @@ class ChildInfolist
     {
         return $schema
             ->components([
-                Section::make('Informations personnelles')
+                Section::make(__('filament.children.infolist.sections.personal_info'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('first_name')
-                            ->label('Prénom'),
+                            ->label(__('filament.children.infolist.fields.first_name')),
                         TextEntry::make('last_name')
-                            ->label('Nom'),
+                            ->label(__('filament.children.infolist.fields.last_name')),
                         TextEntry::make('birthdate')
-                            ->label('Date de naissance')
+                            ->label(__('filament.children.infolist.fields.birthdate'))
                             ->date('d/m/Y')
-                            ->placeholder('Non renseignée'),
+                            ->placeholder(__('filament.children.infolist.fields.birthdate_placeholder')),
                         TextEntry::make('parent.first_name')
-                            ->label('Parent')
+                            ->label(__('filament.children.infolist.fields.parent'))
                             ->getStateUsing(fn ($record) => "{$record->parent->first_name} {$record->parent->last_name}"),
                     ]),
 
-                Section::make('Orthophonistes')
+                Section::make(__('filament.children.infolist.sections.therapists'))
                     ->schema([
                         TextEntry::make('activeTherapists')
-                            ->label('Orthophonistes actifs')
+                            ->label(__('filament.children.infolist.fields.active_therapists'))
                             ->getStateUsing(fn ($record) => $record->activeTherapists
                                 ->map(fn ($t) => "{$t->first_name} {$t->last_name}")
                                 ->join(', ') ?: '-'
                             ),
                     ]),
 
-                Section::make('Notes')
+                Section::make(__('filament.children.infolist.sections.notes'))
                     ->schema([
                         TextEntry::make('notes')
-                            ->label('Notes')
-                            ->placeholder('Aucune note')
+                            ->label(__('filament.children.infolist.fields.notes'))
+                            ->placeholder(__('filament.children.infolist.fields.notes_placeholder'))
                             ->columnSpanFull(),
                     ]),
 
-                Section::make('Dates')
+                Section::make(__('filament.children.infolist.sections.dates'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label('Créé le')
+                            ->label(__('filament.children.infolist.fields.created_at'))
                             ->dateTime('d/m/Y H:i'),
                         TextEntry::make('updated_at')
-                            ->label('Mis à jour le')
+                            ->label(__('filament.children.infolist.fields.updated_at'))
                             ->dateTime('d/m/Y H:i'),
                     ]),
             ]);

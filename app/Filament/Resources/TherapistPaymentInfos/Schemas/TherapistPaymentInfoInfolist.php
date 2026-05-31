@@ -13,36 +13,36 @@ class TherapistPaymentInfoInfolist
         return $schema
             ->columns(1)
             ->components([
-                Section::make('Orthophoniste')
+                Section::make(__('filament.therapist_payment_infos.infolist.sections.therapist'))
                     ->schema([
                         TextEntry::make('user.first_name')
-                            ->label('Nom')
+                            ->label(__('filament.therapist_payment_infos.infolist.fields.name'))
                             ->getStateUsing(fn ($record) => "{$record->user->first_name} {$record->user->last_name}"),
                         TextEntry::make('user.email')
-                            ->label('Email'),
+                            ->label(__('filament.therapist_payment_infos.infolist.fields.email')),
                     ]),
 
-                Section::make('Informations bancaires')
+                Section::make(__('filament.therapist_payment_infos.infolist.sections.bank_info'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('bank_name')
-                            ->label('Banque'),
+                            ->label(__('filament.therapist_payment_infos.infolist.fields.bank_name')),
                         TextEntry::make('bic')
-                            ->label('BIC'),
+                            ->label(__('filament.therapist_payment_infos.infolist.fields.bic')),
                         TextEntry::make('iban')
-                            ->label('IBAN')
+                            ->label(__('filament.therapist_payment_infos.infolist.fields.iban'))
                             ->getStateUsing(fn ($record) => '•••• •••• •••• '.substr($record->iban, -4))
                             ->columnSpanFull(),
                     ]),
 
-                Section::make('Dates')
+                Section::make(__('filament.therapist_payment_infos.infolist.sections.dates'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label('Ajouté le')
+                            ->label(__('filament.therapist_payment_infos.infolist.fields.created_at'))
                             ->dateTime('d/m/Y H:i'),
                         TextEntry::make('updated_at')
-                            ->label('Mis à jour le')
+                            ->label(__('filament.therapist_payment_infos.infolist.fields.updated_at'))
                             ->dateTime('d/m/Y H:i'),
                     ]),
             ]);

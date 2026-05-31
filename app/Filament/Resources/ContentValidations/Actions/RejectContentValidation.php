@@ -19,19 +19,19 @@ class RejectContentValidation extends Action
     {
         parent::setUp();
 
-        $this->label('Rejeter')
+        $this->label(__('filament.content_validations.actions.reject.label'))
             ->color('danger')
             ->icon('heroicon-o-x-circle')
             ->visible(fn ($record) => $record->status === ContentValidationStatus::Pending)
             ->form([
                 Textarea::make('rejection_reason')
-                    ->label('Motif de rejet')
+                    ->label(__('filament.content_validations.actions.reject.field_rejection_reason'))
                     ->required()
                     ->rows(3),
             ])
-            ->modalHeading('Rejeter ce contenu')
-            ->modalDescription('Veuillez indiquer le motif de rejet.')
-            ->modalSubmitActionLabel('Rejeter')
+            ->modalHeading(__('filament.content_validations.actions.reject.modal_heading'))
+            ->modalDescription(__('filament.content_validations.actions.reject.modal_description'))
+            ->modalSubmitActionLabel(__('filament.content_validations.actions.reject.modal_submit_label'))
             ->action(function ($record, array $data) {
                 $record->update([
                     'status' => ContentValidationStatus::Rejected,
@@ -41,10 +41,13 @@ class RejectContentValidation extends Action
                 ]);
 
                 $contentName = $record->validatable->name['fr'] ?? '';
-                $contentType = class_basename($record->validatable_type) === 'Card' ? 'carte' : 'série';
+                $contentTypeKey = class_basename($record->validatable_type) === 'Card' ? 'content_type_card' : 'content_type_series';
 
                 Notification::make()
-                    ->title("Votre {$contentType} \"{$contentName}\" a été refusée.")
+                    ->title(__('filament.content_validations.actions.reject.notification_rejected', [
+                        'type' => __("filament.content_validations.{$contentTypeKey}"),
+                        'name' => $contentName,
+                    ]))
                     ->body($data['rejection_reason'])
                     ->danger()
                     ->sendToDatabase($record->submitter);

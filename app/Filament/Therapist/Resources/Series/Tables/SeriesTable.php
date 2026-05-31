@@ -14,20 +14,20 @@ class SeriesTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label('Nom')
+                    ->label(__('filament.therapist.series.table.name'))
                     ->getStateUsing(fn ($record) => $record->name['fr'] ?? '-')
                     ->searchable(),
                 TextColumn::make('creator.first_name')
-                    ->label('Créé par')
+                    ->label(__('filament.therapist.series.table.created_by'))
                     ->getStateUsing(fn ($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
                 IconColumn::make('is_base')
-                    ->label('Série de base')
+                    ->label(__('filament.therapist.series.table.is_base'))
                     ->boolean(),
                 TextColumn::make('cards_count')
-                    ->label('Cartes')
+                    ->label(__('filament.therapist.series.table.cards_count'))
                     ->counts('cards'),
                 TextColumn::make('created_at')
-                    ->label('Créée le')
+                    ->label(__('filament.therapist.series.table.created_at'))
                     ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

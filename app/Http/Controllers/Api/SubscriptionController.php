@@ -23,7 +23,7 @@ class SubscriptionController extends Controller
     public function store(Request $request, Child $child): JsonResponse
     {
         if ($child->parent_id !== $request->user()->id) {
-            return ApiResponse::error('Accès refusé.', 403);
+            return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
         // Vérifier qu'il n'y a pas déjà un abonnement actif
@@ -32,7 +32,7 @@ class SubscriptionController extends Controller
             ->first();
 
         if ($existingSubscription) {
-            return ApiResponse::error('Cet enfant a déjà un abonnement actif.', 409);
+            return ApiResponse::error(__('api.subscription.already_active'), 409);
         }
 
         $validated = $request->validate([
@@ -61,7 +61,7 @@ class SubscriptionController extends Controller
             $latestPrice = SubscriptionPriceHistory::orderBy('effective_from', 'desc')->first();
 
             if (! $latestPrice) {
-                return ApiResponse::error('Aucun tarif configuré.', 500);
+                return ApiResponse::error(__('api.subscription.no_price_configured'), 500);
             }
 
             // Créer la subscription Stripe
@@ -96,7 +96,7 @@ class SubscriptionController extends Controller
                 'error' => $e->getMessage(),
             ]);
 
-            return ApiResponse::error('Erreur lors de la création de l\'abonnement.', 500);
+            return ApiResponse::error(__('api.subscription.creation_error'), 500);
         }
     }
 
@@ -106,7 +106,7 @@ class SubscriptionController extends Controller
     public function destroy(Request $request, Child $child): JsonResponse
     {
         if ($child->parent_id !== $request->user()->id) {
-            return ApiResponse::error('Accès refusé.', 403);
+            return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
         $subscription = Subscription::where('child_id', $child->id)
@@ -114,7 +114,7 @@ class SubscriptionController extends Controller
             ->first();
 
         if (! $subscription) {
-            return ApiResponse::error('Aucun abonnement actif pour cet enfant.', 404);
+            return ApiResponse::error(__('api.subscription.no_active_subscription'), 404);
         }
 
         try {
@@ -125,7 +125,7 @@ class SubscriptionController extends Controller
                 'canceled_at' => now(),
             ]);
 
-            return ApiResponse::success(['message' => 'Abonnement annulé avec succès.']);
+            return ApiResponse::success(['message' => __('api.subscription.cancel_success')]);
 
         } catch (\Exception $e) {
             Log::error('Erreur annulation abonnement Stripe', [
@@ -133,7 +133,7 @@ class SubscriptionController extends Controller
                 'error' => $e->getMessage(),
             ]);
 
-            return ApiResponse::error('Erreur lors de l\'annulation de l\'abonnement.', 500);
+            return ApiResponse::error(__('api.subscription.cancel_error'), 500);
         }
     }
 
@@ -143,7 +143,7 @@ class SubscriptionController extends Controller
     public function show(Request $request, Child $child): JsonResponse
     {
         if ($child->parent_id !== $request->user()->id) {
-            return ApiResponse::error('Accès refusé.', 403);
+            return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
         $subscription = Subscription::where('child_id', $child->id)
@@ -151,7 +151,7 @@ class SubscriptionController extends Controller
             ->first();
 
         if (! $subscription) {
-            return ApiResponse::error('Aucun abonnement trouvé.', 404);
+            return ApiResponse::error(__('api.subscription.not_found'), 404);
         }
 
         return ApiResponse::success($subscription);

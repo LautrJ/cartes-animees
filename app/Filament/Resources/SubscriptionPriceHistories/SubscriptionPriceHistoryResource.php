@@ -23,15 +23,27 @@ class SubscriptionPriceHistoryResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'stripe_price_id';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
-
     protected static ?int $navigationSort = 4;
 
-    protected static ?string $navigationLabel = 'Historique des prix d\'abonnement';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.navigation_groups.payroll');
+    }
 
-    protected static ?string $modelLabel = 'Historique des prix d\'abonnement';
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.subscription_price_histories.navigation.label');
+    }
 
-    protected static ?string $pluralModelLabel = 'Historique des prix d\'abonnement';
+    public static function getModelLabel(): string
+    {
+        return __('filament.subscription_price_histories.navigation.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.subscription_price_histories.navigation.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

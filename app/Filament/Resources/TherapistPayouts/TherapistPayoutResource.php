@@ -24,15 +24,27 @@ class TherapistPayoutResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'payout_label';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
-
     protected static ?int $navigationSort = 5;
 
-    protected static ?string $navigationLabel = 'Paies Orthophonistes';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.navigation_groups.payroll');
+    }
 
-    protected static ?string $modelLabel = 'Paie Orthophoniste';
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.therapist_payouts.navigation_label');
+    }
 
-    protected static ?string $pluralModelLabel = 'Paies Orthophonistes';
+    public static function getModelLabel(): string
+    {
+        return __('filament.therapist_payouts.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.therapist_payouts.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

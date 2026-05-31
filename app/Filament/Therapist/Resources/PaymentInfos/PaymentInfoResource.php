@@ -26,15 +26,27 @@ class PaymentInfoResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'bank_name';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
-
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $navigationLabel = 'Informations bancaire';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.therapist.payment_infos.navigation_group');
+    }
 
-    protected static ?string $modelLabel = 'Informations bancaire';
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.therapist.payment_infos.navigation_label');
+    }
 
-    protected static ?string $pluralModelLabel = 'Informations bancaire';
+    public static function getModelLabel(): string
+    {
+        return __('filament.therapist.payment_infos.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.therapist.payment_infos.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

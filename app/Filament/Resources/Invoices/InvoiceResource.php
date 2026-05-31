@@ -26,15 +26,35 @@ class InvoiceResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'stripe_invoice_id';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
+    protected static string|null|\UnitEnum $navigationGroup = null;
 
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationLabel = 'Factures';
+    protected static ?string $navigationLabel = null;
 
-    protected static ?string $modelLabel = 'Facture';
+    protected static ?string $modelLabel = null;
 
-    protected static ?string $pluralModelLabel = 'Factures';
+    protected static ?string $pluralModelLabel = null;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.navigation_groups.payroll');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.invoices.navigation_label');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('filament.invoices.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.invoices.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

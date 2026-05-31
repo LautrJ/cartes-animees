@@ -26,15 +26,27 @@ class CardResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name->fr';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Gérer le contenu';
-
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $navigationLabel = 'Animations';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.navigation_groups.content');
+    }
 
-    protected static ?string $modelLabel = 'Animation';
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.cards.navigation_label');
+    }
 
-    protected static ?string $pluralModelLabel = 'Animations';
+    public static function getModelLabel(): string
+    {
+        return __('filament.cards.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.cards.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

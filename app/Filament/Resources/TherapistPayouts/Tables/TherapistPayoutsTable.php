@@ -17,29 +17,29 @@ class TherapistPayoutsTable
             ->defaultSort('created_at', 'asc')
             ->columns([
                 TextColumn::make('therapist.first_name')
-                    ->label('Orthophoniste')
+                    ->label(__('filament.therapist_payouts.table.columns.therapist'))
                     ->getStateUsing(fn ($record) => "{$record->therapist->first_name} {$record->therapist->last_name}"),
                 TextColumn::make('amount')
-                    ->label('Montant')
+                    ->label(__('filament.therapist_payouts.table.columns.amount'))
                     ->getStateUsing(fn ($record) => number_format($record->amount, 2).' €'),
                 TextColumn::make('patient_count')
-                    ->label('Patients'),
+                    ->label(__('filament.therapist_payouts.table.columns.patient_count')),
                 TextColumn::make('period_start')
-                    ->label('Période')
+                    ->label(__('filament.therapist_payouts.table.columns.period'))
                     ->getStateUsing(fn ($record) => $record->period_start->format('d/m/Y').' → '.$record->period_end->format('d/m/Y')),
                 IconColumn::make('paid_at')
-                    ->label('Payé')
+                    ->label(__('filament.therapist_payouts.table.columns.paid'))
                     ->boolean()
                     ->getStateUsing(fn ($record) => ! is_null($record->paid_at)),
                 TextColumn::make('paid_at')
-                    ->label('Payé le')
+                    ->label(__('filament.therapist_payouts.table.columns.paid_at'))
                     ->dateTime('d/m/Y')
-                    ->placeholder('En attente')
+                    ->placeholder(__('filament.therapist_payouts.table.columns.paid_at_placeholder'))
                     ->sortable(),
             ])
             ->filters([
                 Filter::make('pending')
-                    ->label('En attente uniquement')
+                    ->label(__('filament.therapist_payouts.table.filters.pending'))
                     ->query(fn ($query) => $query->whereNull('paid_at'))
                     ->default(),
                 TrashedFilter::make(),

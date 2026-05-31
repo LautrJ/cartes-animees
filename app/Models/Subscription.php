@@ -17,6 +17,7 @@ class Subscription extends Model
         'child_id',
         'overridden_by',
         'stripe_subscription_id',
+        'stripe_coupon_id',
         'stripe_price_id',
         'status',
         'override_price',

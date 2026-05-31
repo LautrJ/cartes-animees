@@ -62,4 +62,20 @@ return [
         'action' => 'Set my password',
         'line_4' => 'This link is valid for 60 minutes.',
     ],
+    'free_subscription_created' => [
+        'subject' => 'Free subscription activated — Cartes Animées',
+        'greeting' => 'Hello!',
+        'line_1' => 'A free subscription has been activated for **:child_first_name** on Cartes Animées.',
+        'line_2' => 'Your child now has access to all series unlocked by their speech therapist at no cost.',
+        'action' => 'Open the app',
+        'salutation' => 'Cordialy,<br>Cartes Animées Team',
+    ],
+    'discount_applied' => [
+        'subject' => 'Discount applied — Cartes Animées',
+        'greeting' => 'Hello!',
+        'line_1' => 'A discount of **:discount_amount €/month** has been applied to **:child_first_name**\'s subscription.',
+        'line_2' => 'New monthly amount: **:new_price €/month**',
+        'action' => 'Open the app',
+        'salutation' => 'Cordialy, <br>Cartes Animées Team',
+    ],
 ];

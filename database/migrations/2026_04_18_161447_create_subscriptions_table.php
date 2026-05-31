@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('child_id')->constrained('children')->restrictOnDelete();
             $table->foreignId('overridden_by')->nullable()->constrained('users')->nullOnDelete();
             $table->string('stripe_subscription_id')->nullable()->unique();
+            $table->string('stripe_coupon_id')->nullable()->unique();
             $table->string('stripe_price_id')->nullable();
             $table->enum('status', ['active', 'past_due', 'canceled', 'free'])->default('active');
             $table->decimal('override_price', 8, 2)->nullable();

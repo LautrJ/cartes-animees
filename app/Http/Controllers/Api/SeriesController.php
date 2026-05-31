@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\SubscriptionStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
 use App\Models\Child;
@@ -17,19 +18,24 @@ class SeriesController extends Controller
             return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
+        $hasActiveSubscription = $child->subscriptions()
+            ->whereIn('status', [SubscriptionStatus::Active, SubscriptionStatus::Free])
+            ->exists();
+
         $series = $child->series()
             ->where('is_active', true)
+            ->when(! $hasActiveSubscription, fn ($query) => $query->where('is_base', true))
             ->withPivot(['status', 'unlocked_at', 'completed_at'])
             ->get()
             ->map(fn ($series) => [
-                'id' => $series->id,
-                'name' => $series->name,
+                'id'          => $series->id,
+                'name'        => $series->name,
                 'description' => $series->description,
-                'thumbnail' => $series->thumbnail_path,
-                'is_base' => $series->is_base,
-                'status' => $series->pivot->status,
+                'thumbnail'   => $series->thumbnail_path,
+                'is_base'     => $series->is_base,
+                'status'      => $series->pivot->status,
                 'unlocked_at' => $series->pivot->unlocked_at,
-                'completed_at' => $series->pivot->completed_at,
+                'completed_at'=> $series->pivot->completed_at,
             ]);
 
         return ApiResponse::success($series);
@@ -38,6 +44,14 @@ class SeriesController extends Controller
     public function show(Request $request, Child $child, Series $series): JsonResponse
     {
         if ($child->parent_id !== $request->user()->id) {
+            return ApiResponse::error(__('api.common.access_denied'), 403);
+        }
+
+        $hasActiveSubscription = $child->subscriptions()
+            ->whereIn('status', [SubscriptionStatus::Active, SubscriptionStatus::Free])
+            ->exists();
+
+        if (! $hasActiveSubscription && ! $series->is_base) {
             return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
@@ -53,23 +67,23 @@ class SeriesController extends Controller
             ->orderBy('series_cards.order')
             ->get()
             ->map(fn ($card) => [
-                'id' => $card->id,
-                'name' => $card->name,
+                'id'                   => $card->id,
+                'name'                 => $card->name,
                 'drawn_animation_path' => $card->drawn_animation_path,
-                'real_animation_path' => $card->real_animation_path,
-                'sound_path' => $card->sound_path,
-                'width' => $card->width,
-                'height' => $card->height,
-                'duration' => $card->duration,
+                'real_animation_path'  => $card->real_animation_path,
+                'sound_path'           => $card->sound_path,
+                'width'                => $card->width,
+                'height'               => $card->height,
+                'duration'             => $card->duration,
             ]);
 
         return ApiResponse::success([
-            'id' => $series->id,
-            'name' => $series->name,
+            'id'          => $series->id,
+            'name'        => $series->name,
             'description' => $series->description,
-            'thumbnail' => $series->thumbnail_path,
-            'is_base' => $series->is_base,
-            'cards' => $cards,
+            'thumbnail'   => $series->thumbnail_path,
+            'is_base'     => $series->is_base,
+            'cards'       => $cards,
         ]);
     }
 }

@@ -44,16 +44,22 @@ class SubscriptionInfolist
                                 (float) $record->override_price === 0.0 => __('filament.subscriptions.infolist.fields.price_free'),
                                 default => number_format($record->override_price, 2).' €',
                             }),
-                        TextEntry::make('stripe_subscription_id')
-                            ->label(__('filament.subscriptions.infolist.fields.stripe_subscription_id'))
-                            ->placeholder(__('filament.subscriptions.infolist.fields.stripe_subscription_id_placeholder'))
-                            ->columnSpanFull(),
                         TextEntry::make('current_period_start')
                             ->label(__('filament.subscriptions.infolist.fields.current_period_start'))
                             ->dateTime('d/m/Y'),
+                        TextEntry::make('stripe_subscription_id')
+                            ->label(__('filament.subscriptions.infolist.fields.stripe_subscription_id'))
+                            ->placeholder(__('filament.subscriptions.infolist.fields.stripe_subscription_id_placeholder')),
                         TextEntry::make('current_period_end')
                             ->label(__('filament.subscriptions.infolist.fields.current_period_end'))
                             ->dateTime('d/m/Y'),
+                        TextEntry::make('stripe_coupon_id')
+                            ->label(__('filament.subscriptions.infolist.fields.stripe_coupon_id'))
+                            ->placeholder('-')
+                            ->fontFamily('mono')
+                            ->color('warning')
+                            ->copyable()
+                            ->copyMessage(__('filament.subscriptions.infolist.fields.copy_message')),
                         TextEntry::make('canceled_at')
                             ->label(__('filament.subscriptions.infolist.fields.canceled_at'))
                             ->dateTime('d/m/Y H:i')

@@ -123,6 +123,15 @@ return [
         'navigation_label' => 'Children',
         'model_label' => 'Child',
         'plural_model_label' => 'Children',
+        'actions' => [
+            'create_free_subscription' => [
+                'label' => 'Create a free subscription',
+                'modal_heading' => 'Create a free subscription?',
+                'modal_description' => 'The child will have access to all unlocked series at no cost.',
+                'modal_submit_label' => 'Confirm',
+                'notification_success' => 'Free subscription successfully created.',
+            ],
+        ],
         'form' => [
             'sections' => [
                 'personal_info' => 'Personal information',
@@ -320,6 +329,30 @@ return [
         'navigation_label' => 'Subscriptions',
         'model_label' => 'Subscription',
         'plural_model_label' => 'Subscriptions',
+        'actions' => [
+            'apply_discount' => [
+                'label' => 'Apply a discount',
+                'modal_heading' => 'Apply a discount',
+                'modal_description' => 'The discount will be applied from the next renewal.',
+                'modal_submit_label' => 'Apply',
+                'field_discount_amount' => 'Discount amount (€/month)',
+                'notification_success' => ':amount € discount successfully applied.',
+            ],
+            'remove_discount' => [
+                'label' => 'Remove discount',
+                'modal_heading' => 'Remove discount?',
+                'modal_description' => 'The parent will be charged at the normal price from the next renewal.',
+                'modal_submit_label' => 'Confirm',
+                'notification_success' => 'Discount successfully removed.',
+            ],
+            'cancel_free_subscription' => [
+                'label' => 'Cancel free subscription',
+                'modal_heading' => 'Cancel free subscription?',
+                'modal_description' => 'The child will only have access to base series.',
+                'modal_submit_label' => 'Confirm',
+                'notification_success' => 'Free subscription successfully canceled.',
+            ],
+        ],
         'form' => [
             'sections' => [
                 'status' => 'Status',
@@ -350,6 +383,8 @@ return [
                 'price_free' => 'Free',
                 'stripe_subscription_id' => 'Stripe ID',
                 'stripe_subscription_id_placeholder' => 'None (free)',
+                'stripe_coupon_id' => 'Applied coupon',
+                'copy_message' => 'ID copied',
                 'current_period_start' => 'Period start',
                 'current_period_end' => 'Period end',
                 'canceled_at' => 'Canceled on',

@@ -123,6 +123,15 @@ return [
         'navigation_label' => 'Enfants',
         'model_label' => 'Enfant',
         'plural_model_label' => 'Enfants',
+        'actions' => [
+            'create_free_subscription' => [
+                'label' => 'Créer un abonnement gratuit',
+                'modal_heading' => 'Créer un abonnement gratuit ?',
+                'modal_description' => 'L\'enfant aura accès à toutes les séries débloquées sans frais.',
+                'modal_submit_label' => 'Confirmer',
+                'notification_success' => 'Abonnement gratuit créé avec succès.',
+            ],
+        ],
         'form' => [
             'sections' => [
                 'personal_info' => 'Informations personnelles',
@@ -320,6 +329,30 @@ return [
         'navigation_label' => 'Abonnements',
         'model_label' => 'Abonnement',
         'plural_model_label' => 'Abonnements',
+        'actions' => [
+            'apply_discount' => [
+                'label' => 'Appliquer une réduction',
+                'modal_heading' => 'Appliquer une réduction',
+                'modal_description' => 'La réduction sera appliquée dès le prochain renouvellement.',
+                'modal_submit_label' => 'Appliquer',
+                'field_discount_amount' => 'Montant de la réduction (€/mois)',
+                'notification_success' => 'Réduction de :amount € appliquée avec succès.',
+            ],
+            'remove_discount' => [
+                'label' => 'Retirer la réduction',
+                'modal_heading' => 'Retirer la réduction ?',
+                'modal_description' => 'Le parent sera à nouveau facturé au prix normal dès le prochain renouvellement.',
+                'modal_submit_label' => 'Confirmer',
+                'notification_success' => 'Réduction retirée avec succès.',
+            ],
+            'cancel_free_subscription' => [
+                'label' => 'Annuler l\'abonnement gratuit',
+                'modal_heading' => 'Annuler l\'abonnement gratuit ?',
+                'modal_description' => 'L\'enfant n\'aura plus accès qu\'aux séries de base.',
+                'modal_submit_label' => 'Confirmer',
+                'notification_success' => 'Abonnement gratuit annulé.',
+            ],
+        ],
         'form' => [
             'sections' => [
                 'status' => 'Statut',
@@ -350,6 +383,8 @@ return [
                 'price_free' => 'Gratuit',
                 'stripe_subscription_id' => 'ID Stripe',
                 'stripe_subscription_id_placeholder' => 'Aucun (gratuit)',
+                'stripe_coupon_id' => 'Coupon appliqué',
+                'copy_message' => 'ID copié',
                 'current_period_start' => 'Début de période',
                 'current_period_end' => 'Fin de période',
                 'canceled_at' => 'Annulé le',

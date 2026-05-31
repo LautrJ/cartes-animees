@@ -55,6 +55,7 @@ class StripeService
         return $this->stripe->subscriptions->create([
             'customer' => $customerId,
             'items' => [['price' => $priceId]],
+            'billing_mode' => ['type' => 'classic'],
             'payment_behavior' => 'default_incomplete',
             'expand' => ['latest_invoice.payment_intent'],
         ]);
@@ -63,6 +64,32 @@ class StripeService
     public function cancelSubscription(string $subscriptionId): void
     {
         $this->stripe->subscriptions->cancel($subscriptionId);
+    }
+
+    public function createCoupon(float $amountOff): string
+    {
+        $coupon = $this->stripe->coupons->create([
+            'amount_off' => (int) ($amountOff * 100),
+            'currency'   => 'eur',
+            'duration'   => 'forever',
+            'name'       => 'Réduction appliquée par l\'administrateur',
+        ]);
+
+        return $coupon->id;
+    }
+
+    public function applyCouponToSubscription(string $subscriptionId, string $couponId): void
+    {
+        $this->stripe->subscriptions->update($subscriptionId, [
+            'discounts' => [['coupon' => $couponId]],
+        ]);
+    }
+
+    public function removeCouponFromSubscription(string $subscriptionId): void
+    {
+        $this->stripe->subscriptions->update($subscriptionId, [
+            'discounts' => [],
+        ]);
     }
 
     public function constructWebhookEvent(string $payload, string $signature): Event

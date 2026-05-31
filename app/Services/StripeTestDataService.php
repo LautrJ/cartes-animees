@@ -84,6 +84,7 @@ class StripeTestDataService
         $stripeSub = $this->stripe->subscriptions->create([
             'customer' => $customerId,
             'items' => [['price' => $priceId]],
+            'billing_mode' => ['type' => 'classic'],
             'default_payment_method' => $pmId,
         ]);
 
@@ -117,6 +118,7 @@ class StripeTestDataService
         $stripeSub = $this->stripe->subscriptions->create([
             'customer' => $customerId,
             'items' => [['price' => $priceId]],
+            'billing_mode' => ['type' => 'classic'],
             'default_payment_method' => $pmId,
         ]);
 
@@ -152,6 +154,7 @@ class StripeTestDataService
         $stripeSub = $this->stripe->subscriptions->create([
             'customer' => $customerId,
             'items' => [['price' => $priceId]],
+            'billing_mode' => ['type' => 'classic'],
             'default_payment_method' => $pmId,
         ]);
 

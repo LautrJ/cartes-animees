@@ -62,4 +62,20 @@ return [
         'action' => 'Définir mon mot de passe',
         'line_4' => 'Ce lien est valable 60 minutes.',
     ],
+    'free_subscription_created' => [
+        'subject' => 'Abonnement gratuit activé — Cartes Animées',
+        'greeting' => 'Bonjour !',
+        'line_1' => 'Un abonnement gratuit a été activé pour **:child_first_name** sur Cartes Animées.',
+        'line_2' => 'Votre enfant a désormais accès à toutes les séries débloquées par son orthophoniste sans frais.',
+        'action' => 'Accéder à l\'application',
+        'salutation' => 'Cordialement,<br>L\'équipe Cartes Animées',
+    ],
+    'discount_applied' => [
+        'subject' => 'Réduction appliquée — Cartes Animées',
+        'greeting' => 'Bonjour !',
+        'line_1' => 'Une réduction de **:discount_amount €/mois** a été appliquée à l\'abonnement de **:child_first_name**.',
+        'line_2' => 'Nouveau montant mensuel : **:new_price €/mois**',
+        'action' => 'Accéder à l\'application',
+        'salutation' => 'Cordialement,<br>L\'équipe Cartes Animées',
+    ],
 ];

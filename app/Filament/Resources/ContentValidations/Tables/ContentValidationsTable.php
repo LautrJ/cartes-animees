@@ -23,11 +23,11 @@ class ContentValidationsTable
             ->defaultSort('submitted_at', 'asc')
             ->columns([
                 TextColumn::make('validatable_type')
-                    ->label('Type')
+                    ->label(__('filament.content_validations.table.columns.validatable_type'))
                     ->badge()
                     ->getStateUsing(fn ($record) => match ($record->validatable_type) {
-                        Card::class => 'Carte',
-                        Series::class => 'Série',
+                        Card::class => __('filament.content_validations.table.columns.validatable_type_card'),
+                        Series::class => __('filament.content_validations.table.columns.validatable_type_series'),
                         default => $record->validatable_type,
                     })
                     ->color(fn ($record) => match ($record->validatable_type) {
@@ -36,13 +36,13 @@ class ContentValidationsTable
                         default => 'gray',
                     }),
                 TextColumn::make('validatable.name')
-                    ->label('Contenu')
+                    ->label(__('filament.content_validations.table.columns.content'))
                     ->getStateUsing(fn ($record) => $record->validatable?->name['fr'] ?? '-'),
                 TextColumn::make('submitter.first_name')
-                    ->label('Soumis par')
+                    ->label(__('filament.content_validations.table.columns.submitted_by'))
                     ->getStateUsing(fn ($record) => "{$record->submitter->first_name} {$record->submitter->last_name}"),
                 TextColumn::make('status')
-                    ->label('Statut')
+                    ->label(__('filament.content_validations.table.columns.status'))
                     ->badge()
                     ->color(fn (ContentValidationStatus $state) => match ($state) {
                         ContentValidationStatus::Pending => 'warning',
@@ -50,29 +50,29 @@ class ContentValidationsTable
                         ContentValidationStatus::Rejected => 'danger',
                     }),
                 TextColumn::make('submitted_at')
-                    ->label('Soumis le')
+                    ->label(__('filament.content_validations.table.columns.submitted_at'))
                     ->dateTime('d/m/Y H:i')
                     ->sortable(),
                 TextColumn::make('reviewed_at')
-                    ->label('Traité le')
+                    ->label(__('filament.content_validations.table.columns.reviewed_at'))
                     ->dateTime('d/m/Y H:i')
                     ->placeholder('-')
                     ->sortable(),
             ])
             ->filters([
                 SelectFilter::make('status')
-                    ->label('Statut')
+                    ->label(__('filament.content_validations.table.filters.status'))
                     ->options([
-                        'pending' => 'En attente',
-                        'approved' => 'Approuvé',
-                        'rejected' => 'Rejeté',
+                        'pending' => __('filament.content_validations.table.filters.status_pending'),
+                        'approved' => __('filament.content_validations.table.filters.status_approved'),
+                        'rejected' => __('filament.content_validations.table.filters.status_rejected'),
                     ])
                     ->default('pending'),
                 SelectFilter::make('validatable_type')
-                    ->label('Type')
+                    ->label(__('filament.content_validations.table.filters.validatable_type'))
                     ->options([
-                        Card::class => 'Carte',
-                        Series::class => 'Série',
+                        Card::class => __('filament.content_validations.table.filters.validatable_type_card'),
+                        Series::class => __('filament.content_validations.table.filters.validatable_type_series'),
                     ]),
                 TrashedFilter::make(),
             ])

@@ -13,18 +13,18 @@ class PaymentInfoForm
         return $schema
             ->columns(1)
             ->components([
-                Section::make('Informations bancaires')
+                Section::make(__('filament.therapist.payment_infos.form.section_bank'))
                     ->schema([
                         TextInput::make('iban')
-                            ->label('IBAN')
+                            ->label(__('filament.therapist.payment_infos.form.iban'))
                             ->required()
                             ->maxLength(34),
                         TextInput::make('bic')
-                            ->label('BIC')
+                            ->label(__('filament.therapist.payment_infos.form.bic'))
                             ->required()
                             ->maxLength(11),
                         TextInput::make('bank_name')
-                            ->label('Nom de la banque')
+                            ->label(__('filament.therapist.payment_infos.form.bank_name'))
                             ->required()
                             ->maxLength(255),
                     ]),

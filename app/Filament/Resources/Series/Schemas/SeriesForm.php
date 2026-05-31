@@ -18,20 +18,20 @@ class SeriesForm
     {
         return $schema
             ->components([
-                Section::make('Informations générales')
+                Section::make(__('filament.series.form.sections.general_info'))
                     ->columns(2)
                     ->schema([
                         TextInput::make('name.fr')
-                            ->label('Nom')
+                            ->label(__('filament.series.form.fields.name'))
                             ->required()
                             ->maxLength(255)
                             ->columnSpanFull(),
                         Textarea::make('description.fr')
-                            ->label('Description')
+                            ->label(__('filament.series.form.fields.description'))
                             ->rows(3)
                             ->columnSpanFull(),
                         Select::make('created_by')
-                            ->label('Créé par')
+                            ->label(__('filament.series.form.fields.created_by'))
                             ->options(
                                 User::whereIn('role', [UserRole::Admin, UserRole::Therapist])
                                     ->get()
@@ -42,23 +42,23 @@ class SeriesForm
                             ->columnSpanFull(),
                     ]),
 
-                Section::make('Médias')
+                Section::make(__('filament.series.form.sections.medias'))
                     ->schema([
                         FileUpload::make('thumbnail_path')
-                            ->label('Miniature')
+                            ->label(__('filament.series.form.fields.thumbnail_path'))
                             ->image()
                             ->nullable(),
                     ]),
 
-                Section::make('Paramètres')
+                Section::make(__('filament.series.form.sections.settings'))
                     ->columns(3)
                     ->schema([
                         Toggle::make('is_base')
-                            ->label('Série de base'),
+                            ->label(__('filament.series.form.fields.is_base')),
                         Toggle::make('is_validated')
-                            ->label('Validée'),
+                            ->label(__('filament.series.form.fields.is_validated')),
                         Toggle::make('is_active')
-                            ->label('Active')
+                            ->label(__('filament.series.form.fields.is_active'))
                             ->default(true),
                     ]),
             ]);

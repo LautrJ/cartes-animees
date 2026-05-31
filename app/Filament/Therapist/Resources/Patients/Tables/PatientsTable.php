@@ -14,24 +14,24 @@ class PatientsTable
         return $table
             ->columns([
                 TextColumn::make('full_name')
-                    ->label('Nom complet')
+                    ->label(__('filament.therapist.patients.table.full_name'))
                     ->getStateUsing(fn ($record) => "{$record->first_name} {$record->last_name}")
                     ->searchable(query: fn ($query, $search) => $query
                         ->where('first_name', 'like', "%{$search}%")
                         ->orWhere('last_name', 'like', "%{$search}%")
                     ),
                 TextColumn::make('birthdate')
-                    ->label('Date de naissance')
+                    ->label(__('filament.therapist.patients.table.birthdate'))
                     ->date('d/m/Y')
                     ->placeholder('-'),
                 TextColumn::make('parent.first_name')
-                    ->label('Parent')
+                    ->label(__('filament.therapist.patients.table.parent'))
                     ->getStateUsing(fn ($record) => "{$record->parent->first_name} {$record->parent->last_name}"),
                 TextColumn::make('series_count')
-                    ->label('Séries débloquées')
+                    ->label(__('filament.therapist.patients.table.series_count'))
                     ->getStateUsing(fn ($record) => $record->series()->count()),
                 TextColumn::make('created_at')
-                    ->label('Suivi depuis')
+                    ->label(__('filament.therapist.patients.table.created_at'))
                     ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

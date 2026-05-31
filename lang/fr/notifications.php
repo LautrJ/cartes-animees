@@ -1,0 +1,65 @@
+<?php
+
+return [
+    'common' => [
+        'greeting' => 'Bonjour !',
+        'action_open_app' => 'Accéder à l\'application',
+    ],
+    'follow_up_ended' => [
+        'subject' => 'Fin de suivi orthophoniste — :child_first_name',
+        'greeting' => 'Bonjour !',
+        'line_1' => 'Le suivi de **:child_first_name** par **:therapist_first_name :therapist_last_name** a pris fin.',
+        'line_2' => 'L\'abonnement de votre enfant reste actif et son accès aux séries débloquées est maintenu.',
+        'action' => 'Accéder à l\'application',
+        'line_3' => 'Vous pouvez rattacher un nouvel orthophoniste depuis votre espace personnel si besoin.',
+    ],
+    'follow_up_started' => [
+        'subject' => 'Nouveau suivi orthophoniste — :child_first_name',
+        'greeting' => 'Bonjour !',
+        'line_1' => '**:therapist_first_name :therapist_last_name** assure désormais le suivi de **:child_first_name** sur Cartes Animées.',
+        'line_2' => 'Il pourra débloquer des séries adaptées à la progression de votre enfant.',
+        'action' => 'Accéder à l\'application',
+        'line_3' => 'Vous pouvez retrouver les informations de suivi depuis votre espace personnel.',
+    ],
+    'no_progress' => [
+        'subject' => 'Pas d\'activité récente — :child_first_name',
+        'greeting' => 'Bonjour !',
+        'line_1' => 'Nous n\'avons pas détecté d\'activité de **:child_first_name** sur Cartes Animées depuis plus d\'une semaine.',
+        'line_2' => 'La régularité est importante pour la progression de votre enfant.',
+        'action' => 'Reprendre les exercices',
+        'line_3' => 'Votre orthophoniste référent peut également débloquer de nouvelles séries pour maintenir la motivation.',
+    ],
+    'payment_failed' => [
+        'subject' => 'Échec de paiement — Cartes Animées',
+        'greeting' => 'Bonjour !',
+        'line_1' => 'Le renouvellement de l\'abonnement de **:child_first_name** a échoué.',
+        'line_2' => 'L\'accès aux séries payantes a été suspendu temporairement.',
+        'action' => 'Mettre à jour mes informations de paiement',
+        'line_3' => 'L\'accès sera automatiquement restauré après régularisation du paiement.',
+    ],
+    'payment_succeeded' => [
+        'subject' => 'Paiement confirmé — Cartes Animées',
+        'greeting' => 'Bonjour !',
+        'line_1' => 'Le paiement de l\'abonnement de **:child_first_name** a bien été effectué.',
+        'line_2' => 'Montant débité : **:amount €**',
+        'action' => 'Accéder à l\'application',
+        'line_3' => 'Merci pour votre confiance !',
+    ],
+    'welcome_parent' => [
+        'subject' => 'Bienvenue sur Cartes Animées !',
+        'greeting' => 'Bonjour :first_name !',
+        'line_1' => 'Nous sommes ravis de vous accueillir sur Cartes Animées, l\'application éducative pour les enfants malentendants.',
+        'line_2' => 'Vous pouvez dès maintenant créer le profil de votre enfant et découvrir nos séries d\'animations gratuites.',
+        'action' => 'Accéder à l\'application',
+        'line_3' => 'Si vous avez des questions, n\'hésitez pas à nous contacter.',
+    ],
+    'welcome_therapist' => [
+        'subject' => 'Bienvenue sur Cartes Animées !',
+        'greeting' => 'Bonjour :first_name !',
+        'line_1' => 'Votre compte orthophoniste a bien été créé sur Cartes Animées.',
+        'line_2' => 'Vous pouvez dès maintenant gérer vos patients, créer du contenu et suivre leur progression.',
+        'line_3' => 'Votre code d\'invitation à partager à vos patients : **:invitation_code**',
+        'action' => 'Définir mon mot de passe',
+        'line_4' => 'Ce lien est valable 60 minutes.',
+    ],
+];

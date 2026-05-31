@@ -19,7 +19,10 @@ class SeriesRelationManager extends RelationManager
 {
     protected static string $relationship = 'series';
 
-    protected static ?string $title = 'Séries';
+    public static function getTitle(\Illuminate\Database\Eloquent\Model $ownerRecord, string $pageClass): string
+    {
+        return __('filament.therapist.patients.series_relation_manager.title');
+    }
 
     public function form(Schema $schema): Schema
     {
@@ -32,10 +35,10 @@ class SeriesRelationManager extends RelationManager
             ->recordTitleAttribute('name.fr')
             ->columns([
                 TextColumn::make('name.fr')
-                    ->label('Série')
+                    ->label(__('filament.therapist.patients.series_relation_manager.column_serie'))
                     ->searchable(),
                 TextColumn::make('pivot.status')
-                    ->label('Statut')
+                    ->label(__('filament.therapist.patients.series_relation_manager.column_status'))
                     ->badge()
                     ->color(fn ($state) => match ($state) {
                         'completed' => 'success',
@@ -43,22 +46,22 @@ class SeriesRelationManager extends RelationManager
                         default => 'gray',
                     })
                     ->formatStateUsing(fn ($state) => match ($state) {
-                        'completed' => 'Complétée',
-                        'unlocked' => 'En cours',
+                        'completed' => __('filament.therapist.patients.series_relation_manager.status_completed'),
+                        'unlocked' => __('filament.therapist.patients.series_relation_manager.status_unlocked'),
                         default => $state,
                     }),
                 TextColumn::make('pivot.unlocked_at')
-                    ->label('Débloquée le')
+                    ->label(__('filament.therapist.patients.series_relation_manager.column_unlocked_at'))
                     ->dateTime('d/m/Y'),
                 TextColumn::make('pivot.completed_at')
-                    ->label('Complétée le')
+                    ->label(__('filament.therapist.patients.series_relation_manager.column_completed_at'))
                     ->dateTime('d/m/Y')
-                    ->placeholder('En cours'),
+                    ->placeholder(__('filament.therapist.patients.series_relation_manager.completed_at_placeholder')),
             ])
             ->filters([])
             ->headerActions([
                 Action::make('unlock_series')
-                    ->label('Débloquer une série')
+                    ->label(__('filament.therapist.patients.series_relation_manager.unlock_label'))
                     ->icon('heroicon-o-lock-open')
                     ->color('success')
                     ->form(function () {
@@ -69,7 +72,7 @@ class SeriesRelationManager extends RelationManager
 
                         return [
                             Select::make('series_id')
-                                ->label('Série à débloquer')
+                                ->label(__('filament.therapist.patients.series_relation_manager.unlock_series_label'))
                                 ->options(
                                     Series::validated()
                                         ->active()
@@ -81,8 +84,8 @@ class SeriesRelationManager extends RelationManager
                                 ->searchable(),
                         ];
                     })
-                    ->modalHeading('Débloquer une série')
-                    ->modalSubmitActionLabel('Débloquer')
+                    ->modalHeading(__('filament.therapist.patients.series_relation_manager.unlock_modal_heading'))
+                    ->modalSubmitActionLabel(__('filament.therapist.patients.series_relation_manager.unlock_modal_submit'))
                     ->action(function (array $data) {
                         $child = $this->getOwnerRecord();
                         $series = Series::findOrFail($data['series_id']);
@@ -96,20 +99,20 @@ class SeriesRelationManager extends RelationManager
                         $child->parent->notify(new SeriesUnlockedNotification($child, $series));
 
                         Notification::make()
-                            ->title('Série débloquée avec succès')
+                            ->title(__('filament.therapist.patients.series_relation_manager.unlock_notification'))
                             ->success()
                             ->send();
                     }),
             ])
             ->recordActions([
                 Action::make('complete')
-                    ->label('Marquer complétée')
+                    ->label(__('filament.therapist.patients.series_relation_manager.complete_label'))
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
                     ->visible(fn ($record) => $record->pivot->status === ChildSeriesStatus::Unlocked->value)
                     ->requiresConfirmation()
-                    ->modalHeading('Marquer cette série comme complétée ?')
-                    ->modalSubmitActionLabel('Confirmer')
+                    ->modalHeading(__('filament.therapist.patients.series_relation_manager.complete_modal_heading'))
+                    ->modalSubmitActionLabel(__('filament.therapist.patients.series_relation_manager.complete_modal_submit'))
                     ->action(function ($record) {
                         $child = $this->getOwnerRecord();
 
@@ -121,25 +124,25 @@ class SeriesRelationManager extends RelationManager
                         $child->parent->notify(new SeriesCompletedNotification($child, $record));
 
                         Notification::make()
-                            ->title('Série marquée comme complétée')
+                            ->title(__('filament.therapist.patients.series_relation_manager.complete_notification'))
                             ->success()
                             ->send();
                     }),
 
                 Action::make('detach')
-                    ->label('Retirer')
+                    ->label(__('filament.therapist.patients.series_relation_manager.detach_label'))
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
                     ->visible(fn ($record) => ! $record->is_base)
                     ->requiresConfirmation()
-                    ->modalHeading('Retirer cette série ?')
-                    ->modalDescription('L\'enfant n\'aura plus accès à cette série.')
-                    ->modalSubmitActionLabel('Retirer')
+                    ->modalHeading(__('filament.therapist.patients.series_relation_manager.detach_modal_heading'))
+                    ->modalDescription(__('filament.therapist.patients.series_relation_manager.detach_modal_description'))
+                    ->modalSubmitActionLabel(__('filament.therapist.patients.series_relation_manager.detach_modal_submit'))
                     ->action(function ($record) {
                         $this->getOwnerRecord()->series()->detach($record->id);
 
                         Notification::make()
-                            ->title('Série retirée')
+                            ->title(__('filament.therapist.patients.series_relation_manager.detach_notification'))
                             ->success()
                             ->send();
                     }),

@@ -2,12 +2,12 @@
     <x-filament::section>
         <div style="display: flex; align-items: center; justify-content: space-between;">
             <div>
-                <p style="font-size: 0.875rem; color: var(--color-gray-500); margin: 0;">Taux de commission actuel</p>
+                <p style="font-size: 0.875rem; color: var(--color-gray-500); margin: 0;">{{ __('filament.therapist.widgets.current_commission_rate.label') }}</p>
                 <p style="font-size: 1.75rem; font-weight: 700; color: var(--color-primary-600); margin: 4px 0;">
                     {{ $rate }} €
-                    <span style="font-size: 0.875rem; font-weight: 400; color: var(--color-gray-500);">/patient/mois</span>
+                    <span style="font-size: 0.875rem; font-weight: 400; color: var(--color-gray-500);">{{ __('filament.therapist.widgets.current_commission_rate.unit') }}</span>
                 </p>
-                <p style="font-size: 0.75rem; color: var(--color-gray-400); margin: 0;">En vigueur depuis le {{ $since }}</p>
+                <p style="font-size: 0.75rem; color: var(--color-gray-400); margin: 0;">{{ __('filament.therapist.widgets.current_commission_rate.since') }} {{ $since }}</p>
             </div>
             <div style="background: var(--color-primary-100); border-radius: 9999px; padding: 12px; display: flex; align-items: center; justify-content: center;">
                 <svg style="width: 28px; height: 28px; color: var(--color-primary-600);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

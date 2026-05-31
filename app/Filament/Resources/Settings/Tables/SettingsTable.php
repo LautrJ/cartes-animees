@@ -14,12 +14,12 @@ class SettingsTable
         return $table
             ->columns([
                 TextColumn::make('label')
-                    ->label('Paramètre')
+                    ->label(__('filament.settings.table.column_label'))
                     ->searchable(),
                 TextColumn::make('value')
-                    ->label('Valeur'),
+                    ->label(__('filament.settings.table.value')),
                 TextColumn::make('type')
-                    ->label('Type')
+                    ->label(__('filament.settings.table.type'))
                     ->badge()
                     ->color(fn (SettingType $state) => match ($state) {
                         SettingType::String => 'gray',
@@ -28,7 +28,7 @@ class SettingsTable
                         SettingType::Boolean => 'success',
                     }),
                 TextColumn::make('description')
-                    ->label('Description')
+                    ->label(__('filament.settings.table.description'))
                     ->limit(50)
                     ->placeholder('-'),
             ])

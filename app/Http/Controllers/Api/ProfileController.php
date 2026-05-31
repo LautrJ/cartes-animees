@@ -38,13 +38,13 @@ class ProfileController extends Controller
         ]);
 
         if (! Hash::check($request->current_password, $request->user()->password)) {
-            return ApiResponse::error('Mot de passe actuel incorrect.', 422);
+            return ApiResponse::error(__('api.profile.wrong_password'), 422);
         }
 
         $request->user()->update([
             'password' => $request->password,
         ]);
 
-        return ApiResponse::success(['message' => 'Mot de passe mis à jour avec succès.']);
+        return ApiResponse::success(['message' => __('api.profile.password_updated')]);
     }
 }

@@ -24,15 +24,27 @@ class TherapistPayoutResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'amount';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
-
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationLabel = 'Paies';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.therapist.therapist_payouts.navigation.group');
+    }
 
-    protected static ?string $modelLabel = 'Paie';
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.therapist.therapist_payouts.navigation.label');
+    }
 
-    protected static ?string $pluralModelLabel = 'Paies';
+    public static function getModelLabel(): string
+    {
+        return __('filament.therapist.therapist_payouts.navigation.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.therapist.therapist_payouts.navigation.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

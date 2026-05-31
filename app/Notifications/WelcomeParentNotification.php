@@ -33,11 +33,11 @@ class WelcomeParentNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Bienvenue sur Cartes Animées !')
-            ->greeting("Bonjour {$this->firstName} !")
-            ->line('Nous sommes ravis de vous accueillir sur Cartes Animées, l\'application éducative pour les enfants malentendants.')
-            ->line('Vous pouvez dès maintenant créer le profil de votre enfant et découvrir nos séries d\'animations gratuites.')
-            ->action('Accéder à l\'application', config('app.frontend_url'))
-            ->line('Si vous avez des questions, n\'hésitez pas à nous contacter.');
+            ->subject(__('notifications.welcome_parent.subject'))
+            ->greeting(__('notifications.welcome_parent.greeting', ['first_name' => $this->firstName]))
+            ->line(__('notifications.welcome_parent.line_1'))
+            ->line(__('notifications.welcome_parent.line_2'))
+            ->action(__('notifications.welcome_parent.action'), config('app.frontend_url'))
+            ->line(__('notifications.welcome_parent.line_3'));
     }
 }

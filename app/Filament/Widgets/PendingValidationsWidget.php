@@ -13,7 +13,12 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class PendingValidationsWidget extends BaseWidget
 {
-    protected static ?string $heading = 'Validations en attente';
+    protected static ?string $heading = null;
+
+    public function getHeading(): string|\Illuminate\Contracts\Support\Htmlable|null
+    {
+        return __('filament.widgets.pending_validations.heading');
+    }
 
     protected int|string|array $columnSpan = 'full';
 
@@ -30,11 +35,11 @@ class PendingValidationsWidget extends BaseWidget
             )
             ->columns([
                 TextColumn::make('validatable_type')
-                    ->label('Type')
+                    ->label(__('filament.widgets.pending_validations.type'))
                     ->badge()
                     ->getStateUsing(fn ($record) => match ($record->validatable_type) {
-                        Card::class => 'Carte',
-                        Series::class => 'Série',
+                        Card::class => __('filament.widgets.pending_validations.badge_card'),
+                        Series::class => __('filament.widgets.pending_validations.badge_series'),
                         default => '-',
                     })
                     ->color(fn ($record) => match ($record->validatable_type) {
@@ -43,13 +48,13 @@ class PendingValidationsWidget extends BaseWidget
                         default => 'gray',
                     }),
                 TextColumn::make('validatable.name')
-                    ->label('Contenu')
+                    ->label(__('filament.widgets.pending_validations.content'))
                     ->getStateUsing(fn ($record) => $record->validatable?->name['fr'] ?? '-'),
                 TextColumn::make('submitter.first_name')
-                    ->label('Soumis par')
+                    ->label(__('filament.widgets.pending_validations.submitted_by'))
                     ->getStateUsing(fn ($record) => "{$record->submitter->first_name} {$record->submitter->last_name}"),
                 TextColumn::make('submitted_at')
-                    ->label('Soumis le')
+                    ->label(__('filament.widgets.pending_validations.submitted_at'))
                     ->dateTime('d/m/Y H:i'),
             ])
             ->recordUrl(fn ($record) => ContentValidationResource::getUrl('view', ['record' => $record]));

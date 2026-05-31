@@ -24,7 +24,7 @@ class TherapistPatientController extends Controller
             ->exists();
 
         if (! $isPatient) {
-            return ApiResponse::error('Accès refusé.', 403);
+            return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
         return ApiResponse::success($child);

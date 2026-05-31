@@ -14,27 +14,27 @@ class InvoiceInfolist
         return $schema
             ->columns(1)
             ->components([
-                Section::make('Enfant & abonnement')
+                Section::make(__('filament.invoices.infolist.sections.child_subscription'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('subscription.child.first_name')
-                            ->label('Enfant')
+                            ->label(__('filament.invoices.infolist.fields.child'))
                             ->getStateUsing(fn ($record) => "{$record->subscription->child->first_name} {$record->subscription->child->last_name}"),
                         TextEntry::make('subscription.stripe_subscription_id')
-                            ->label('Abonnement Stripe'),
+                            ->label(__('filament.invoices.infolist.fields.stripe_subscription_id')),
                     ]),
 
-                Section::make('Facture')
+                Section::make(__('filament.invoices.infolist.sections.invoice'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('stripe_invoice_id')
-                            ->label('ID Stripe')
+                            ->label(__('filament.invoices.infolist.fields.stripe_invoice_id'))
                             ->columnSpanFull(),
                         TextEntry::make('amount')
-                            ->label('Montant')
+                            ->label(__('filament.invoices.infolist.fields.amount'))
                             ->getStateUsing(fn ($record) => number_format($record->amount, 2).' €'),
                         TextEntry::make('status')
-                            ->label('Statut')
+                            ->label(__('filament.invoices.infolist.fields.status'))
                             ->badge()
                             ->color(fn (InvoiceStatus $state) => match ($state) {
                                 InvoiceStatus::Paid => 'success',
@@ -44,26 +44,26 @@ class InvoiceInfolist
                                 InvoiceStatus::Void => 'gray',
                             }),
                         TextEntry::make('period_start')
-                            ->label('Période')
+                            ->label(__('filament.invoices.infolist.fields.period'))
                             ->getStateUsing(fn ($record) => $record->period_start->format('d/m/Y').' → '.$record->period_end->format('d/m/Y'))
                             ->columnSpanFull(),
                         TextEntry::make('paid_at')
-                            ->label('Payé le')
+                            ->label(__('filament.invoices.infolist.fields.paid_at'))
                             ->dateTime('d/m/Y H:i')
-                            ->placeholder('Non payé'),
+                            ->placeholder(__('filament.invoices.infolist.fields.paid_at_placeholder')),
                         TextEntry::make('invoice_pdf')
-                            ->label('PDF')
-                            ->placeholder('Aucun fichier'),
+                            ->label(__('filament.invoices.infolist.fields.invoice_pdf'))
+                            ->placeholder(__('filament.invoices.infolist.fields.invoice_pdf_placeholder')),
                     ]),
 
-                Section::make('Dates')
+                Section::make(__('filament.invoices.infolist.sections.dates'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label('Créé le')
+                            ->label(__('filament.invoices.infolist.fields.created_at'))
                             ->dateTime('d/m/Y H:i'),
                         TextEntry::make('updated_at')
-                            ->label('Mis à jour le')
+                            ->label(__('filament.invoices.infolist.fields.updated_at'))
                             ->dateTime('d/m/Y H:i'),
                     ]),
             ]);

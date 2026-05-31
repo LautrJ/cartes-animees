@@ -26,15 +26,27 @@ class UserResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'first_name';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Gérer les utilisateurs';
-
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationLabel = 'Utilisateurs';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.navigation_groups.users');
+    }
 
-    protected static ?string $modelLabel = 'Utilisateur';
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.users.navigation_label');
+    }
 
-    protected static ?string $pluralModelLabel = 'Utilisateurs';
+    public static function getModelLabel(): string
+    {
+        return __('filament.users.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.users.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

@@ -16,18 +16,18 @@ class ContentValidationInfolist
         return $schema
             ->columns(1)
             ->components([
-                Section::make('Demande')
+                Section::make(__('filament.therapist.content_validations.infolist.section_request'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('validatable_type')
-                            ->label('Type')
+                            ->label(__('filament.therapist.content_validations.infolist.type'))
                             ->getStateUsing(fn ($record) => match ($record->validatable_type) {
-                                Card::class => 'Carte',
-                                Series::class => 'Série',
+                                Card::class => __('filament.therapist.content_validations.infolist.type_card'),
+                                Series::class => __('filament.therapist.content_validations.infolist.type_series'),
                                 default => '-',
                             }),
                         TextEntry::make('status')
-                            ->label('Statut')
+                            ->label(__('filament.therapist.content_validations.infolist.status'))
                             ->badge()
                             ->color(fn (ContentValidationStatus $state) => match ($state) {
                                 ContentValidationStatus::Pending => 'warning',
@@ -35,19 +35,19 @@ class ContentValidationInfolist
                                 ContentValidationStatus::Rejected => 'danger',
                             }),
                         TextEntry::make('validatable.name')
-                            ->label('Contenu')
+                            ->label(__('filament.therapist.content_validations.infolist.content'))
                             ->getStateUsing(fn ($record) => $record->validatable?->name['fr'] ?? '-')
                             ->columnSpanFull(),
                         TextEntry::make('submitted_at')
-                            ->label('Soumis le')
+                            ->label(__('filament.therapist.content_validations.infolist.submitted_at'))
                             ->dateTime('d/m/Y H:i'),
                         TextEntry::make('reviewed_at')
-                            ->label('Traité le')
+                            ->label(__('filament.therapist.content_validations.infolist.reviewed_at'))
                             ->dateTime('d/m/Y H:i')
                             ->placeholder('-'),
                         TextEntry::make('rejection_reason')
-                            ->label('Motif de rejet')
-                            ->placeholder('Aucun')
+                            ->label(__('filament.therapist.content_validations.infolist.rejection_reason'))
+                            ->placeholder(__('filament.therapist.content_validations.infolist.rejection_reason_placeholder'))
                             ->columnSpanFull(),
                     ]),
             ]);

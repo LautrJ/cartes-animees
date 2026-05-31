@@ -18,11 +18,11 @@ class ContentValidationsTable
             ->defaultSort('submitted_at', 'desc')
             ->columns([
                 TextColumn::make('validatable_type')
-                    ->label('Type')
+                    ->label(__('filament.therapist.content_validations.table.type'))
                     ->badge()
                     ->getStateUsing(fn ($record) => match ($record->validatable_type) {
-                        Card::class => 'Carte',
-                        Series::class => 'Série',
+                        Card::class => __('filament.therapist.content_validations.table.type_card'),
+                        Series::class => __('filament.therapist.content_validations.table.type_series'),
                         default => '-',
                     })
                     ->color(fn ($record) => match ($record->validatable_type) {
@@ -31,10 +31,10 @@ class ContentValidationsTable
                         default => 'gray',
                     }),
                 TextColumn::make('validatable.name')
-                    ->label('Contenu')
+                    ->label(__('filament.therapist.content_validations.table.content'))
                     ->getStateUsing(fn ($record) => $record->validatable?->name['fr'] ?? '-'),
                 TextColumn::make('status')
-                    ->label('Statut')
+                    ->label(__('filament.therapist.content_validations.table.status'))
                     ->badge()
                     ->color(fn (ContentValidationStatus $state) => match ($state) {
                         ContentValidationStatus::Pending => 'warning',
@@ -42,21 +42,21 @@ class ContentValidationsTable
                         ContentValidationStatus::Rejected => 'danger',
                     }),
                 TextColumn::make('submitted_at')
-                    ->label('Soumis le')
+                    ->label(__('filament.therapist.content_validations.table.submitted_at'))
                     ->dateTime('d/m/Y H:i')
                     ->sortable(),
                 TextColumn::make('reviewed_at')
-                    ->label('Traité le')
+                    ->label(__('filament.therapist.content_validations.table.reviewed_at'))
                     ->dateTime('d/m/Y H:i')
                     ->placeholder('-'),
             ])
             ->filters([
                 SelectFilter::make('status')
-                    ->label('Statut')
+                    ->label(__('filament.therapist.content_validations.table.filter_status'))
                     ->options([
-                        'pending' => 'En attente',
-                        'approved' => 'Approuvé',
-                        'rejected' => 'Rejeté',
+                        'pending' => __('filament.therapist.content_validations.table.filter_status_pending'),
+                        'approved' => __('filament.therapist.content_validations.table.filter_status_approved'),
+                        'rejected' => __('filament.therapist.content_validations.table.filter_status_rejected'),
                     ]),
             ])
             ->recordActions([

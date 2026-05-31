@@ -24,11 +24,20 @@ class SettingResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationLabel = 'Paramètres';
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.settings.navigation.label');
+    }
 
-    protected static ?string $modelLabel = 'Paramètre';
+    public static function getModelLabel(): string
+    {
+        return __('filament.settings.navigation.model_label');
+    }
 
-    protected static ?string $pluralModelLabel = 'Paramètres';
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.settings.navigation.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

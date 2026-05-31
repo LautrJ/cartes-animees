@@ -35,11 +35,15 @@ class FollowUpStartedNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject("Nouveau suivi orthophoniste — {$this->childFirstName}")
-            ->greeting('Bonjour !')
-            ->line("**{$this->therapistFirstName} {$this->therapistLastName}** assure désormais le suivi de **{$this->childFirstName}** sur Cartes Animées.")
-            ->line('Il pourra débloquer des séries adaptées à la progression de votre enfant.')
-            ->action('Accéder à l\'application', config('app.frontend_url'))
-            ->line('Vous pouvez retrouver les informations de suivi depuis votre espace personnel.');
+            ->subject(__('notifications.follow_up_started.subject', ['child_first_name' => $this->childFirstName]))
+            ->greeting(__('notifications.follow_up_started.greeting'))
+            ->line(__('notifications.follow_up_started.line_1', [
+                'therapist_first_name' => $this->therapistFirstName,
+                'therapist_last_name' => $this->therapistLastName,
+                'child_first_name' => $this->childFirstName,
+            ]))
+            ->line(__('notifications.follow_up_started.line_2'))
+            ->action(__('notifications.follow_up_started.action'), config('app.frontend_url'))
+            ->line(__('notifications.follow_up_started.line_3'));
     }
 }

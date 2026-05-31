@@ -18,14 +18,14 @@ class ApproveContentValidation extends Action
     {
         parent::setUp();
 
-        $this->label('Approuver')
+        $this->label(__('filament.content_validations.actions.approve.label'))
             ->color('success')
             ->icon('heroicon-o-check-circle')
             ->visible(fn ($record) => $record->status === ContentValidationStatus::Pending)
             ->requiresConfirmation()
-            ->modalHeading('Approuver ce contenu ?')
-            ->modalDescription('Le contenu sera validé et accessible aux orthophonistes.')
-            ->modalSubmitActionLabel('Confirmer')
+            ->modalHeading(__('filament.content_validations.actions.approve.modal_heading'))
+            ->modalDescription(__('filament.content_validations.actions.approve.modal_description'))
+            ->modalSubmitActionLabel(__('filament.content_validations.actions.approve.modal_submit_label'))
             ->action(function ($record) {
                 $record->update([
                     'status' => ContentValidationStatus::Approved,
@@ -36,10 +36,13 @@ class ApproveContentValidation extends Action
                 $record->validatable->update(['is_validated' => true]);
 
                 $contentName = $record->validatable->name['fr'] ?? '';
-                $contentType = class_basename($record->validatable_type) === 'Card' ? 'carte' : 'série';
+                $contentTypeKey = class_basename($record->validatable_type) === 'Card' ? 'content_type_card' : 'content_type_series';
 
                 Notification::make()
-                    ->title("Votre {$contentType} \"{$contentName}\" a été approuvée.")
+                    ->title(__('filament.content_validations.actions.approve.notification_approved', [
+                        'type' => __("filament.content_validations.{$contentTypeKey}"),
+                        'name' => $contentName,
+                    ]))
                     ->success()
                     ->sendToDatabase($record->submitter);
             });

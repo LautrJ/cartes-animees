@@ -14,38 +14,38 @@ class CardForm
         return $schema
             ->columns(1)
             ->components([
-                Section::make('Informations générales')
+                Section::make(__('filament.therapist.cards.form.section_general'))
                     ->schema([
                         TextInput::make('name.fr')
-                            ->label('Nom')
+                            ->label(__('filament.therapist.cards.form.name'))
                             ->required()
                             ->maxLength(255),
                         TextInput::make('duration')
-                            ->label('Durée (secondes)')
+                            ->label(__('filament.therapist.cards.form.duration'))
                             ->numeric()
                             ->required()
                             ->minValue(1)
                             ->maxValue(30)
-                            ->helperText('Durée d\'affichage de chaque animation avant de passer à la suivante'),
+                            ->helperText(__('filament.therapist.cards.form.duration_helper')),
                     ]),
 
-                Section::make('Médias')
+                Section::make(__('filament.therapist.cards.form.section_media'))
                     ->columns(3)
                     ->schema([
                         FileUpload::make('drawn_animation_path')
-                            ->label('Animation dessinée')
+                            ->label(__('filament.therapist.cards.form.drawn_animation_path'))
                             ->disk('cards')
                             ->directory('drawn')
                             ->acceptedFileTypes(['image/gif', 'video/mp4'])
                             ->required(),
                         FileUpload::make('real_animation_path')
-                            ->label('Animation réelle')
+                            ->label(__('filament.therapist.cards.form.real_animation_path'))
                             ->disk('cards')
                             ->directory('real')
                             ->acceptedFileTypes(['image/gif', 'video/mp4'])
                             ->required(),
                         FileUpload::make('sound_path')
-                            ->label('Son')
+                            ->label(__('filament.therapist.cards.form.sound_path'))
                             ->disk('cards')
                             ->directory('sounds')
                             ->acceptedFileTypes(['audio/mpeg', 'audio/mp3'])

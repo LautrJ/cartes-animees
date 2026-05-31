@@ -13,20 +13,20 @@ class CommissionRateHistoryInfolist
         return $schema
             ->columns(1)
             ->components([
-                Section::make('Taux de commission')
+                Section::make(__('filament.commission_rate_histories.infolist.sections.commission_rate'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('rate')
-                            ->label('Taux')
-                            ->getStateUsing(fn ($record) => $record->rate.' €/patient'),
+                            ->label(__('filament.commission_rate_histories.infolist.fields.rate'))
+                            ->getStateUsing(fn ($record) => $record->rate.__('filament.commission_rate_histories.rate_suffix')),
                         TextEntry::make('effective_from')
-                            ->label('En vigueur depuis')
+                            ->label(__('filament.commission_rate_histories.infolist.fields.effective_from'))
                             ->dateTime('d/m/Y H:i'),
                         TextEntry::make('creator.first_name')
-                            ->label('Modifié par')
+                            ->label(__('filament.commission_rate_histories.infolist.fields.modified_by'))
                             ->getStateUsing(fn ($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
                         TextEntry::make('created_at')
-                            ->label('Créé le')
+                            ->label(__('filament.commission_rate_histories.infolist.fields.created_at'))
                             ->dateTime('d/m/Y H:i'),
                     ]),
             ]);

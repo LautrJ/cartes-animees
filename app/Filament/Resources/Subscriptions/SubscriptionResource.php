@@ -25,15 +25,35 @@ class SubscriptionResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'stripe_subscription_id';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Paie & administratif';
+    protected static string|null|\UnitEnum $navigationGroup = null;
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $navigationLabel = 'Abonnements';
+    protected static ?string $navigationLabel = null;
 
-    protected static ?string $modelLabel = 'Abonnement';
+    protected static ?string $modelLabel = null;
 
-    protected static ?string $pluralModelLabel = 'Abonnements';
+    protected static ?string $pluralModelLabel = null;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.navigation_groups.payroll');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.subscriptions.navigation_label');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('filament.subscriptions.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.subscriptions.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

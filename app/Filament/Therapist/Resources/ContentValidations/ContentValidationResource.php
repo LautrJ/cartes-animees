@@ -24,15 +24,27 @@ class ContentValidationResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'submitted_at';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Suivi';
-
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $navigationLabel = 'Demandes en attente';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament.therapist.content_validations.navigation.group');
+    }
 
-    protected static ?string $modelLabel = 'Demande en attente';
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.therapist.content_validations.navigation.label');
+    }
 
-    protected static ?string $pluralModelLabel = 'Demandes en attente';
+    public static function getModelLabel(): string
+    {
+        return __('filament.therapist.content_validations.navigation.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.therapist.content_validations.navigation.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

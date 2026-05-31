@@ -18,23 +18,23 @@ class EditNotesAction extends Action
     {
         parent::setUp();
 
-        $this->label('Modifier les notes')
+        $this->label(__('filament.therapist.patients.actions.edit_notes.label'))
             ->icon(Heroicon::OutlinedPencilSquare)
             ->color('gray')
             ->fillForm(fn ($record) => ['notes' => $record->notes])
             ->form([
                 Textarea::make('notes')
-                    ->label('Notes')
+                    ->label(__('filament.therapist.patients.actions.edit_notes.notes_label'))
                     ->rows(5)
-                    ->placeholder('Ajouter des notes sur ce patient...'),
+                    ->placeholder(__('filament.therapist.patients.actions.edit_notes.notes_placeholder')),
             ])
-            ->modalHeading('Modifier les notes')
-            ->modalSubmitActionLabel('Enregistrer')
+            ->modalHeading(__('filament.therapist.patients.actions.edit_notes.modal_heading'))
+            ->modalSubmitActionLabel(__('filament.therapist.patients.actions.edit_notes.modal_submit'))
             ->action(function ($record, array $data) {
                 $record->update(['notes' => $data['notes']]);
 
                 Notification::make()
-                    ->title('Notes mises à jour')
+                    ->title(__('filament.therapist.patients.actions.edit_notes.notification'))
                     ->success()
                     ->send();
             });

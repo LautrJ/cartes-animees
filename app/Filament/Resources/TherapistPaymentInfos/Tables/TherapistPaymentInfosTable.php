@@ -14,21 +14,21 @@ class TherapistPaymentInfosTable
         return $table
             ->columns([
                 TextColumn::make('user.first_name')
-                    ->label('Orthophoniste')
+                    ->label(__('filament.therapist_payment_infos.table.columns.therapist'))
                     ->getStateUsing(fn ($record) => "{$record->user->first_name} {$record->user->last_name}")
                     ->searchable(query: fn ($query, $search) => $query->whereHas('user', fn ($q) => $q
                         ->where('first_name', 'like', "%{$search}%")
                         ->orWhere('last_name', 'like', "%{$search}%")
                     )),
                 TextColumn::make('bank_name')
-                    ->label('Banque'),
+                    ->label(__('filament.therapist_payment_infos.table.columns.bank_name')),
                 TextColumn::make('iban')
-                    ->label('IBAN')
+                    ->label(__('filament.therapist_payment_infos.table.columns.iban'))
                     ->getStateUsing(fn ($record) => '•••• •••• •••• '.substr($record->iban, -4)),
                 TextColumn::make('bic')
-                    ->label('BIC'),
+                    ->label(__('filament.therapist_payment_infos.table.columns.bic')),
                 TextColumn::make('created_at')
-                    ->label('Ajouté le')
+                    ->label(__('filament.therapist_payment_infos.table.columns.created_at'))
                     ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

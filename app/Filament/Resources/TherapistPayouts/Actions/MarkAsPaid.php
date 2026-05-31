@@ -16,19 +16,19 @@ class MarkAsPaid extends Action
     {
         parent::setUp();
 
-        $this->label('Marquer comme payé')
+        $this->label(__('filament.therapist_payouts.actions.mark_as_paid.label'))
             ->color('success')
             ->icon('heroicon-o-check-circle')
             ->visible(fn ($record) => is_null($record->paid_at))
             ->requiresConfirmation()
-            ->modalHeading('Confirmer le paiement')
-            ->modalDescription('Confirmer que ce virement a bien été effectué ?')
-            ->modalSubmitActionLabel('Confirmer')
+            ->modalHeading(__('filament.therapist_payouts.actions.mark_as_paid.modal_heading'))
+            ->modalDescription(__('filament.therapist_payouts.actions.mark_as_paid.modal_description'))
+            ->modalSubmitActionLabel(__('filament.therapist_payouts.actions.mark_as_paid.modal_submit_label'))
             ->action(function ($record) {
                 $record->update(['paid_at' => now()]);
 
                 Notification::make()
-                    ->title('Virement marqué comme payé')
+                    ->title(__('filament.therapist_payouts.actions.mark_as_paid.notification_success'))
                     ->success()
                     ->send();
             });

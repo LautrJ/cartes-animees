@@ -14,39 +14,39 @@ class SeriesInfolist
         return $schema
             ->columns(1)
             ->components([
-                Section::make('Informations')
+                Section::make(__('filament.therapist.series.infolist.section_info'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('name.fr')
-                            ->label('Nom'),
+                            ->label(__('filament.therapist.series.infolist.name')),
                         TextEntry::make('creator.first_name')
-                            ->label('Créé par')
+                            ->label(__('filament.therapist.series.infolist.created_by'))
                             ->getStateUsing(fn ($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
                         TextEntry::make('description.fr')
-                            ->label('Description')
-                            ->placeholder('Aucune description')
+                            ->label(__('filament.therapist.series.infolist.description'))
+                            ->placeholder(__('filament.therapist.series.infolist.no_description'))
                             ->columnSpanFull(),
                     ]),
 
-                Section::make('Paramètres')
+                Section::make(__('filament.therapist.series.infolist.section_settings'))
                     ->columns(2)
                     ->schema([
                         IconEntry::make('is_base')
-                            ->label('Série de base')
+                            ->label(__('filament.therapist.series.infolist.is_base'))
                             ->boolean(),
                         TextEntry::make('cards_count')
-                            ->label('Nombre de cartes')
+                            ->label(__('filament.therapist.series.infolist.cards_count'))
                             ->getStateUsing(fn ($record) => $record->cards()->count()),
                     ]),
 
-                Section::make('Dates')
+                Section::make(__('filament.therapist.series.infolist.section_dates'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label('Créée le')
+                            ->label(__('filament.therapist.series.infolist.created_at'))
                             ->dateTime('d/m/Y H:i'),
                         TextEntry::make('updated_at')
-                            ->label('Mise à jour le')
+                            ->label(__('filament.therapist.series.infolist.updated_at'))
                             ->dateTime('d/m/Y H:i'),
                     ]),
             ]);

@@ -16,24 +16,24 @@ class SettingForm
         return $schema
             ->columns(1)
             ->components([
-                Section::make('Paramètre')
+                Section::make(__('filament.settings.form.section_title'))
                     ->columns(2)
                     ->schema([
                         TextInput::make('label')
-                            ->label('Libellé')
+                            ->label(__('filament.settings.form.label'))
                             ->disabled(),
                         TextInput::make('key')
-                            ->label('Clé')
+                            ->label(__('filament.settings.form.key'))
                             ->disabled(),
                         Select::make('type')
-                            ->label('Type')
+                            ->label(__('filament.settings.form.type'))
                             ->options(SettingType::class)
                             ->disabled(),
                         TextInput::make('value')
-                            ->label('Valeur')
+                            ->label(__('filament.settings.form.value'))
                             ->required(),
                         Textarea::make('description')
-                            ->label('Description')
+                            ->label(__('filament.settings.form.description'))
                             ->disabled()
                             ->columnSpanFull(),
                     ]),

@@ -26,11 +26,20 @@ class ProfileResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationLabel = 'Mon profil';
+    public static function getNavigationLabel(): string
+    {
+        return __('filament.therapist.profiles.navigation_label');
+    }
 
-    protected static ?string $modelLabel = 'Mon profil';
+    public static function getModelLabel(): string
+    {
+        return __('filament.therapist.profiles.model_label');
+    }
 
-    protected static ?string $pluralModelLabel = 'Mon profil';
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament.therapist.profiles.plural_model_label');
+    }
 
     public static function form(Schema $schema): Schema
     {

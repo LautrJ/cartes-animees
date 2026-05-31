@@ -14,14 +14,14 @@ class PaymentInfosTable
         return $table
             ->columns([
                 TextColumn::make('bank_name')
-                    ->label('Banque'),
+                    ->label(__('filament.therapist.payment_infos.table.bank_name')),
                 TextColumn::make('bic')
-                    ->label('BIC'),
+                    ->label(__('filament.therapist.payment_infos.table.bic')),
                 TextColumn::make('iban')
-                    ->label('IBAN')
+                    ->label(__('filament.therapist.payment_infos.table.iban'))
                     ->getStateUsing(fn ($record) => '•••• •••• •••• '.substr($record->iban, -4)),
                 TextColumn::make('updated_at')
-                    ->label('Mis à jour le')
+                    ->label(__('filament.therapist.payment_infos.table.updated_at'))
                     ->dateTime('d/m/Y')
                     ->sortable(),
             ])

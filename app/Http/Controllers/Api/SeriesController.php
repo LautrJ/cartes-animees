@@ -14,7 +14,7 @@ class SeriesController extends Controller
     public function index(Request $request, Child $child): JsonResponse
     {
         if ($child->parent_id !== $request->user()->id) {
-            return ApiResponse::error('Accès refusé.', 403);
+            return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
         $series = $child->series()
@@ -38,7 +38,7 @@ class SeriesController extends Controller
     public function show(Request $request, Child $child, Series $series): JsonResponse
     {
         if ($child->parent_id !== $request->user()->id) {
-            return ApiResponse::error('Accès refusé.', 403);
+            return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
         $hasAccess = $child->series()
@@ -46,7 +46,7 @@ class SeriesController extends Controller
             ->exists();
 
         if (! $hasAccess) {
-            return ApiResponse::error('Cette série n\'est pas débloquée pour cet enfant.', 403);
+            return ApiResponse::error(__('api.common.series_not_unlocked_for_child'), 403);
         }
 
         $cards = $series->cards()

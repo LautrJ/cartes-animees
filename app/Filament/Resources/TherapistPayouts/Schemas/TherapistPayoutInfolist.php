@@ -14,55 +14,55 @@ class TherapistPayoutInfolist
         return $schema
             ->columns(1)
             ->components([
-                Section::make('Orthophoniste')
+                Section::make(__('filament.therapist_payouts.infolist.sections.therapist'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('therapist.first_name')
-                            ->label('Orthophoniste')
+                            ->label(__('filament.therapist_payouts.infolist.fields.therapist'))
                             ->getStateUsing(fn ($record) => "{$record->therapist->first_name} {$record->therapist->last_name}"),
                         TextEntry::make('processedBy.first_name')
-                            ->label('Traité par')
+                            ->label(__('filament.therapist_payouts.infolist.fields.processed_by'))
                             ->getStateUsing(fn ($record) => "{$record->processedBy->first_name} {$record->processedBy->last_name}"),
                     ]),
 
-                Section::make('Détails du virement')
+                Section::make(__('filament.therapist_payouts.infolist.sections.payout_details'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('amount')
-                            ->label('Montant')
+                            ->label(__('filament.therapist_payouts.infolist.fields.amount'))
                             ->getStateUsing(fn ($record) => number_format($record->amount, 2).' €'),
                         TextEntry::make('patient_count')
-                            ->label('Nombre de patients'),
+                            ->label(__('filament.therapist_payouts.infolist.fields.patient_count')),
                         TextEntry::make('period_start')
-                            ->label('Période')
+                            ->label(__('filament.therapist_payouts.infolist.fields.period'))
                             ->getStateUsing(fn ($record) => $record->period_start->format('d/m/Y').' → '.$record->period_end->format('d/m/Y')),
                         TextEntry::make('note')
-                            ->label('Note')
-                            ->placeholder('Aucune note')
+                            ->label(__('filament.therapist_payouts.infolist.fields.note'))
+                            ->placeholder(__('filament.therapist_payouts.infolist.fields.note_placeholder'))
                             ->columnSpanFull(),
                     ]),
 
-                Section::make('Statut du paiement')
+                Section::make(__('filament.therapist_payouts.infolist.sections.payment_status'))
                     ->columns(2)
                     ->schema([
                         IconEntry::make('paid_at')
-                            ->label('Payé')
+                            ->label(__('filament.therapist_payouts.infolist.fields.paid'))
                             ->boolean()
                             ->getStateUsing(fn ($record) => ! is_null($record->paid_at)),
                         TextEntry::make('paid_at')
-                            ->label('Payé le')
+                            ->label(__('filament.therapist_payouts.infolist.fields.paid_at'))
                             ->dateTime('d/m/Y H:i')
-                            ->placeholder('En attente'),
+                            ->placeholder(__('filament.therapist_payouts.infolist.fields.paid_at_placeholder')),
                     ]),
 
-                Section::make('Dates')
+                Section::make(__('filament.therapist_payouts.infolist.sections.dates'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label('Créé le')
+                            ->label(__('filament.therapist_payouts.infolist.fields.created_at'))
                             ->dateTime('d/m/Y H:i'),
                         TextEntry::make('updated_at')
-                            ->label('Mis à jour le')
+                            ->label(__('filament.therapist_payouts.infolist.fields.updated_at'))
                             ->dateTime('d/m/Y H:i'),
                     ]),
             ]);

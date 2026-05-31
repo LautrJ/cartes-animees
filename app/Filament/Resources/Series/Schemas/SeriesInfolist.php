@@ -13,42 +13,42 @@ class SeriesInfolist
     {
         return $schema
             ->components([
-                Section::make('Informations générales')
+                Section::make(__('filament.series.infolist.sections.general_info'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('name.fr')
-                            ->label('Nom'),
+                            ->label(__('filament.series.infolist.fields.name')),
                         TextEntry::make('creator.first_name')
-                            ->label('Créé par')
+                            ->label(__('filament.series.infolist.fields.creator'))
                             ->getStateUsing(fn ($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
                         TextEntry::make('description.fr')
-                            ->label('Description')
-                            ->placeholder('Aucune description')
+                            ->label(__('filament.series.infolist.fields.description'))
+                            ->placeholder(__('filament.series.infolist.fields.description_placeholder'))
                             ->columnSpanFull(),
                     ]),
 
-                Section::make('Paramètres')
+                Section::make(__('filament.series.infolist.sections.settings'))
                     ->columns(3)
                     ->schema([
                         IconEntry::make('is_base')
-                            ->label('Série de base')
+                            ->label(__('filament.series.infolist.fields.is_base'))
                             ->boolean(),
                         IconEntry::make('is_validated')
-                            ->label('Validée')
+                            ->label(__('filament.series.infolist.fields.is_validated'))
                             ->boolean(),
                         IconEntry::make('is_active')
-                            ->label('Active')
+                            ->label(__('filament.series.infolist.fields.is_active'))
                             ->boolean(),
                     ]),
 
-                Section::make('Dates')
+                Section::make(__('filament.series.infolist.sections.dates'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label('Créée le')
+                            ->label(__('filament.series.infolist.fields.created_at'))
                             ->dateTime('d/m/Y H:i'),
                         TextEntry::make('updated_at')
-                            ->label('Mise à jour le')
+                            ->label(__('filament.series.infolist.fields.updated_at'))
                             ->dateTime('d/m/Y H:i'),
                     ]),
             ]);

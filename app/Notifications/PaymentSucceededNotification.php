@@ -34,12 +34,12 @@ class PaymentSucceededNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Paiement confirmé — Cartes Animées')
-            ->greeting('Bonjour !')
+            ->subject(__('notifications.payment_succeeded.subject'))
+            ->greeting(__('notifications.payment_succeeded.greeting'))
             ->success()
-            ->line("Le paiement de l'abonnement de **{$this->childFirstName}** a bien été effectué.")
-            ->line('Montant débité : **'.number_format($this->amount, 2, ',', ' ').' €**')
-            ->action('Accéder à l\'application', config('app.frontend_url'))
-            ->line('Merci pour votre confiance !');
+            ->line(__('notifications.payment_succeeded.line_1', ['child_first_name' => $this->childFirstName]))
+            ->line(__('notifications.payment_succeeded.line_2', ['amount' => number_format($this->amount, 2, ',', ' ')]))
+            ->action(__('notifications.payment_succeeded.action'), config('app.frontend_url'))
+            ->line(__('notifications.payment_succeeded.line_3'));
     }
 }

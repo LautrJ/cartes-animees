@@ -18,23 +18,23 @@ class AdminStatsOverview extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Utilisateurs actifs', User::where('is_active', true)->count())
-                ->description('Tous rôles confondus')
+            Stat::make(__('filament.widgets.admin_stats_overview.active_users_title'), User::where('is_active', true)->count())
+                ->description(__('filament.widgets.admin_stats_overview.active_users_description'))
                 ->color('success')
                 ->icon('heroicon-o-users'),
 
-            Stat::make('Abonnements actifs', Subscription::where('status', SubscriptionStatus::Active)->count())
-                ->description('Hors gratuits et annulés')
+            Stat::make(__('filament.widgets.admin_stats_overview.active_subscriptions_title'), Subscription::where('status', SubscriptionStatus::Active)->count())
+                ->description(__('filament.widgets.admin_stats_overview.active_subscriptions_description'))
                 ->color('info')
                 ->icon('heroicon-o-newspaper'),
 
-            Stat::make('Validations en attente', ContentValidation::where('status', ContentValidationStatus::Pending)->count())
-                ->description('Contenus à traiter')
+            Stat::make(__('filament.widgets.admin_stats_overview.pending_validations_title'), ContentValidation::where('status', ContentValidationStatus::Pending)->count())
+                ->description(__('filament.widgets.admin_stats_overview.pending_validations_description'))
                 ->color('warning')
                 ->icon('heroicon-o-clock'),
 
-            Stat::make('Paies en attente', TherapistPayout::whereNull('paid_at')->count())
-                ->description('Virements à effectuer')
+            Stat::make(__('filament.widgets.admin_stats_overview.pending_payouts_title'), TherapistPayout::whereNull('paid_at')->count())
+                ->description(__('filament.widgets.admin_stats_overview.pending_payouts_description'))
                 ->color('danger')
                 ->icon('heroicon-o-banknotes'),
         ];

@@ -35,7 +35,7 @@ class ChildController extends Controller
     public function show(Request $request, Child $child): JsonResponse
     {
         if ($child->parent_id !== $request->user()->id) {
-            return ApiResponse::error('Accès refusé.', 403);
+            return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
         return ApiResponse::success($child);
@@ -44,7 +44,7 @@ class ChildController extends Controller
     public function update(Request $request, Child $child): JsonResponse
     {
         if ($child->parent_id !== $request->user()->id) {
-            return ApiResponse::error('Accès refusé.', 403);
+            return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
         $validated = $request->validate([
@@ -63,7 +63,7 @@ class ChildController extends Controller
     public function destroy(Request $request, Child $child): JsonResponse
     {
         if ($child->parent_id !== $request->user()->id) {
-            return ApiResponse::error('Accès refusé.', 403);
+            return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
         $child->delete();

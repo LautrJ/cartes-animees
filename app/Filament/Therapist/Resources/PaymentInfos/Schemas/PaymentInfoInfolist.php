@@ -13,27 +13,27 @@ class PaymentInfoInfolist
         return $schema
             ->columns(1)
             ->components([
-                Section::make('Informations bancaires')
+                Section::make(__('filament.therapist.payment_infos.infolist.section_bank'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('bank_name')
-                            ->label('Banque'),
+                            ->label(__('filament.therapist.payment_infos.infolist.bank_name')),
                         TextEntry::make('bic')
-                            ->label('BIC'),
+                            ->label(__('filament.therapist.payment_infos.infolist.bic')),
                         TextEntry::make('iban')
-                            ->label('IBAN')
+                            ->label(__('filament.therapist.payment_infos.infolist.iban'))
                             ->getStateUsing(fn ($record) => '•••• •••• •••• '.substr($record->iban, -4))
                             ->columnSpanFull(),
                     ]),
 
-                Section::make('Dates')
+                Section::make(__('filament.therapist.payment_infos.infolist.section_dates'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label('Ajouté le')
+                            ->label(__('filament.therapist.payment_infos.infolist.created_at'))
                             ->dateTime('d/m/Y H:i'),
                         TextEntry::make('updated_at')
-                            ->label('Mis à jour le')
+                            ->label(__('filament.therapist.payment_infos.infolist.updated_at'))
                             ->dateTime('d/m/Y H:i'),
                     ]),
             ]);

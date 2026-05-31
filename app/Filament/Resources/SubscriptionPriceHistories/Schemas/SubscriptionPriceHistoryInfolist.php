@@ -13,26 +13,26 @@ class SubscriptionPriceHistoryInfolist
         return $schema
             ->columns(1)
             ->components([
-                Section::make('Prix d\'abonnement')
+                Section::make(__('filament.subscription_price_histories.infolist.section_title'))
                     ->columns(2)
                     ->schema([
                         TextEntry::make('price')
-                            ->label('Prix')
+                            ->label(__('filament.subscription_price_histories.infolist.price'))
                             ->getStateUsing(fn ($record) => number_format($record->price, 2, ',', ' ').' €/mois'),
                         TextEntry::make('stripe_price_id')
-                            ->label('Stripe Price ID')
+                            ->label(__('filament.subscription_price_histories.infolist.stripe_price_id'))
                             ->copyable()
-                            ->copyMessage('ID copié')
+                            ->copyMessage(__('filament.subscription_price_histories.infolist.copy_message'))
                             ->fontFamily('mono')
                             ->color('gray'),
                         TextEntry::make('effective_from')
-                            ->label('En vigueur depuis')
+                            ->label(__('filament.subscription_price_histories.infolist.effective_from'))
                             ->dateTime('d/m/Y H:i'),
                         TextEntry::make('creator.first_name')
-                            ->label('Modifié par')
+                            ->label(__('filament.subscription_price_histories.infolist.creator'))
                             ->getStateUsing(fn ($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
                         TextEntry::make('created_at')
-                            ->label('Créé le')
+                            ->label(__('filament.subscription_price_histories.infolist.created_at'))
                             ->dateTime('d/m/Y H:i'),
                     ]),
             ]);

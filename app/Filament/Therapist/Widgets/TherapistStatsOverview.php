@@ -41,23 +41,23 @@ class TherapistStatsOverview extends StatsOverviewWidget
         )->count();
 
         return [
-            Stat::make('Patients actifs', $activePatients)
-                ->description('Suivis en cours')
+            Stat::make(__('filament.therapist.widgets.therapist_stats_overview.active_patients_title'), $activePatients)
+                ->description(__('filament.therapist.widgets.therapist_stats_overview.active_patients_description'))
                 ->color('success')
                 ->icon('heroicon-o-users'),
 
-            Stat::make('Séries débloquées ce mois', $unlockedThisMonth)
-                ->description('Nouveaux déblocages')
+            Stat::make(__('filament.therapist.widgets.therapist_stats_overview.unlocked_this_month_title'), $unlockedThisMonth)
+                ->description(__('filament.therapist.widgets.therapist_stats_overview.unlocked_this_month_description'))
                 ->color('info')
                 ->icon('heroicon-o-lock-open'),
 
-            Stat::make('Contenus en attente', $pendingValidations)
-                ->description('En cours de validation')
+            Stat::make(__('filament.therapist.widgets.therapist_stats_overview.pending_validations_title'), $pendingValidations)
+                ->description(__('filament.therapist.widgets.therapist_stats_overview.pending_validations_description'))
                 ->color('warning')
                 ->icon('heroicon-o-clock'),
 
-            Stat::make('Revenus estimés', $monthlyRevenue.' €')
-                ->description('Ce mois-ci')
+            Stat::make(__('filament.therapist.widgets.therapist_stats_overview.monthly_revenue_title'), $monthlyRevenue.' €')
+                ->description(__('filament.therapist.widgets.therapist_stats_overview.monthly_revenue_description'))
                 ->color('success')
                 ->icon('heroicon-o-banknotes'),
         ];

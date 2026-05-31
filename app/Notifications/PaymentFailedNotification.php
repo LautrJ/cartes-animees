@@ -33,12 +33,12 @@ class PaymentFailedNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Échec de paiement — Cartes Animées')
-            ->greeting('Bonjour !')
+            ->subject(__('notifications.payment_failed.subject'))
+            ->greeting(__('notifications.payment_failed.greeting'))
             ->error()
-            ->line("Le renouvellement de l'abonnement de **{$this->childFirstName}** a échoué.")
-            ->line('L\'accès aux séries payantes a été suspendu temporairement.')
-            ->action('Mettre à jour mes informations de paiement', config('app.frontend_url').'/subscription')
-            ->line('L\'accès sera automatiquement restauré après régularisation du paiement.');
+            ->line(__('notifications.payment_failed.line_1', ['child_first_name' => $this->childFirstName]))
+            ->line(__('notifications.payment_failed.line_2'))
+            ->action(__('notifications.payment_failed.action'), config('app.frontend_url').'/subscription')
+            ->line(__('notifications.payment_failed.line_3'));
     }
 }

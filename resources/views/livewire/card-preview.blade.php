@@ -56,7 +56,7 @@
         @if($drawnUrl)
             @if(str_ends_with($drawnUrl, '.gif'))
                 <img src="{{ $drawnUrl }}"
-                     alt="Animation dessinée"
+                     alt="{{ __('views.card_preview.alt_drawn') }}"
                      style="width:{{ $width }}px; height:{{ $height }}px; border-radius:8px; object-fit:cover;">
             @else
                 <video id="preview-drawn-player" loop
@@ -65,7 +65,7 @@
                 </video>
             @endif
         @else
-            <p style="color:gray;">Aucune animation dessinée disponible</p>
+            <p style="color:gray;">{{ __('views.card_preview.no_drawn') }}</p>
         @endif
     </div>
 
@@ -74,7 +74,7 @@
         @if($realUrl)
             @if(str_ends_with($realUrl, '.gif'))
                 <img src="{{ $realUrl }}"
-                     alt="Animation réelle"
+                     alt="{{ __('views.card_preview.alt_real') }}"
                      style="width:{{ $width }}px; height:{{ $height }}px; border-radius:8px; object-fit:cover;">
             @else
                 <video id="preview-real-player"
@@ -83,7 +83,7 @@
                 </video>
             @endif
         @else
-            <p style="color:gray;">Aucune animation réelle disponible</p>
+            <p style="color:gray;">{{ __('views.card_preview.no_real') }}</p>
         @endif
     </div>
 
@@ -97,8 +97,9 @@
     {{-- Label --}}
     <p x-show="started"
        x-cloak
-       style="color:#a896d8; font-weight:600; font-size:0.9rem;"
-       x-text="showReal ? 'Animation réelle...' : 'Animation dessinée...'">
+       style="color:#a896d8; font-weight:600; font-size:0.9rem;">
+        <span x-show="!showReal">{{ __('views.card_preview.label_drawn') }}</span>
+        <span x-show="showReal">{{ __('views.card_preview.label_real') }}</span>
     </p>
 
     {{-- Bouton Lancer --}}
@@ -106,7 +107,7 @@
             type="button"
             @click="start()"
             style="background:#a896d8; color:white; border:none; border-radius:8px; padding:0.75rem 2rem; font-size:1rem; cursor:pointer; font-weight:600;">
-        ▶ Lancer
+        {{ __('views.card_preview.btn_start') }}
     </button>
 
     {{-- Bouton Rejouer --}}
@@ -115,7 +116,7 @@
             type="button"
             @click="replay()"
             style="background:#a896d8; color:white; border:none; border-radius:8px; padding:0.75rem 2rem; font-size:1rem; cursor:pointer; font-weight:600;">
-        🔁 Rejouer
+        {{ __('views.card_preview.btn_replay') }}
     </button>
 
 </div>

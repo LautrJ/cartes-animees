@@ -13,26 +13,26 @@ class SubscriptionForm
     {
         return $schema
             ->components([
-                Section::make('Statut')
+                Section::make(__('filament.subscriptions.form.sections.status'))
                     ->schema([
                         Select::make('status')
-                            ->label('Statut')
+                            ->label(__('filament.subscriptions.form.fields.status'))
                             ->options([
-                                'active' => 'Actif',
-                                'past_due' => 'En retard',
-                                'canceled' => 'Annulé',
-                                'free' => 'Gratuit',
+                                'active' => __('filament.subscriptions.form.fields.status_active'),
+                                'past_due' => __('filament.subscriptions.form.fields.status_past_due'),
+                                'canceled' => __('filament.subscriptions.form.fields.status_canceled'),
+                                'free' => __('filament.subscriptions.form.fields.status_free'),
                             ])
                             ->required(),
                     ]),
 
-                Section::make('Remise & gratuité')
+                Section::make(__('filament.subscriptions.form.sections.discount'))
                     ->schema([
                         TextInput::make('override_price')
-                            ->label('Prix personnalisé (€)')
+                            ->label(__('filament.subscriptions.form.fields.override_price'))
                             ->numeric()
                             ->minValue(0)
-                            ->placeholder('Laisser vide = prix normal, 0 = gratuit')
+                            ->placeholder(__('filament.subscriptions.form.fields.override_price_placeholder'))
                             ->nullable(),
                     ]),
             ]);

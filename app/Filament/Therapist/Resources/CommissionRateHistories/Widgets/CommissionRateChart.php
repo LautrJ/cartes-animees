@@ -7,11 +7,14 @@ use Filament\Widgets\ChartWidget;
 
 class CommissionRateChart extends ChartWidget
 {
-    protected ?string $heading = 'Évolution du taux de commission';
-
     protected int|string|array $columnSpan = 'full';
 
     protected ?string $maxHeight = '300px';
+
+    public function getHeading(): string|\Illuminate\Contracts\Support\Htmlable|null
+    {
+        return __('filament.therapist.commission_rate_histories.widgets.chart.heading');
+    }
 
     protected function getData(): array
     {
@@ -20,7 +23,7 @@ class CommissionRateChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Taux (€/patient)',
+                    'label' => __('filament.therapist.commission_rate_histories.widgets.chart.dataset_label'),
                     'data' => $history->pluck('rate')->toArray(),
                     'borderColor' => '#7fcfb0',
                     'backgroundColor' => 'rgba(163, 220, 198, 0.1)',

@@ -21,39 +21,39 @@ class SeriesTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label('Nom')
+                    ->label(__('filament.series.table.columns.name'))
                     ->getStateUsing(fn ($record) => $record->name['fr'] ?? '-')
                     ->searchable(),
                 TextColumn::make('creator.first_name')
-                    ->label('Créé par')
+                    ->label(__('filament.series.table.columns.creator'))
                     ->getStateUsing(fn ($record) => "{$record->creator->first_name} {$record->creator->last_name}"),
                 IconColumn::make('is_base')
-                    ->label('Série de base')
+                    ->label(__('filament.series.table.columns.is_base'))
                     ->boolean(),
                 IconColumn::make('is_validated')
-                    ->label('Validée')
+                    ->label(__('filament.series.table.columns.is_validated'))
                     ->boolean(),
                 IconColumn::make('is_active')
-                    ->label('Active')
+                    ->label(__('filament.series.table.columns.is_active'))
                     ->boolean(),
                 TextColumn::make('cards_count')
-                    ->label('Cartes')
+                    ->label(__('filament.series.table.columns.cards_count'))
                     ->counts('cards'),
                 TextColumn::make('created_at')
-                    ->label('Créée le')
+                    ->label(__('filament.series.table.columns.created_at'))
                     ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Filter::make('is_base')
-                    ->label('Séries de base')
+                    ->label(__('filament.series.table.filters.is_base'))
                     ->query(fn ($query) => $query->where('is_base', true)),
                 Filter::make('is_validated')
-                    ->label('Validées')
+                    ->label(__('filament.series.table.filters.is_validated'))
                     ->query(fn ($query) => $query->where('is_validated', true)),
                 Filter::make('is_active')
-                    ->label('Actives')
+                    ->label(__('filament.series.table.filters.is_active'))
                     ->query(fn ($query) => $query->where('is_active', true)),
                 TrashedFilter::make(),
             ])

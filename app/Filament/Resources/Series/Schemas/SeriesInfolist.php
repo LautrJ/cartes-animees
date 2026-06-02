@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Series\Schemas;
 
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ViewEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -50,6 +51,14 @@ class SeriesInfolist
                         TextEntry::make('updated_at')
                             ->label(__('filament.series.infolist.fields.updated_at'))
                             ->dateTime('d/m/Y H:i'),
+                    ]),
+
+                Section::make(__('filament.series.infolist.sections.cards'))
+                    ->columnSpanFull()
+                    ->schema([
+                        ViewEntry::make('cards')
+                            ->label('')
+                            ->view('filament.components.series-cards-list'),
                     ]),
             ]);
     }

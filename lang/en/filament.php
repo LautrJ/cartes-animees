@@ -72,7 +72,8 @@ return [
             'sections' => [
                 'general_info' => 'General information',
                 'medias' => 'Media',
-                'settings' => 'Settings',
+                'medias_settings' => 'Media & settings',
+                'cards' => 'Cards'
             ],
             'fields' => [
                 'name' => 'Name',
@@ -89,6 +90,7 @@ return [
                 'general_info' => 'General information',
                 'settings' => 'Settings',
                 'dates' => 'Dates',
+                'cards' => 'Cards',
             ],
             'fields' => [
                 'name' => 'Name',
@@ -118,6 +120,17 @@ return [
                 'is_active' => 'Active',
             ],
         ],
+    ],
+    'series_card_picker' => [
+        'available'          => 'Available cards',
+        'search_placeholder' => 'Search for a card...',
+        'selected'           => 'Selected cards',
+        'drag_hint'          => '(drag to reorder)',
+        'add'                => 'Add',
+        'remove'             => 'Remove',
+        'no_results'         => 'No cards found.',
+        'empty'              => 'No cards selected.',
+        'count'              => 'card(s) selected',
     ],
     'children' => [
         'navigation_label' => 'Children',
@@ -666,6 +679,7 @@ return [
                 'section_dates' => 'Dates',
                 'created_at' => 'Created on',
                 'updated_at' => 'Updated on',
+                'section_cards' => 'Cards',
             ],
             'table' => [
                 'name' => 'Name',

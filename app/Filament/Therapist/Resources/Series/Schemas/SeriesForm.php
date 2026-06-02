@@ -3,9 +3,11 @@
 namespace App\Filament\Therapist\Resources\Series\Schemas;
 
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ViewField;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -35,15 +37,15 @@ class SeriesForm
                             ->nullable(),
                     ]),
 
-                Section::make(__('filament.therapist.series.form.section_cards'))
+                Section::make(__('filament.series.form.sections.cards'))
                     ->schema([
-                        Select::make('cards')
-                            ->label(__('filament.therapist.series.form.cards_to_include'))
-                            ->relationship('cards', 'id')
-                            ->getOptionLabelFromRecordUsing(fn ($record) => $record->name['fr'] ?? '-')
-                            ->multiple()
-                            ->preload()
-                            ->searchable(),
+                        Hidden::make('cards_data')
+                            ->default('[]'),
+                        ViewField::make('card_picker')
+                            ->view('livewire.series-card-picker-wrapper')
+                            ->viewData([
+                                'seriesId' => $schema->getRecord()?->id,
+                            ]),
                     ]),
             ]);
     }

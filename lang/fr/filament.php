@@ -72,7 +72,8 @@ return [
             'sections' => [
                 'general_info' => 'Informations générales',
                 'medias' => 'Médias',
-                'settings' => 'Paramètres',
+                'medias_settings' => 'Médias & paramètres',
+                'cards' => 'Cartes',
             ],
             'fields' => [
                 'name' => 'Nom',
@@ -89,6 +90,7 @@ return [
                 'general_info' => 'Informations générales',
                 'settings' => 'Paramètres',
                 'dates' => 'Dates',
+                'cards' => 'Cartes',
             ],
             'fields' => [
                 'name' => 'Nom',
@@ -118,6 +120,17 @@ return [
                 'is_active' => 'Actives',
             ],
         ],
+    ],
+    'series_card_picker' => [
+        'available'          => 'Cartes disponibles',
+        'search_placeholder' => 'Rechercher une carte...',
+        'selected'           => 'Cartes sélectionnées',
+        'drag_hint'          => '(glisser pour réordonner)',
+        'add'                => 'Ajouter',
+        'remove'             => 'Retirer',
+        'no_results'         => 'Aucune carte trouvée.',
+        'empty'              => 'Aucune carte sélectionnée.',
+        'count'              => 'carte(s) sélectionnée(s)',
     ],
     'children' => [
         'navigation_label' => 'Enfants',
@@ -666,6 +679,7 @@ return [
                 'section_dates' => 'Dates',
                 'created_at' => 'Créée le',
                 'updated_at' => 'Mise à jour le',
+                'section_cards' => 'Cartes',
             ],
             'table' => [
                 'name' => 'Nom',

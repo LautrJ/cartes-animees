@@ -1,0 +1,81 @@
+{
+    "app_name": "Cartes Animées",
+    "auth": {
+        "login": {
+            "title": "Log in",
+            "subtitle": "Access your child's space",
+            "email": "Email address",
+            "password": "Password",
+            "submit": "Log in",
+            "forgot": "Forgot your password?",
+            "no_account": "No account yet?",
+            "register_link": "Sign up"
+        },
+        "register": {
+            "title": "Create an account",
+            "subtitle": "Join Cartes Animées",
+            "first_name": "First name",
+            "last_name": "Last name",
+            "email": "Email address",
+            "phone": "Phone",
+            "password": "Password",
+            "password_confirm": "Confirm password",
+            "submit": "Create my account",
+            "already_account": "Already have an account?",
+            "login_link": "Log in"
+        },
+        "forgot_password": {
+            "title": "Forgot password",
+            "subtitle": "We will send you a reset link",
+            "email": "Email address",
+            "submit": "Send link",
+            "success": "A reset link was sent to you",
+            "back": "Back to login"
+        },
+        "reset_password": {
+            "title": "New password",
+            "email": "Email address",
+            "password": "New password",
+            "password_confirm": "Confirm password",
+            "submit": "Reset password"
+        }
+    },
+    "default_layout": {
+        "disconnect": "Disconnect",
+        "parent_space": "Parent space",
+        "children_space": "children space",
+        "switch_to_parent": "Back to parent account",
+        "switch_profile": "Switch profile",
+        "no_children": "No children"
+    },
+    "pages": {
+        "children": {
+            "title": "My children",
+            "add": "Add a child",
+            "empty": "You haven't added a child yet.",
+            "form": {
+                "first_name": "First name",
+                "birth_date": "Date of birth",
+                "submit_create": "Add",
+                "submit_edit": "Save"
+            }
+        },
+        "profile": {
+            "title": "My profil"
+        }
+    },
+    "impersonation": {
+        "banner": "You are viewing {name}'s space (administrator mode)",
+        "leave": "Return to back-office",
+        "connexion": "Connecting... "
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "back": "Back",
+        "cancel": "Cancel",
+        "save": "Save",
+        "delete": "Delete",
+        "confirm": "Confirm"
+    }
+}

@@ -1,0 +1,81 @@
+{
+    "app_name": "Cartes animées",
+    "auth": {
+        "login": {
+            "title": "Connexion",
+            "subtitle": "Accédez à l'espace de votre enfant",
+            "email": "Adresse e-mail",
+            "password": "Mot de passe",
+            "submit": "Se connecter",
+            "forgot": "Mot de passe oublié ?",
+            "no_account": "Pas encore de compte ?",
+            "register_link": "S'inscrire"
+        },
+        "register": {
+            "title": "Créer un compte",
+            "subtitle": "Rejoignez Cartes Animées",
+            "first_name": "Prénom",
+            "last_name": "Nom",
+            "email": "Adresse e-mail",
+            "phone": "Téléphone",
+            "password": "Mot de passe",
+            "password_confirm": "Confirmer le mot de passe",
+            "submit": "Créer mon compte",
+            "already_account": "Déjà un compte ?",
+            "login_link": "Se connecter"
+        },
+        "forgot_password": {
+            "title": "Mot de passe oublié",
+            "subtitle": "Nous vous enverrons un lien de réinitialisation",
+            "email": "Adresse e-mail",
+            "submit": "Envoyer le lien",
+            "success": "Un email de réinitialisation vous a été envoyé",
+            "back": "Retour à la connexion"
+        },
+        "reset_password": {
+            "title": "Nouveau mot de passe",
+            "email": "Adresse e-mail",
+            "password": "Nouveau mot de passe",
+            "password_confirm": "Confirmer le mot de passe",
+            "submit": "Réinitialiser"
+        }
+    },
+    "default_layout": {
+        "disconnect": "Se déconnecter",
+        "parent_space": "Espace parent",
+        "children_space": "Espace enfant",
+        "switch_to_parent": "Retour au compte parent",
+        "switch_profile": "Changer de profile",
+        "no_children": "Aucun enfant ajouté"
+    },
+    "pages": {
+        "children": {
+            "title": "Mes enfants",
+            "add": "Ajouter un enfant",
+            "empty": "Vous n'avez pas encore ajouté d'enfant.",
+            "form": {
+                "first_name": "Prénom",
+                "birth_date": "Date de naissance",
+                "submit_create": "Ajouter",
+                "submit_edit": "Enregistrer"
+            }
+        },
+        "profile": {
+            "title": "Mon profile"
+        }
+    },
+    "impersonation": {
+        "banner": "Vous consultez l'espace de {name} (mode administrateur)",
+        "leave": "Retourner au back-office",
+        "connexion": "Connexion en cours..."
+    },
+    "common": {
+        "loading": "Chargement...",
+        "error": "Une erreur est survenue",
+        "back": "Retour",
+        "cancel": "Annuler",
+        "save": "Enregistrer",
+        "delete": "Supprimer",
+        "confirm": "Confirmer"
+    }
+}

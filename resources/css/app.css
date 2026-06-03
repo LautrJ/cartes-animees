@@ -4,8 +4,71 @@
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
+@source '../**/*.vue';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Fredoka', ui-sans-serif, system-ui, sans-serif;
+    --font-dynapuff: 'DynaPuff', cursive;
+}
+
+/* ─── Thème enfant (défaut) ─────────────────────────────────── */
+:root {
+    --color-bg:           #F0F9FF; /* sky-50  — fond principal     */
+    --color-bg-navbar:    #E0F2FE; /* sky-100 — fond navbar        */
+    --color-bg-card:      #FFFFFF; /* blanc   — fond des cartes    */
+    --color-primary:      #0EA5E9; /* sky-500 — couleur principale */
+    --color-primary-hover:#0284C7; /* sky-600 — hover boutons      */
+    --color-primary-light:#BAE6FD; /* sky-200 — teinte légère      */
+    --color-accent:       #38BDF8; /* sky-400 — accents            */
+    --color-text:         #0C4A6E; /* sky-900 — texte principal    */
+    --color-text-muted:   #0369A1; /* sky-700 — texte secondaire   */
+    --color-border:       #BAE6FD; /* sky-200 — bordures           */
+}
+
+/* ─── Thème parent ───────────────────────────────────────────── */
+[data-theme="parent"] {
+    --color-bg:           #FEF9C3; /* yellow-100 — fond principal  */
+    --color-bg-navbar:    #FDE047; /* yellow-300 — fond navbar     */
+    --color-bg-card:      #FFFFFF; /* blanc      — fond des cartes */
+    --color-primary:      #CA8A04; /* yellow-600 — couleur princ.  */
+    --color-primary-hover:#A16207; /* yellow-700 — hover boutons   */
+    --color-primary-light:#FEF08A; /* yellow-200 — teinte légère   */
+    --color-accent:       #F97316; /* orange-500 — accents         */
+    --color-text:         #78350F; /* amber-900  — texte principal */
+    --color-text-muted:   #92400E; /* amber-800  — texte secondaire*/
+    --color-border:       #FDE68A; /* amber-200  — bordures        */
+}
+
+/* ─── Classes utilitaires thémées ───────────────────────────── */
+@layer components {
+    .bg-theme         { background-color: var(--color-bg); }
+    .bg-theme-navbar  { background-color: var(--color-bg-navbar); }
+    .bg-theme-card    { background-color: var(--color-bg-card); }
+    .text-theme       { color: var(--color-text); }
+    .text-theme-muted { color: var(--color-text-muted); }
+    .text-primary     { color: var(--color-primary); }
+    .border-theme     { border-color: var(--color-border); }
+
+    .btn-theme {
+        background-color: var(--color-primary);
+        color: #ffffff;
+        transition: background-color 0.15s ease;
+    }
+    .btn-theme:hover:not(:disabled) {
+        background-color: var(--color-primary-hover);
+    }
+    .btn-theme:disabled {
+        opacity: 0.5;
+    }
+
+    .bg-primary-light { background-color: var(--color-primary-light); }
+    .text-primary     { color: var(--color-primary); }
+}
+
+/* ─── Base ───────────────────────────────────────────────────── */
+@layer base {
+    body {
+        font-family: 'Fredoka', ui-sans-serif, system-ui, sans-serif;
+        font-weight: 500;
+    }
 }

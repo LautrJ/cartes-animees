@@ -91,7 +91,6 @@ class AuthController extends Controller
         Password::sendResetLink(
             $request->only('email'),
             function ($user, $token) {
-                // URL vers le frontend Vue.js (à adapter)
                 $url = config('app.frontend_url').'/reset-password?token='.$token.'&email='.urlencode($user->email);
 
                 $user->sendPasswordResetNotification($token);

@@ -38,8 +38,8 @@ class UsersTable
                     ->badge()
                     ->color(fn (UserRole $state) => match ($state) {
                         UserRole::Admin => 'danger',
-                        UserRole::Therapist => 'warning',
-                        UserRole::Parent => 'success',
+                        UserRole::Therapist => 'success',
+                        UserRole::Parent => 'info',
                     }),
                 TextColumn::make('phone')
                     ->label(__('filament.users.table.columns.phone'))
@@ -64,7 +64,7 @@ class UsersTable
                     ->label('')
                     ->redirectTo(fn ($record) => match (true) {
                         $record->isTherapist() => '/therapist',
-                        $record->isParent() => '/',
+                        $record->isParent() => '/impersonate/bridge',
                         default => '/admin',
                     }),
                 ViewAction::make(),

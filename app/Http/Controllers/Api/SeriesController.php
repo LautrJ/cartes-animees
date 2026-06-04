@@ -32,6 +32,7 @@ class SeriesController extends Controller
                 'name'        => $series->name,
                 'description' => $series->description,
                 'thumbnail'   => $series->thumbnail_path,
+                'card_count'  => $series->cards()->count(),
                 'is_base'     => $series->is_base,
                 'status'      => $series->pivot->status,
                 'unlocked_at' => $series->pivot->unlocked_at,

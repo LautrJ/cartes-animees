@@ -6,4 +6,8 @@ export const childrenService = {
     create: (data) => api.post('/children', data),
     update: (id, data) => api.put(`/children/${id}`, data),
     delete: (id) => api.delete(`/children/${id}`),
+    affiliateTherapist: (childId, code) =>
+        api.post(`/children/${childId}/therapist`, { invitation_code: code }),
+    removeTherapist: (childId, therapistId) =>
+        api.delete(`children/${childId}/therapist/${therapistId}`),
 }

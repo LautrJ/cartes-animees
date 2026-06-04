@@ -75,7 +75,6 @@ export const useAuthStore = defineStore('auth', () => {
         token.value = localStorage.getItem('auth_token')
         user.value = null
         clearImpersonation()
-        // Full redirect pour restaurer la session admin Laravel
         window.location.href = returnUrl
     }
 

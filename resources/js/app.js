@@ -11,9 +11,9 @@ import { useAuthStore } from './src/stores/auth'
 
 const i18n = createI18n({
     legacy: false,
-    locale: 'en',
+    locale: 'fr',
     fallbackLocale: 'en',
-    messages: { en, fr },
+    messages: { fr, en },
 })
 
 const pinia = createPinia()

@@ -44,6 +44,24 @@ const routes = [
         meta: { requiresAuth: true },
     },
     {
+        path: '/children/:id',
+        name: 'child-detail',
+        component: () => import('@/src/pages/children/ChildDetailPage.vue'),
+        meta: { requiresAuth: true },
+    },
+    {
+        path: '/children/:id/series',
+        name: 'child-series',
+        //component: () => import('@/src/pages/children/ChildSeriesPage.vue'),
+        meta: { requiresAuth: true },
+    },
+    {
+        path: '/children/:id/series/:seriesId',
+        name: 'child-series-player',
+        //component: () => import('@/src/pages/children/SeriesPlayerPage.vue'),
+        meta: { requiresAuth: true },
+    },
+    {
         path: '/profile',
         name: 'profile',
         //component: () => import('@/src/pages/ProfilePage.vue'),

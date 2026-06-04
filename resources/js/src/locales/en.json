@@ -55,9 +55,48 @@
             "empty": "You haven't added a child yet.",
             "form": {
                 "first_name": "First name",
+                "last_name": "Last name",
                 "birth_date": "Date of birth",
                 "submit_create": "Add",
                 "submit_edit": "Save"
+            },
+            "therapist": {
+                "followed": "Followed",
+                "not_followed": "Not followed"
+            },
+            "subscription": {
+                "active": "Subscribed",
+                "free": "Free",
+                "past_due": "Waiting for payment",
+                "canceled": "Canceled",
+                "none": "No subscription"
+            }
+        },
+        "child_detail": {
+            "born_on": "Born on {date}",
+            "therapist_notes": "Therapist notes",
+            "subscription": {
+                "title": "Subscription",
+                "next_payment": "Next payment on {date}",
+                "manage": "Manage"
+            },
+            "therapists": {
+                "title": "Therapists",
+                "name": "Name : ",
+                "end": "End follow",
+                "affiliate": "+ Link",
+                "error_invalid_code": "Invalid invitation code",
+                "error_already_linked": "This therapist already follows this child",
+                "code_placeholder": "Invitation code"
+            },
+            "series": {
+                "title": "Series",
+                "see_all": "See all",
+                "empty": "No series unlocked for the moment",
+                "cards": "Cards"
+            },
+            "edit": {
+                "title": "Edit child"
             }
         },
         "profile": {
@@ -73,6 +112,7 @@
         "loading": "Loading...",
         "error": "An error occurred",
         "back": "Back",
+        "edit": "Edit",
         "cancel": "Cancel",
         "save": "Save",
         "delete": "Delete",

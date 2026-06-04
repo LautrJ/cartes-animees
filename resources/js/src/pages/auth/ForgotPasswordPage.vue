@@ -1,12 +1,10 @@
 <script setup>
-import {reactive, ref} from 'vue'
+import {ref} from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/src/stores/auth'
 import AuthLayout from '@/src/layouts/AuthLayout.vue'
 
 const { t } = useI18n()
-const router = useRouter()
 const authStore = useAuthStore()
 
 const email = ref('')

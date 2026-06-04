@@ -55,9 +55,48 @@
             "empty": "Vous n'avez pas encore ajouté d'enfant.",
             "form": {
                 "first_name": "Prénom",
+                "last_name": "Nom de famille",
                 "birth_date": "Date de naissance",
                 "submit_create": "Ajouter",
                 "submit_edit": "Enregistrer"
+            },
+            "therapist": {
+                "followed": "Suivi",
+                "not_followed": "Non suivi"
+            },
+            "subscription": {
+                "active": "Abonné",
+                "free": "Gratuit",
+                "past_due": "Paiement en attente",
+                "canceled": "Annulé",
+                "none": "Sans abonnement"
+            }
+        },
+        "child_detail": {
+            "born_on": "Né(e) le {date}",
+            "therapist_notes": "Notes de l'orthophoniste",
+            "subscription": {
+                "title": "Abonnement",
+                "next_payment": "Prochain paiement le {date}",
+                "manage": "Gérer"
+            },
+            "therapists": {
+                "title": "Orthophonistes",
+                "name": "Nom : ",
+                "end": "Fin de suivi",
+                "affiliate": "+ Affilier",
+                "error_invalid_code": "Code d'invitation invalide.",
+                "error_already_linked": "Cet orthophoniste suit déjà cet enfant.",
+                "code_placeholder": "Code d'invitation"
+            },
+            "series": {
+                "title": "Séries",
+                "see_all": "Voir tout",
+                "empty": "Aucune série débloquée pour l'instant",
+                "cards": "Cartes"
+            },
+            "edit": {
+                "title": "Modifier l'enfant"
             }
         },
         "profile": {
@@ -73,6 +112,7 @@
         "loading": "Chargement...",
         "error": "Une erreur est survenue",
         "back": "Retour",
+        "edit": "Modifier",
         "cancel": "Annuler",
         "save": "Enregistrer",
         "delete": "Supprimer",

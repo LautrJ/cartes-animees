@@ -12,9 +12,21 @@ class ChildController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
-        $children = $request->user()->children;
+        $children = auth()->user()
+            ->children()
+            ->with(['activeTherapists', 'subscription'])
+            ->get()
+            ->map(fn($child) => [
+                'id' => $child->id,
+                'first_name' => $child->first_name,
+                'last_name' => $child->last_name,
+                'birthdate' => $child->birthdate,
+                'avatar' => $child->avatar,
+                'has_therapist' => $child->activeTherapists->isNotEmpty(),
+                'subscription_status' => $child->subscription?->satus,
+            ]);
 
-        return ApiResponse::success($children);
+        return response()->json($children);
     }
 
     public function store(Request $request): JsonResponse
@@ -38,7 +50,25 @@ class ChildController extends Controller
             return ApiResponse::error(__('api.common.access_denied'), 403);
         }
 
-        return ApiResponse::success($child);
+        $child->load(['activeTherapists', 'subscription']);
+
+        return response()->json([
+            'id'                  => $child->id,
+            'first_name'          => $child->first_name,
+            'last_name'           => $child->last_name,
+            'birthdate'           => $child->birthdate,
+            'avatar'              => $child->avatar,
+            'notes'               => $child->notes,
+            'has_therapist'       => $child->activeTherapists->isNotEmpty(),
+            'therapists'          => $child->activeTherapists->map(fn($t) => [
+                'id'   => $t->id,
+                'name' => $t->first_name . ' ' . $t->last_name,
+            ]),
+            'subscription'        => $child->subscription ? [
+                'status'      => $child->subscription->status,
+                'next_payment'=> $child->subscription->next_payment_at,
+            ] : null,
+        ]);
     }
 
     public function update(Request $request, Child $child): JsonResponse

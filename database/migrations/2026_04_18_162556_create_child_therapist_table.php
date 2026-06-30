@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('child_id')->constrained('children')->restrictOnDelete();
             $table->foreignId('therapist_id')->constrained('users')->restrictOnDelete();
             $table->foreignId('assigned_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->timestamp('assigned_at');
+            $table->timestamp('assigned_at')->useCurrent();
             $table->timestamp('ended_at')->nullable();
             $table->timestamps();
         });

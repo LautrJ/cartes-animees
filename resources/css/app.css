@@ -11,6 +11,10 @@
     --font-dynapuff: 'DynaPuff', cursive;
 }
 
+button {
+    cursor: pointer;
+}
+
 /* ─── Thème enfant (défaut) ─────────────────────────────────── */
 :root {
     --color-bg:           #F0F9FF; /* sky-50  — fond principal     */

@@ -61,10 +61,11 @@ class Child extends Model
     public function series(): BelongsToMany
     {
         return $this->belongsToMany(Series::class, 'child_series')
-            ->withPivot(['unlocked_by', 'status', 'unlocked_at', 'completed_at'])
+            ->withPivot(['unlocked_by', 'status', 'unlocked_at', 'last_played_at', 'completed_at'])
             ->withTimestamps()
             ->withCasts([
                 'unlocked_at' => 'datetime',
+                'last_played_at' => 'datetime',
                 'completed_at' => 'datetime',
             ]);
     }

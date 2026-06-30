@@ -18,10 +18,22 @@ export const useAuthStore = defineStore('auth', () => {
         localStorage.setItem('auth_token', authToken)
     }
 
+    const INACTIVITY_LIMIT = 2 * 60 * 60 * 1000 // 2 heures en ms
+
+    function checkSession() {
+        if (!token.value || isImpersonating.value) return
+        const lastActivity = parseInt(localStorage.getItem('last_activity') ?? '0')
+        if (!lastActivity) return
+        if (Date.now() - lastActivity > INACTIVITY_LIMIT) {
+            clearAuth()
+        }
+    }
+
     function clearAuth() {
         token.value = null
         user.value = null
         localStorage.removeItem('auth_token')
+        localStorage.removeItem('last_activity')
     }
 
     async function login(email, password) {
@@ -42,6 +54,8 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function init() {
+        if (!token.value) return
+        checkSession()
         if (!token.value) return
         try {
             const { data } = await authService.me()
@@ -88,7 +102,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     return {
         token, user, isAuthenticated, isImpersonating, impersonateReturnUrl,
-        setAuth, clearAuth, login, register, logout, init,
+        setAuth, clearAuth, checkSession, login, register, logout, init,
         startImpersonation, clearImpersonation, leaveImpersonation,
         forgotPassword, resetPassword,
     }

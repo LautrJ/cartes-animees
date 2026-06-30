@@ -64,7 +64,7 @@ const routes = [
     {
         path: '/profile',
         name: 'profile',
-        //component: () => import('@/src/pages/ProfilePage.vue'),
+        component: () => import('@/src/pages/ProfilePage.vue'),
         meta: { requiresAuth: true },
     },
     {
@@ -84,6 +84,8 @@ const router = createRouter({
 
 router.beforeEach((to) => {
     const authStore = useAuthStore()
+
+    authStore.checkSession()
 
     if (to.meta.requiresAuth && !authStore.isAuthenticated) {
         return { name: 'login' }

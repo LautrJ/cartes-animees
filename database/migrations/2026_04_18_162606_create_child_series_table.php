@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('unlocked_by')->nullable()->constrained('users')->nullOnDelete();
             $table->enum('status', ['unlocked', 'completed'])->default('unlocked');
             $table->timestamp('unlocked_at');
+            $table->timestamp('last_played_at')->nullable();
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
 

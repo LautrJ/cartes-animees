@@ -49,6 +49,9 @@
         "no_children": "Aucun enfant ajouté"
     },
     "pages": {
+        "home": {
+            "no_series_played": "Aucune série jouée"
+        },
         "children": {
             "title": "Mes enfants",
             "add": "Ajouter un enfant",
@@ -100,7 +103,19 @@
             }
         },
         "profile": {
-            "title": "Mon profile"
+            "title": "Mon profile",
+            "member_since": "Membre depuis le {date}",
+            "personal_info": "Informations personnelles",
+            "first_name": "Prénom",
+            "last_name": "Nom",
+            "email": "Adresse email",
+            "phone": "Téléphone",
+            "password": "Mot de passe",
+            "current_password": "Mot de passe actuel",
+            "new_password": "Nouveau mot de passe",
+            "password_confirm": "Confirmer le mot de passe",
+            "wrong_password": "Mot de passe actuel incorrect.",
+            "password_updated": "Mot de passe mis à jour."
         }
     },
     "impersonation": {
@@ -116,6 +131,9 @@
         "cancel": "Annuler",
         "save": "Enregistrer",
         "delete": "Supprimer",
-        "confirm": "Confirmer"
+        "confirm": "Confirmer",
+        "today": "Ajourd'hui",
+        "yesterday": "Hier",
+        "days_ago": "Il y à {days} jours"
     }
 }

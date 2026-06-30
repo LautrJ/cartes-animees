@@ -14,7 +14,7 @@ class ChildController extends Controller
     {
         $children = auth()->user()
             ->children()
-            ->with(['activeTherapists', 'subscription'])
+            ->with(['activeTherapists', 'subscription', 'series'])
             ->get()
             ->map(fn($child) => [
                 'id' => $child->id,
@@ -23,7 +23,15 @@ class ChildController extends Controller
                 'birthdate' => $child->birthdate,
                 'avatar' => $child->avatar,
                 'has_therapist' => $child->activeTherapists->isNotEmpty(),
-                'subscription_status' => $child->subscription?->satus,
+                'last_series' => ($last = $child->series
+                    ->whereNotNull('pivot.last_played_at')
+                    ->sortByDesc('pivot.last_played_at')
+                    ->first()
+                ) ? [
+                    'name' => $last->name,
+                    'played_at' => $last->pivot->last_played_at
+                ] : null,
+                'subscription_status' => $child->subscription?->status,
             ]);
 
         return response()->json($children);

@@ -18,7 +18,10 @@ api.interceptors.request.use((config) => {
 })
 
 api.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        localStorage.setItem('last_activity', Date.now().toString())
+        return response
+    },
     (error) => {
         if (error.response?.status === 401) {
             const authStore = useAuthStore()

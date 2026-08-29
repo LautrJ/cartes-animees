@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\TherapistPayouts\Tables;
 
+use App\Filament\Resources\TherapistPayouts\Actions\MarkAsPaid;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -46,6 +47,7 @@ class TherapistPayoutsTable
             ])
             ->recordActions([
                 ViewAction::make(),
+                MarkAsPaid::make(),
             ])
             ->toolbarActions([
             ]);

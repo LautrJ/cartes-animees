@@ -62,7 +62,6 @@ async function subscribe() {
         const { data } = await subscriptionService.create(childId, {
             payment_method_id: paymentMethod.id,
         })
-        console.log(data)
 
         if (data.client_secret) {
             const { error: confirmError } = await stripe.confirmCardPayment(data.client_secret, {

@@ -210,7 +210,7 @@ php artisan schedule:run
 
 ```env
 APP_URL=http://localhost:8000
-APP_FRONTEND_URL=http://localhost:5173
+FRONTEND_URL=http://localhost:5173
 
 STRIPE_KEY=
 STRIPE_SECRET=

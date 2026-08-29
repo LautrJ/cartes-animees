@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\TherapistPayouts\Pages;
 
+use App\Filament\Resources\TherapistPayouts\Actions\MarkAsPaid;
 use App\Filament\Resources\TherapistPayouts\TherapistPayoutResource;
 use Filament\Resources\Pages\ViewRecord;
 
@@ -11,6 +12,8 @@ class ViewTherapistPayout extends ViewRecord
 
     protected function getHeaderActions(): array
     {
-        return [];
+        return [
+            MarkAsPaid::make(),
+        ];
     }
 }

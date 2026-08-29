@@ -12,6 +12,7 @@ use App\Services\StripeService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Stripe\Exception\CardException;
 
 class SubscriptionController extends Controller
 {
@@ -55,8 +56,20 @@ class SubscriptionController extends Controller
                 $user->stripe_customer_id
             );
 
+            // Aucun PI en attente : soit le paiement a déjà abouti entre-temps (ex. webhook en
+            // retard/absent, double appel pendant qu'une confirmation 3DS précédente se terminait),
+            // soit il a échoué. On vérifie le statut réel sur Stripe pour resynchroniser la BDD
+            // au lieu de laisser l'abonnement bloqué en "incomplete" indéfiniment.
+            if (! $clientSecret) {
+                $freshSub = $this->stripeService->retrieveSubscription($existingSubscription->stripe_subscription_id);
+                if ($freshSub->status === 'active') {
+                    $existingSubscription->update(['status' => SubscriptionStatus::Active]);
+                    $existingSubscription->refresh();
+                }
+            }
+
             return ApiResponse::success([
-                'subscription'  => $existingSubscription,
+                'subscription' => $existingSubscription,
                 'client_secret' => $clientSecret,
             ]);
         }
@@ -120,26 +133,27 @@ class SubscriptionController extends Controller
             }
 
             return ApiResponse::success([
-                'subscription'  => $subscription,
+                'subscription' => $subscription,
                 'client_secret' => $clientSecret,
             ], 201);
 
-        } catch (\Stripe\Exception\CardException $e) {
+        } catch (CardException $e) {
             $code = $e->getError()->decline_code ?? $e->getError()->code ?? 'card_declined';
             $message = match ($code) {
-                'insufficient_funds'   => 'Fonds insuffisants sur votre carte.',
-                'card_declined'        => 'Votre carte a été refusée.',
-                'incorrect_cvc'        => 'Le code de sécurité (CVC) est incorrect.',
-                'expired_card'         => 'Votre carte a expiré.',
-                'incorrect_number'     => 'Le numéro de carte est incorrect.',
+                'insufficient_funds' => 'Fonds insuffisants sur votre carte.',
+                'card_declined' => 'Votre carte a été refusée.',
+                'incorrect_cvc' => 'Le code de sécurité (CVC) est incorrect.',
+                'expired_card' => 'Votre carte a expiré.',
+                'incorrect_number' => 'Le numéro de carte est incorrect.',
                 'invalid_expiry_month' => 'Le mois d\'expiration est invalide.',
-                'invalid_expiry_year'  => 'L\'année d\'expiration est invalide.',
+                'invalid_expiry_year' => 'L\'année d\'expiration est invalide.',
                 'do_not_honor',
-                'generic_decline'      => 'Votre carte a été refusée. Contactez votre banque.',
+                'generic_decline' => 'Votre carte a été refusée. Contactez votre banque.',
                 'lost_card',
-                'stolen_card'          => 'Votre carte a été refusée.',
-                default                => 'Votre carte a été refusée. Veuillez réessayer ou utiliser une autre carte.',
+                'stolen_card' => 'Votre carte a été refusée.',
+                default => 'Votre carte a été refusée. Veuillez réessayer ou utiliser une autre carte.',
             };
+
             return ApiResponse::error($message, 422);
         } catch (\Exception $e) {
             Log::error('Erreur création abonnement Stripe', [
@@ -215,6 +229,7 @@ class SubscriptionController extends Controller
     public function currentPrice(): JsonResponse
     {
         $price = SubscriptionPriceHistory::orderBy('effective_from', 'desc')->first();
+
         return ApiResponse::success(['price' => $price?->price]);
     }
 }

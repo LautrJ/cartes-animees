@@ -64,6 +64,9 @@ Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {
     Route::get('profile', [ProfileController::class, 'show']);
     Route::put('profile', [ProfileController::class, 'update']);
     Route::patch('profile/password', [ProfileController::class, 'updatePassword']);
+
+    // Abonnement
+    Route::get('subscription/price', [SubscriptionController::class, 'currentPrice']);
 });
 
 Route::post('stripe/webhook', [StripeWebhookController::class, 'handle']);

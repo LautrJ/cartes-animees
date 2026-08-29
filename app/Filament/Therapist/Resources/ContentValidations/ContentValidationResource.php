@@ -22,7 +22,7 @@ class ContentValidationResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentCheck;
 
-    protected static ?string $recordTitleAttribute = 'submitted_at';
+    protected static ?string $recordTitleAttribute = 'display_title';
 
     protected static ?int $navigationSort = 2;
 

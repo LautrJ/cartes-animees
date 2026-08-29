@@ -21,7 +21,9 @@ class InvoicesTable
                     ->searchable(),
                 TextColumn::make('subscription.child.first_name')
                     ->label(__('filament.invoices.table.columns.child'))
-                    ->getStateUsing(fn ($record) => "{$record->subscription->child->first_name} {$record->subscription->child->last_name}"),
+                    ->getStateUsing(fn ($record) => $record->subscription?->child
+                        ? "{$record->subscription->child->first_name} {$record->subscription->child->last_name}"
+                        : '-'),
                 TextColumn::make('amount')
                     ->label(__('filament.invoices.table.columns.amount'))
                     ->getStateUsing(fn ($record) => number_format($record->amount, 2).' €'),

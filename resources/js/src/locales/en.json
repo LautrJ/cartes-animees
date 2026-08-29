@@ -1,0 +1,171 @@
+{
+    "app_name": "Cartes Animées",
+    "auth": {
+        "login": {
+            "title": "Log in",
+            "subtitle": "Access your child's space",
+            "email": "Email address",
+            "password": "Password",
+            "submit": "Log in",
+            "forgot": "Forgot your password?",
+            "no_account": "No account yet?",
+            "register_link": "Sign up"
+        },
+        "register": {
+            "title": "Create an account",
+            "subtitle": "Join Cartes Animées",
+            "first_name": "First name",
+            "last_name": "Last name",
+            "email": "Email address",
+            "phone": "Phone",
+            "password": "Password",
+            "password_confirm": "Confirm password",
+            "submit": "Create my account",
+            "already_account": "Already have an account?",
+            "login_link": "Log in"
+        },
+        "forgot_password": {
+            "title": "Forgot password",
+            "subtitle": "We will send you a reset link",
+            "email": "Email address",
+            "submit": "Send link",
+            "success": "A reset link was sent to you",
+            "back": "Back to login"
+        },
+        "reset_password": {
+            "title": "New password",
+            "email": "Email address",
+            "password": "New password",
+            "password_confirm": "Confirm password",
+            "submit": "Reset password"
+        }
+    },
+    "default_layout": {
+        "disconnect": "Disconnect",
+        "parent_space": "Parent space",
+        "children_space": "children space",
+        "switch_to_parent": "Back to parent account",
+        "switch_profile": "Switch profile",
+        "no_children": "No children"
+    },
+    "pages": {
+        "home": {
+            "greeting": "Hello {name}",
+            "no_series": "No series available for the moment.",
+            "no_series_played": "No series played"
+        },
+        "children": {
+            "title": "My children",
+            "add": "Add a child",
+            "empty": "You haven't added a child yet.",
+            "form": {
+                "first_name": "First name",
+                "last_name": "Last name",
+                "birth_date": "Date of birth",
+                "submit_create": "Add",
+                "submit_edit": "Save"
+            },
+            "therapist": {
+                "followed": "Followed",
+                "not_followed": "Not followed"
+            },
+            "subscription": {
+                "active": "Subscribed",
+                "free": "Free",
+                "past_due": "Waiting for payment",
+                "canceled": "Canceled",
+                "incomplete": "Pending payment",
+                "none": "No subscription"
+            }
+        },
+        "child_detail": {
+            "born_on": "Born on {date}",
+            "therapist_notes": "Therapist notes",
+            "subscription": {
+                "title": "Subscription",
+                "next_payment": "Next payment on {date}",
+                "subscribe": "Subscribe",
+                "regularize": "Regularize",
+                "cancel": "Cancel",
+                "cancel_confirm": "Are you sure? The child will lose access to paid series.",
+                "price_free": "Price: Free (granted)",
+                "price_reduced": "Reduced price: {price} €/month",
+                "past_due_warning": "Last payment failed. Please, regularize to keep your access to the series.",
+                "incomplete_warning": "Payment was not completed. Resume the process to activate the subscription.",
+                "retry": "Resume payment"
+            },
+            "therapists": {
+                "title": "Therapists",
+                "name": "Name : ",
+                "end": "End follow",
+                "affiliate": "+ Link",
+                "error_invalid_code": "Invalid invitation code",
+                "error_already_linked": "This therapist already follows this child",
+                "code_placeholder": "Invitation code"
+            },
+            "series": {
+                "title": "Series",
+                "see_all": "See all",
+                "empty": "No series unlocked for the moment",
+                "cards": "Cards"
+            },
+            "edit": {
+                "title": "Edit child"
+            }
+        },
+        "child_create": {
+            "title": "Add new child",
+            "first_name": "Last name",
+            "last_name": "First name",
+            "birthdate": "Birthdate"
+        },
+        "landing": {
+            "register": "Sign up",
+            "login": "Log in"
+        },
+        "series": {
+            "play": "▶ Jouer"
+        },
+        "subscribe": {
+            "title": "Subscribe",
+            "no_therapist_warning": "No new content will be available if the child is not linked to an therapist.",
+            "monthly_price": "Monthly price",
+            "per_month": "/month",
+            "card": "Payment by card",
+            "cta": "Confirm"
+        },
+        "profile": {
+            "title": "My profil",
+            "member_since": "Member since {date}",
+            "personal_info": "Personal informations",
+            "first_name": "First name",
+            "last_name": "Last name",
+            "email": "Email address",
+            "phone": "Phone",
+            "password": "Password",
+            "current_password": "Current password",
+            "new_password": "New password",
+            "password_confirm": "Confirm password",
+            "wrong_password": "Incorrect current password.",
+            "password_updated": "Password updated."
+        }
+    },
+    "impersonation": {
+        "banner": "You are viewing {name}'s space (administrator mode)",
+        "leave": "Return to back-office",
+        "connexion": "Connecting... "
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "back": "Back",
+        "edit": "Edit",
+        "cancel": "Cancel",
+        "save": "Save",
+        "delete": "Delete",
+        "confirm": "Confirm",
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "days_ago": "{days} days ago"
+    }
+}

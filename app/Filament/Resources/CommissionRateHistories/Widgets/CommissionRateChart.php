@@ -7,8 +7,6 @@ use Filament\Widgets\ChartWidget;
 
 class CommissionRateChart extends ChartWidget
 {
-    protected ?string $heading = null;
-
     public function getHeading(): string|\Illuminate\Contracts\Support\Htmlable|null
     {
         return __('filament.commission_rate_histories.widgets.chart.heading');

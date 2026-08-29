@@ -3,6 +3,7 @@
 namespace App\Filament\Therapist\Resources\Series\Pages;
 
 use App\Enums\ContentValidationStatus;
+use App\Filament\Therapist\Resources\ContentValidations\ContentValidationResource;
 use App\Filament\Therapist\Resources\Series\SeriesResource;
 use App\Models\ContentValidation;
 use App\Models\Series;
@@ -16,6 +17,8 @@ class CreateSeries extends CreateRecord
     protected $listeners = ['cards-updated' => 'updateCardsData'];
     public string $cardsJson = '[]';
 
+    protected ?ContentValidation $createdValidation = null;
+
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['created_by']   = auth()->id();
@@ -26,11 +29,20 @@ class CreateSeries extends CreateRecord
         return $data;
     }
 
+    protected function getRedirectUrl(): string
+    {
+        if ($this->createdValidation) {
+            return ContentValidationResource::getUrl('view', ['record' => $this->createdValidation]);
+        }
+
+        return $this->getResource()::getUrl('index');
+    }
+
     protected function afterCreate(): void
     {
         $this->syncCards();
 
-        ContentValidation::create([
+        $this->createdValidation = ContentValidation::create([
             'validatable_id'   => $this->record->id,
             'validatable_type' => Series::class,
             'submitted_by'     => auth()->id(),

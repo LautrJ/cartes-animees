@@ -24,7 +24,7 @@ return [
     'no_progress' => [
         'subject' => 'Pas d\'activité récente — :child_first_name',
         'greeting' => 'Bonjour !',
-        'line_1' => 'Nous n\'avons pas détecté d\'activité de **:child_first_name** sur Cartes Animées depuis plus d\'une semaine.',
+        'line_1' => 'Nous n\'avons pas détecté d\'activité de **:child_first_name** sur Cartes Animées depuis plus de deux semaines.',
         'line_2' => 'La régularité est importante pour la progression de votre enfant.',
         'action' => 'Reprendre les exercices',
         'line_3' => 'Votre orthophoniste référent peut également débloquer de nouvelles séries pour maintenir la motivation.',
@@ -44,6 +44,13 @@ return [
         'line_2' => 'Montant débité : **:amount €**',
         'action' => 'Accéder à l\'application',
         'line_3' => 'Merci pour votre confiance !',
+    ],
+    'password_reset' => [
+        'subject' => 'Réinitialisation de votre mot de passe — Cartes Animées',
+        'greeting' => 'Bonjour !',
+        'line_1' => 'Vous recevez cet email car une demande de réinitialisation de mot de passe a été effectuée pour votre compte.',
+        'action' => 'Réinitialiser mon mot de passe',
+        'line_2' => 'Si vous n\'êtes pas à l\'origine de cette demande, vous pouvez ignorer cet email.',
     ],
     'welcome_parent' => [
         'subject' => 'Bienvenue sur Cartes Animées !',

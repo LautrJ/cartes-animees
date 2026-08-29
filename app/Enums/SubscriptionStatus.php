@@ -5,6 +5,7 @@ namespace App\Enums;
 enum SubscriptionStatus: string implements \Filament\Support\Contracts\HasLabel
 {
     case Active = 'active';
+    case Incomplete = 'incomplete';
     case PastDue = 'past_due';
     case Canceled = 'canceled';
     case Free = 'free';

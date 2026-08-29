@@ -7,8 +7,6 @@ use Filament\Widgets\ChartWidget;
 
 class SubscriptionPriceChart extends ChartWidget
 {
-    protected ?string $heading = null;
-
     public function getHeading(): string|\Illuminate\Contracts\Support\Htmlable|null
     {
         return __('filament.widgets.subscription_price_chart.heading');

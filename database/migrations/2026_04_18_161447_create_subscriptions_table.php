@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('stripe_subscription_id')->nullable()->unique();
             $table->string('stripe_coupon_id')->nullable()->unique();
             $table->string('stripe_price_id')->nullable();
-            $table->enum('status', ['active', 'past_due', 'canceled', 'free'])->default('active');
+            $table->enum('status', ['active', 'incomplete', 'past_due', 'canceled', 'free'])->default('active');
             $table->decimal('override_price', 8, 2)->nullable();
             $table->timestamp('current_period_start');
             $table->timestamp('current_period_end');

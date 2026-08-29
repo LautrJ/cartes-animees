@@ -1,0 +1,171 @@
+{
+    "app_name": "Cartes animées",
+    "auth": {
+        "login": {
+            "title": "Connexion",
+            "subtitle": "Accédez à l'espace de votre enfant",
+            "email": "Adresse e-mail",
+            "password": "Mot de passe",
+            "submit": "Se connecter",
+            "forgot": "Mot de passe oublié ?",
+            "no_account": "Pas encore de compte ?",
+            "register_link": "S'inscrire"
+        },
+        "register": {
+            "title": "Créer un compte",
+            "subtitle": "Rejoignez Cartes Animées",
+            "first_name": "Prénom",
+            "last_name": "Nom",
+            "email": "Adresse e-mail",
+            "phone": "Téléphone",
+            "password": "Mot de passe",
+            "password_confirm": "Confirmer le mot de passe",
+            "submit": "Créer mon compte",
+            "already_account": "Déjà un compte ?",
+            "login_link": "Se connecter"
+        },
+        "forgot_password": {
+            "title": "Mot de passe oublié",
+            "subtitle": "Nous vous enverrons un lien de réinitialisation",
+            "email": "Adresse e-mail",
+            "submit": "Envoyer le lien",
+            "success": "Un email de réinitialisation vous a été envoyé",
+            "back": "Retour à la connexion"
+        },
+        "reset_password": {
+            "title": "Nouveau mot de passe",
+            "email": "Adresse e-mail",
+            "password": "Nouveau mot de passe",
+            "password_confirm": "Confirmer le mot de passe",
+            "submit": "Réinitialiser"
+        }
+    },
+    "default_layout": {
+        "disconnect": "Se déconnecter",
+        "parent_space": "Espace parent",
+        "children_space": "Espace enfant",
+        "switch_to_parent": "Retour au compte parent",
+        "switch_profile": "Changer de profile",
+        "no_children": "Aucun enfant ajouté"
+    },
+    "pages": {
+        "home": {
+            "greeting": "Bonjour {name}",
+            "no_series": "Aucune séries disponible pour l'instant.",
+            "no_series_played": "Aucune série jouée"
+        },
+        "children": {
+            "title": "Mes enfants",
+            "add": "Ajouter un enfant",
+            "empty": "Vous n'avez pas encore ajouté d'enfant.",
+            "form": {
+                "first_name": "Prénom",
+                "last_name": "Nom de famille",
+                "birth_date": "Date de naissance",
+                "submit_create": "Ajouter",
+                "submit_edit": "Enregistrer"
+            },
+            "therapist": {
+                "followed": "Suivi",
+                "not_followed": "Non suivi"
+            },
+            "subscription": {
+                "active": "Abonné",
+                "free": "Gratuit",
+                "past_due": "Paiement en attente",
+                "canceled": "Annulé",
+                "incomplete": "En attente de paiement",
+                "none": "Sans abonnement"
+            }
+        },
+        "child_detail": {
+            "born_on": "Né(e) le {date}",
+            "therapist_notes": "Notes de l'orthophoniste",
+            "subscription": {
+                "title": "Abonnement",
+                "next_payment": "Prochain paiement le {date}",
+                "subscribe": "Souscrire",
+                "regularize": "Régulariser",
+                "cancel": "Annuler l'abonnement",
+                "cancel_confirm": "Êtes-vous sûr ? L'enfant perdra l'accès aux séries payantes.",
+                "price_free": "Tarif : Gratuit (offert)",
+                "price_reduced": "Tarif réduit : {price} €/mois",
+                "past_due_warning": "Le dernier paiement a échoué. Veuillez régulariser pour conserver l'accès aux séries.",
+                "incomplete_warning": "Le paiement n'a pas été finalisé. Reprenez le processus pour activer l'abonnement.",
+                "retry": "Reprendre le paiement"
+            },
+            "therapists": {
+                "title": "Orthophonistes",
+                "name": "Nom : ",
+                "end": "Fin de suivi",
+                "affiliate": "+ Affilier",
+                "error_invalid_code": "Code d'invitation invalide.",
+                "error_already_linked": "Cet orthophoniste suit déjà cet enfant.",
+                "code_placeholder": "Code d'invitation"
+            },
+            "series": {
+                "title": "Séries",
+                "see_all": "Voir tout",
+                "empty": "Aucune série débloquée pour l'instant",
+                "cards": "Cartes"
+            },
+            "edit": {
+                "title": "Modifier l'enfant"
+            }
+        },
+        "child_create": {
+            "title": "Ajouter un enfant",
+            "first_name": "Prénom",
+            "last_name": "Nom de famille",
+            "birthdate": "Date de naissance"
+        },
+        "landing": {
+            "register": "S'inscrire",
+            "login": "Se connecter"
+        },
+        "series": {
+            "play": "▶ Jouer"
+        },
+        "subscribe": {
+            "title": "S'abonner",
+            "no_therapist_warning": "Aucun nouveau contenu ne pourra être débloqué si l'enfant n'est pas affilié à un orthophoniste.",
+            "monthly_price": "Prix mensuel",
+            "per_month": "/mois",
+            "card": "Paiement par carte",
+            "cta": "Valider"
+        },
+        "profile": {
+            "title": "Mon profile",
+            "member_since": "Membre depuis le {date}",
+            "personal_info": "Informations personnelles",
+            "first_name": "Prénom",
+            "last_name": "Nom",
+            "email": "Adresse email",
+            "phone": "Téléphone",
+            "password": "Mot de passe",
+            "current_password": "Mot de passe actuel",
+            "new_password": "Nouveau mot de passe",
+            "password_confirm": "Confirmer le mot de passe",
+            "wrong_password": "Mot de passe actuel incorrect.",
+            "password_updated": "Mot de passe mis à jour."
+        }
+    },
+    "impersonation": {
+        "banner": "Vous consultez l'espace de {name} (mode administrateur)",
+        "leave": "Retourner au back-office",
+        "connexion": "Connexion en cours..."
+    },
+    "common": {
+        "loading": "Chargement...",
+        "error": "Une erreur est survenue",
+        "back": "Retour",
+        "edit": "Modifier",
+        "cancel": "Annuler",
+        "save": "Enregistrer",
+        "delete": "Supprimer",
+        "confirm": "Confirmer",
+        "today": "Ajourd'hui",
+        "yesterday": "Hier",
+        "days_ago": "Il y à {days} jours"
+    }
+}

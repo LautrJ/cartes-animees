@@ -6,6 +6,7 @@ use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
 use App\Models\User;
+use App\Notifications\PasswordResetNotification;
 use App\Notifications\WelcomeParentNotification;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;
@@ -91,10 +92,8 @@ class AuthController extends Controller
         Password::sendResetLink(
             $request->only('email'),
             function ($user, $token) {
-                // URL vers le frontend Vue.js (à adapter)
                 $url = config('app.frontend_url').'/reset-password?token='.$token.'&email='.urlencode($user->email);
-
-                $user->sendPasswordResetNotification($token);
+                $user->notify(new PasswordResetNotification($url));
             }
         );
 

@@ -103,7 +103,7 @@ Cette commande lance en parallèle :
 **Dans un terminal séparé**, pour les webhooks Stripe :
 
 ```bash
-stripe listen --forward-to http://localhost:8000/api/stripe/webhook
+stripe listen --forward-to http://cartes-animees.test/api/stripe/webhook
 ```
 
 > Mailpit est accessible sur [http://localhost:8025](http://localhost:8025)
@@ -189,7 +189,7 @@ Base URL : `/api`
 
 ```bash
 # Lancer les tests Stripe en local
-stripe listen --forward-to http://localhost:8000/api/stripe/webhook
+stripe listen --forward-to http://cartes-animees.test/api/stripe/webhook
 stripe trigger invoice.payment_failed
 stripe trigger invoice.payment_succeeded
 stripe trigger customer.subscription.deleted

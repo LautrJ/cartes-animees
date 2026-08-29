@@ -161,6 +161,7 @@ class TestDataSeeder extends Seeder
                         'status' => $isCompleted ? ChildSeriesStatus::Completed->value : ChildSeriesStatus::Unlocked->value,
                         'unlocked_at' => $unlockedAt,
                         'completed_at' => $isCompleted ? $unlockedAt->copy()->addDays(rand(3, 14)) : null,
+                        'last_played_at' => rand(0, 1) ? $now->copy()->subDays(rand(0, 30)) : null,
                     ]);
                 });
             }

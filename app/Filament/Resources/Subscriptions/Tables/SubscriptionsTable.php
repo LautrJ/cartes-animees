@@ -21,10 +21,14 @@ class SubscriptionsTable
             ->columns([
                 TextColumn::make('child.first_name')
                     ->label(__('filament.subscriptions.table.columns.child'))
-                    ->getStateUsing(fn ($record) => "{$record->child->first_name} {$record->child->last_name}"),
+                    ->getStateUsing(fn ($record) => $record->child
+                        ? "{$record->child->first_name} {$record->child->last_name}"
+                        : '-'),
                 TextColumn::make('child.parent.first_name')
                     ->label(__('filament.subscriptions.table.columns.parent'))
-                    ->getStateUsing(fn ($record) => "{$record->child->parent->first_name} {$record->child->parent->last_name}"),
+                    ->getStateUsing(fn ($record) => $record->child?->parent
+                        ? "{$record->child->parent->first_name} {$record->child->parent->last_name}"
+                        : '-'),
                 TextColumn::make('status')
                     ->label(__('filament.subscriptions.table.columns.status'))
                     ->badge()
@@ -33,6 +37,7 @@ class SubscriptionsTable
                         SubscriptionStatus::PastDue => 'danger',
                         SubscriptionStatus::Canceled => 'gray',
                         SubscriptionStatus::Free => 'info',
+                        SubscriptionStatus::Incomplete => 'warning',
                     }),
                 TextColumn::make('override_price')
                     ->label(__('filament.subscriptions.table.columns.price'))

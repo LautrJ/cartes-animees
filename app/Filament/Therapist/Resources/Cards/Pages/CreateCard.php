@@ -4,6 +4,7 @@ namespace App\Filament\Therapist\Resources\Cards\Pages;
 
 use App\Enums\ContentValidationStatus;
 use App\Filament\Therapist\Resources\Cards\CardResource;
+use App\Filament\Therapist\Resources\ContentValidations\ContentValidationResource;
 use App\Models\Card;
 use App\Models\ContentValidation;
 use App\Models\User;
@@ -15,6 +16,17 @@ use Illuminate\Support\Str;
 class CreateCard extends CreateRecord
 {
     protected static string $resource = CardResource::class;
+
+    protected ?ContentValidation $createdValidation = null;
+
+    protected function getRedirectUrl(): string
+    {
+        if ($this->createdValidation) {
+            return ContentValidationResource::getUrl('view', ['record' => $this->createdValidation]);
+        }
+
+        return $this->getResource()::getUrl('index');
+    }
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
@@ -29,7 +41,7 @@ class CreateCard extends CreateRecord
 
     protected function afterCreate(): void
     {
-        ContentValidation::create([
+        $this->createdValidation = ContentValidation::create([
             'validatable_id' => $this->record->id,
             'validatable_type' => Card::class,
             'submitted_by' => auth()->id(),

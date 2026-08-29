@@ -35,7 +35,7 @@ class FollowUpEndedNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(__('notifications.follow_up_ended.subject'))
+            ->subject(__('notifications.follow_up_ended.subject', ['child_first_name' => $this->childFirstName]))
             ->greeting(__('notifications.follow_up_ended.greeting'))
             ->line(__('notifications.follow_up_ended.line_1', [
                 'child_first_name' => $this->childFirstName,

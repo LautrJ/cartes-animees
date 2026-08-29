@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ContentValidations\Actions;
 
 use App\Enums\ContentValidationStatus;
+use App\Models\Series;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,13 @@ class ApproveContentValidation extends Action
                     'reviewed_at' => now(),
                 ]);
 
-                $record->validatable->update(['is_validated' => true]);
+                $updates = ['is_validated' => true];
+
+                if ($record->validatable instanceof Series) {
+                    $updates['is_active'] = true;
+                }
+
+                $record->validatable->update($updates);
 
                 $contentName = $record->validatable->name['fr'] ?? '';
                 $contentTypeKey = class_basename($record->validatable_type) === 'Card' ? 'content_type_card' : 'content_type_series';

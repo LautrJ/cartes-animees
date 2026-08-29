@@ -11,9 +11,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class TherapistPatientsWidget extends BaseWidget
 {
-    protected static ?string $heading = null;
-
-    public function getHeading(): string
+    protected function getTableHeading(): string|\Illuminate\Contracts\Support\Htmlable|null
     {
         return __('filament.therapist.widgets.therapist_patients.heading');
     }

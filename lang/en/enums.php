@@ -28,6 +28,7 @@ return [
         'past_due' => 'Past due',
         'canceled' => 'Canceled',
         'free' => 'Free',
+        'incomplete' => 'Incomplete',
     ],
     'user_role' => [
         'parent' => 'Parent',

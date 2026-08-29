@@ -96,8 +96,6 @@ class SeriesRelationManager extends RelationManager
                             'unlocked_at' => now(),
                         ]);
 
-                        $child->parent->notify(new SeriesUnlockedNotification($child, $series));
-
                         Notification::make()
                             ->title(__('filament.therapist.patients.series_relation_manager.unlock_notification'))
                             ->success()
@@ -120,8 +118,6 @@ class SeriesRelationManager extends RelationManager
                             'status' => ChildSeriesStatus::Completed,
                             'completed_at' => now(),
                         ]);
-
-                        $child->parent->notify(new SeriesCompletedNotification($child, $record));
 
                         Notification::make()
                             ->title(__('filament.therapist.patients.series_relation_manager.complete_notification'))

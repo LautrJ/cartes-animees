@@ -10,7 +10,7 @@ class SendNoProgressNotifications extends Command
 {
     protected $signature = 'notifications:no-progress';
 
-    protected $description = 'Envoie un mail aux parents dont l\'enfant n\'a pas eu d\'activité depuis 7 jours';
+    protected $description = 'Envoie un mail aux parents inactifs depuis 2 semaines (last_login_at)';
 
     public function handle(): int
     {
@@ -19,7 +19,7 @@ class SendNoProgressNotifications extends Command
             ->whereHas('parent', fn ($q) => $q
                 ->where(fn ($q) => $q
                     ->whereNull('last_login_at')
-                    ->orWhere('last_login_at', '<', now()->subDays(7))
+                    ->orWhere('last_login_at', '<', now()->subWeeks(2))
                 )
             )
             ->with('parent')

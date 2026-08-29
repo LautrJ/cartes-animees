@@ -12,10 +12,16 @@ const childrenStore = useChildrenStore()
 
 <template>
     <DefaultLayout>
-        <div class="text-center">
-            <h2 class="font-dynapuff font-bold text-2xl text-theme">
+        <div class="relative flex items-center justify-center mb-4">
+            <h1 class="font-dynapuff font-bold text-2xl text-theme">
                 {{ t('pages.children.title') }}
-            </h2>
+            </h1>
+            <RouterLink
+                :to="{ name: 'child-create' }"
+                class="absolute right-0 btn-theme px-4 py-2 rounded-xl text-sm font-medium"
+            >
+                {{ t('pages.children.add') }}
+            </RouterLink>
         </div>
 
         <div class="p-6">

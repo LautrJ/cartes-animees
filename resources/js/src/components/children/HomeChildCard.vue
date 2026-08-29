@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const props = defineProps({
     child : { type: Object, required: true },
@@ -26,26 +26,38 @@ const cardColors = [
 ]
 const cardColor = computed(() => cardColors[props.child.id % cardColors.length])
 
-const initials = computed(() => {
+const initials = computed(() =>
     `${props.child.first_name[0]}${props.child.last_name[0]}`.toUpperCase()
-})
+)
 
 const subscriptionBadge = computed(() => {
+    const status = props.child.subscription_status
+    const override = props.child.subscription_override_price
+
+    if (status === 'active' && override !== null && override !== undefined && parseFloat(override) === 0) {
+        return { label: t('pages.children.subscription.free'), classes: 'text-sky-600' }
+    }
+
     const map = {
-        active: { label: t('pages.children.subscription.active'), classes: 'text-emerald-600' },
-        free: { label: t('pages.children.subscription.free'), classes: 'text-sky-600' },
+        active:   { label: t('pages.children.subscription.active'),   classes: 'text-emerald-600' },
+        free:     { label: t('pages.children.subscription.free'),     classes: 'text-sky-600' },
         past_due: { label: t('pages.children.subscription.past_due'), classes: 'text-orange-500' },
         canceled: { label: t('pages.children.subscription.canceled'), classes: 'text-red-500' },
     }
-    return map[props.child.subscription_status] ?? { label: t('pages.children.subscription.none'), classes: 'text-gray-400' }
+    return map[status] ?? { label: t('pages.children.subscription.none'), classes: 'text-gray-400' }
 })
+
+function seriesName(name) {
+    if (typeof name === 'string') return name
+    return name[locale.value] ?? name.fr ?? ''
+}
 
 function relativeTime(dateStr) {
     if (!dateStr) return null
     const days = Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000)
     if (days === 0) return t('common.today')
     if (days === 1) return t('common.yesterday')
-    return t('common.days_ago', { n: days })
+    return t('common.days_ago', { days })
 }
 </script>
 
@@ -65,7 +77,7 @@ function relativeTime(dateStr) {
         </p>
 
         <p v-if="child.last_series" class="text-xs text-gray-400 truncate">
-            {{ child.last_series.name }} · {{ relativeTime(child.last_series.played_at) }}
+            {{ seriesName(child.last_series.name) }} · {{ relativeTime(child.last_series.played_at) }}
         </p>
 
         <p v-else class="text-xs text-gray-300 italic">

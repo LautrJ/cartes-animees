@@ -9,6 +9,7 @@ use App\Models\Child;
 use App\Models\Series;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SeriesController extends Controller
 {
@@ -31,7 +32,7 @@ class SeriesController extends Controller
                 'id'          => $series->id,
                 'name'        => $series->name,
                 'description' => $series->description,
-                'thumbnail'   => $series->thumbnail_path,
+                'thumbnail'   => $series->thumbnail_path ? Storage::disk('public')->url($series->thumbnail_path) : null,
                 'card_count'  => $series->cards()->count(),
                 'is_base'     => $series->is_base,
                 'status'      => $series->pivot->status,
@@ -64,15 +65,19 @@ class SeriesController extends Controller
             return ApiResponse::error(__('api.common.series_not_unlocked_for_child'), 403);
         }
 
+        $child->series()->updateExistingPivot($series->id, [
+            'last_played_at' => now(),
+        ]);
+
         $cards = $series->cards()
             ->orderBy('series_cards.order')
             ->get()
             ->map(fn ($card) => [
                 'id'                   => $card->id,
                 'name'                 => $card->name,
-                'drawn_animation_path' => $card->drawn_animation_path,
-                'real_animation_path'  => $card->real_animation_path,
-                'sound_path'           => $card->sound_path,
+                'drawn_animation_path' => $card->drawn_animation_path ? Storage::disk('cards')->url($card->drawn_animation_path) : null,
+                'real_animation_path'  => $card->real_animation_path  ? Storage::disk('cards')->url($card->real_animation_path)  : null,
+                'sound_path'           => $card->sound_path            ? Storage::disk('cards')->url($card->sound_path)            : null,
                 'width'                => $card->width,
                 'height'               => $card->height,
                 'duration'             => $card->duration,
@@ -82,7 +87,7 @@ class SeriesController extends Controller
             'id'          => $series->id,
             'name'        => $series->name,
             'description' => $series->description,
-            'thumbnail'   => $series->thumbnail_path,
+            'thumbnail'   => $series->thumbnail_path ? Storage::disk('public')->url($series->thumbnail_path) : null,
             'is_base'     => $series->is_base,
             'cards'       => $cards,
         ]);

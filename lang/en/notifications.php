@@ -24,7 +24,7 @@ return [
     'no_progress' => [
         'subject' => 'No recent activity — :child_first_name',
         'greeting' => 'Hello!',
-        'line_1' => 'We have not detected any activity from **:child_first_name** on Cartes Animées for more than a week.',
+        'line_1' => 'We have not detected any activity from **:child_first_name** on Cartes Animées for more than two weeks.',
         'line_2' => 'Regularity is important for your child\'s progress.',
         'action' => 'Resume exercises',
         'line_3' => 'Your referring speech therapist can also unlock new series to keep motivation high.',
@@ -44,6 +44,13 @@ return [
         'line_2' => 'Amount charged: **:amount €**',
         'action' => 'Open the app',
         'line_3' => 'Thank you for your trust!',
+    ],
+    'password_reset' => [
+        'subject' => 'Reset your password — Cartes Animées',
+        'greeting' => 'Hello!',
+        'line_1' => 'You are receiving this email because a password reset was requested for your account.',
+        'action' => 'Reset my password',
+        'line_2' => 'If you did not request a password reset, no further action is required.',
     ],
     'welcome_parent' => [
         'subject' => 'Welcome to Cartes Animées!',

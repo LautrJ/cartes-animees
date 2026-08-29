@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Log;
 use Stripe\Event;
 use Stripe\StripeClient;
 use Stripe\Subscription;
@@ -59,6 +60,70 @@ class StripeService
             'payment_behavior' => 'default_incomplete',
             'expand' => ['latest_invoice.payment_intent'],
         ]);
+    }
+
+    public function retrievePaymentIntent(string $id): \Stripe\PaymentIntent
+    {
+        return $this->stripe->paymentIntents->retrieve($id);
+    }
+
+    public function retrieveInvoice(string $id): \Stripe\Invoice
+    {
+        return $this->stripe->invoices->retrieve($id, [
+            'expand' => ['payment_intent'],
+        ]);
+    }
+
+    public function getClientSecretForSubscription(string $subscriptionId, string $customerId): ?string
+    {
+        // API 2026-04-22 (dahlia): `payment_intent` was removed from the Invoice object,
+        // and the `invoice` field is no longer returned on PaymentIntents in list responses.
+        // The only reliable approach is to list the customer's PaymentIntents and pick the
+        // first one in a confirmable status. In practice, at most one PI is pending per customer.
+        $pendingStatuses = ['requires_payment_method', 'requires_confirmation', 'requires_action'];
+
+        $sub       = $this->stripe->subscriptions->retrieve($subscriptionId, ['expand' => ['latest_invoice']]);
+        $invoice   = $sub->latest_invoice;
+        $invoiceId = is_string($invoice) ? $invoice : ($invoice->id ?? null);
+
+        Log::channel('stripe')->info('[3DS] looking for PI', [
+            'subscription_id' => $subscriptionId,
+            'invoice_id'      => $invoiceId,
+        ]);
+
+        try {
+            $pis = $this->stripe->paymentIntents->all([
+                'customer' => $customerId,
+                'limit'    => 10,
+            ]);
+
+            foreach ($pis->data as $pi) {
+                if (in_array($pi->status, $pendingStatuses, true)) {
+                    Log::channel('stripe')->info('[3DS] client_secret found', [
+                        'pi_id'  => $pi->id,
+                        'status' => $pi->status,
+                    ]);
+
+                    return $pi->client_secret;
+                }
+            }
+        } catch (\Throwable $e) {
+            Log::channel('stripe')->warning('[3DS] paymentIntents list failed', [
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        Log::channel('stripe')->error('[3DS] client_secret not found', [
+            'subscription_id' => $subscriptionId,
+            'invoice_id'      => $invoiceId,
+        ]);
+
+        return null;
+    }
+
+    public function retrieveSubscription(string $subscriptionId): Subscription
+    {
+        return $this->stripe->subscriptions->retrieve($subscriptionId);
     }
 
     public function cancelSubscription(string $subscriptionId): void

@@ -13,9 +13,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class PendingValidationsWidget extends BaseWidget
 {
-    protected static ?string $heading = null;
-
-    public function getHeading(): string|\Illuminate\Contracts\Support\Htmlable|null
+    protected function getTableHeading(): string|\Illuminate\Contracts\Support\Htmlable|null
     {
         return __('filament.widgets.pending_validations.heading');
     }

@@ -50,6 +50,8 @@
     },
     "pages": {
         "home": {
+            "greeting": "Hello {name}",
+            "no_series": "No series available for the moment.",
             "no_series_played": "No series played"
         },
         "children": {
@@ -72,6 +74,7 @@
                 "free": "Free",
                 "past_due": "Waiting for payment",
                 "canceled": "Canceled",
+                "incomplete": "Pending payment",
                 "none": "No subscription"
             }
         },
@@ -81,7 +84,15 @@
             "subscription": {
                 "title": "Subscription",
                 "next_payment": "Next payment on {date}",
-                "manage": "Manage"
+                "subscribe": "Subscribe",
+                "regularize": "Regularize",
+                "cancel": "Cancel",
+                "cancel_confirm": "Are you sure? The child will lose access to paid series.",
+                "price_free": "Price: Free (granted)",
+                "price_reduced": "Reduced price: {price} €/month",
+                "past_due_warning": "Last payment failed. Please, regularize to keep your access to the series.",
+                "incomplete_warning": "Payment was not completed. Resume the process to activate the subscription.",
+                "retry": "Resume payment"
             },
             "therapists": {
                 "title": "Therapists",
@@ -101,6 +112,27 @@
             "edit": {
                 "title": "Edit child"
             }
+        },
+        "child_create": {
+            "title": "Add new child",
+            "first_name": "Last name",
+            "last_name": "First name",
+            "birthdate": "Birthdate"
+        },
+        "landing": {
+            "register": "Sign up",
+            "login": "Log in"
+        },
+        "series": {
+            "play": "▶ Jouer"
+        },
+        "subscribe": {
+            "title": "Subscribe",
+            "no_therapist_warning": "No new content will be available if the child is not linked to an therapist.",
+            "monthly_price": "Monthly price",
+            "per_month": "/month",
+            "card": "Payment by card",
+            "cta": "Confirm"
         },
         "profile": {
             "title": "My profil",

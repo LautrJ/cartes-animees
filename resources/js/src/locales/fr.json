@@ -50,6 +50,8 @@
     },
     "pages": {
         "home": {
+            "greeting": "Bonjour {name}",
+            "no_series": "Aucune séries disponible pour l'instant.",
             "no_series_played": "Aucune série jouée"
         },
         "children": {
@@ -72,6 +74,7 @@
                 "free": "Gratuit",
                 "past_due": "Paiement en attente",
                 "canceled": "Annulé",
+                "incomplete": "En attente de paiement",
                 "none": "Sans abonnement"
             }
         },
@@ -81,7 +84,15 @@
             "subscription": {
                 "title": "Abonnement",
                 "next_payment": "Prochain paiement le {date}",
-                "manage": "Gérer"
+                "subscribe": "Souscrire",
+                "regularize": "Régulariser",
+                "cancel": "Annuler l'abonnement",
+                "cancel_confirm": "Êtes-vous sûr ? L'enfant perdra l'accès aux séries payantes.",
+                "price_free": "Tarif : Gratuit (offert)",
+                "price_reduced": "Tarif réduit : {price} €/mois",
+                "past_due_warning": "Le dernier paiement a échoué. Veuillez régulariser pour conserver l'accès aux séries.",
+                "incomplete_warning": "Le paiement n'a pas été finalisé. Reprenez le processus pour activer l'abonnement.",
+                "retry": "Reprendre le paiement"
             },
             "therapists": {
                 "title": "Orthophonistes",
@@ -101,6 +112,27 @@
             "edit": {
                 "title": "Modifier l'enfant"
             }
+        },
+        "child_create": {
+            "title": "Ajouter un enfant",
+            "first_name": "Prénom",
+            "last_name": "Nom de famille",
+            "birthdate": "Date de naissance"
+        },
+        "landing": {
+            "register": "S'inscrire",
+            "login": "Se connecter"
+        },
+        "series": {
+            "play": "▶ Jouer"
+        },
+        "subscribe": {
+            "title": "S'abonner",
+            "no_therapist_warning": "Aucun nouveau contenu ne pourra être débloqué si l'enfant n'est pas affilié à un orthophoniste.",
+            "monthly_price": "Prix mensuel",
+            "per_month": "/mois",
+            "card": "Paiement par carte",
+            "cta": "Valider"
         },
         "profile": {
             "title": "Mon profile",

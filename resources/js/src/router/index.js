@@ -44,21 +44,27 @@ const routes = [
         meta: { requiresAuth: true },
     },
     {
+        path: '/children/create',
+        name: 'child-create',
+        component: () => import('@/src/pages/children/ChildCreatePage.vue'),
+        meta: { requiresAuth: true },
+    },
+    {
+        path: '/children/:id/subscribe',
+        name: 'child-subscribe',
+        component: () => import('@/src/pages/children/ChildSubscribePage.vue'),
+        meta: { requiresAuth: true },
+    },
+    {
         path: '/children/:id',
         name: 'child-detail',
         component: () => import('@/src/pages/children/ChildDetailPage.vue'),
         meta: { requiresAuth: true },
     },
     {
-        path: '/children/:id/series',
-        name: 'child-series',
-        //component: () => import('@/src/pages/children/ChildSeriesPage.vue'),
-        meta: { requiresAuth: true },
-    },
-    {
         path: '/children/:id/series/:seriesId',
         name: 'child-series-player',
-        //component: () => import('@/src/pages/children/SeriesPlayerPage.vue'),
+        component: () => import('@/src/pages/children/SeriesDetailPage.vue'),
         meta: { requiresAuth: true },
     },
     {
@@ -69,7 +75,9 @@ const routes = [
     },
     {
         path: '/',
-        redirect: '/home',
+        name: 'landing',
+        component: () => import('@/src/pages/LandingPage.vue'),
+        meta: { requiresGuest: true },
     },
     {
         path: '/:pathMatch(.*)*',

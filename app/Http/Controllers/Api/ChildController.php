@@ -32,6 +32,7 @@ class ChildController extends Controller
                     'played_at' => $last->pivot->last_played_at
                 ] : null,
                 'subscription_status' => $child->subscription?->status,
+                'subscription_override_price' => $child->subscription?->override_price,
             ]);
 
         return response()->json($children);
@@ -73,8 +74,9 @@ class ChildController extends Controller
                 'name' => $t->first_name . ' ' . $t->last_name,
             ]),
             'subscription'        => $child->subscription ? [
-                'status'      => $child->subscription->status,
-                'next_payment'=> $child->subscription->next_payment_at,
+                'status'         => $child->subscription->status,
+                'next_payment'   => $child->subscription->next_payment_at,
+                'override_price' => $child->subscription->override_price,
             ] : null,
         ]);
     }

@@ -22,6 +22,17 @@ class StripeWebhookHandler
             'customer.subscription.deleted' => $this->handleSubscriptionDeleted($event),
             'customer.subscription.updated' => $this->handleSubscriptionUpdated($event),
             'invoice.finalized' => $this->handleInvoiceFinalized($event),
+            // Events attendus mais non traités explicitement
+            'invoice.paid',
+            'invoice.payment_action_required',
+            'invoice_payment.paid',
+            'payment_intent.requires_action',
+            'payment_intent.succeeded',
+            'payment_intent.created',
+            'charge.succeeded',
+            'charge.updated',
+            'customer.updated',
+            'payment_method.attached' => null,
             default => Log::channel('stripe')->info('Event Stripe non géré : '.$event->type),
         };
     }
@@ -30,7 +41,11 @@ class StripeWebhookHandler
     {
         $stripeInvoice = $event->data->object;
 
-        $subscription = Subscription::where('stripe_subscription_id', $stripeInvoice->subscription)->first();
+        $subscriptionId = $stripeInvoice->parent?->subscription_details?->subscription
+            ?? $stripeInvoice->subscription
+            ?? null;
+
+        $subscription = Subscription::where('stripe_subscription_id', $subscriptionId)->first();
 
         if (! $subscription) {
             Log::channel('stripe')->warning('Subscription introuvable pour invoice.payment_succeeded', [
@@ -74,11 +89,24 @@ class StripeWebhookHandler
     {
         $stripeInvoice = $event->data->object;
 
-        $subscription = Subscription::where('stripe_subscription_id', $stripeInvoice->subscription)->first();
+        // attempt_count = 0 means 3DS is pending, not a genuine failure — skip
+        if (($stripeInvoice->attempt_count ?? 0) === 0) {
+            Log::channel('stripe')->info('Tentative en attente d\'action 3DS, pas un échec réel', [
+                'stripe_invoice_id' => $stripeInvoice->id,
+            ]);
+
+            return;
+        }
+
+        $subscriptionId = $stripeInvoice->parent?->subscription_details?->subscription
+            ?? $stripeInvoice->subscription
+            ?? null;
+
+        $subscription = Subscription::where('stripe_subscription_id', $subscriptionId)->first();
 
         if (! $subscription) {
             Log::channel('stripe')->warning('Subscription introuvable pour invoice.payment_failed', [
-                'stripe_subscription_id' => $stripeInvoice->subscription,
+                'stripe_subscription_id' => $subscriptionId,
             ]);
 
             return;
@@ -96,15 +124,27 @@ class StripeWebhookHandler
             ]
         );
 
-        $subscription->update(['status' => SubscriptionStatus::PastDue]);
+        // Un échec sur la toute première facture (création de l'abonnement, 3DS refusé/annulé)
+        // ne doit pas passer l'abonnement en "past_due" — ce statut implique une période active
+        // précédente. Il doit rester "incomplete" pour permettre une nouvelle tentative de paiement.
+        // La notification "paiement échoué" (qui parle de renouvellement et de suspension d'accès)
+        // n'a également de sens que pour un vrai échec de renouvellement.
+        $isFirstInvoice = $stripeInvoice->billing_reason === 'subscription_create';
 
-        $subscription->child->parent->notify(new PaymentFailedNotification(
-            childFirstName: $subscription->child->first_name,
-        ));
+        if ($isFirstInvoice) {
+            $subscription->update(['status' => SubscriptionStatus::Incomplete]);
+        } else {
+            $subscription->update(['status' => SubscriptionStatus::PastDue]);
+
+            $subscription->child->parent->notify(new PaymentFailedNotification(
+                childFirstName: $subscription->child->first_name,
+            ));
+        }
 
         Log::channel('stripe')->warning('Paiement échoué', [
             'stripe_invoice_id' => $stripeInvoice->id,
             'subscription_id' => $subscription->id,
+            'billing_reason' => $stripeInvoice->billing_reason,
         ]);
     }
 
@@ -148,15 +188,20 @@ class StripeWebhookHandler
 
         $stripeStatus = match ($stripeSubscription->status) {
             'active' => SubscriptionStatus::Active,
+            'incomplete' => SubscriptionStatus::Incomplete,
             'past_due' => SubscriptionStatus::PastDue,
             'canceled' => SubscriptionStatus::Canceled,
             default => null,
         };
 
-        $data = [
-            'current_period_start' => Carbon::createFromTimestamp($stripeSubscription->current_period_start),
-            'current_period_end' => Carbon::createFromTimestamp($stripeSubscription->current_period_end),
-        ];
+        $data = array_filter([
+            'current_period_start' => $stripeSubscription->current_period_start
+                ? Carbon::createFromTimestamp($stripeSubscription->current_period_start)
+                : null,
+            'current_period_end' => $stripeSubscription->current_period_end
+                ? Carbon::createFromTimestamp($stripeSubscription->current_period_end)
+                : null,
+        ]);
 
         if ($stripeStatus) {
             $data['status'] = $stripeStatus;

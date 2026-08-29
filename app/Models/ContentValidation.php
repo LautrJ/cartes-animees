@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use App\Enums\ContentValidationStatus;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\Card;
+use App\Models\Series;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -47,6 +50,25 @@ class ContentValidation extends Model
     public function reviewer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'reviewed_by');
+    }
+
+    // Accesseurs
+    protected function displayTitle(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $typeLabel = match ($this->validatable_type) {
+                    Card::class   => __('filament.content_validations.content_type_card'),
+                    Series::class => __('filament.content_validations.content_type_series'),
+                    default       => $this->validatable_type,
+                };
+
+                $name = $this->validatable?->name;
+                $nameLabel = is_array($name) ? ($name['fr'] ?? $name[array_key_first($name)] ?? '—') : ($name ?? '—');
+
+                return ucfirst($typeLabel).' : '.$nameLabel;
+            }
+        );
     }
 
     // Filament

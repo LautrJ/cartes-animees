@@ -15,7 +15,7 @@ class InvoiceFactory extends Factory
         return [
             'subscription_id' => Subscription::inRandomOrder()->first()->id,
             'stripe_invoice_id' => 'in_'.$this->faker->unique()->bothify('??????????'),
-            'amount' => 9.99,
+            'amount' => 7.99,
             'status' => InvoiceStatus::Paid,
             'invoice_pdf' => null,
             'period_start' => $start,

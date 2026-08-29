@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useUiStore } from "@/src/stores/ui.js";
 import { useI18n } from 'vue-i18n'
 import DefaultLayout from '@/src/layouts/DefaultLayout.vue'
 import SubscriptionCard from '@/src/components/children/SubscriptionCard.vue'
@@ -9,10 +10,12 @@ import SeriesPreview from '@/src/components/children/SeriesPreview.vue'
 import ChildEditModal from '@/src/components/children/ChildEditModal.vue'
 import { childrenService } from '@/src/services/children.service'
 import { seriesService } from '@/src/services/series.service'
+import { subscriptionService } from '@/src/services/subscription.service'
 
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
+const uiStore = useUiStore()
 
 const child = ref(null)
 const series = ref([])
@@ -50,6 +53,25 @@ function onTherapistRemoved(therapistId) {
 function onChildUpdated(updated) {
     child.value = { ...child.value, ...updated }
     showEditModal.value = false
+}
+
+function handleSeeAll() {
+    uiStore.switchToChild(child.value)
+    router.push({ name: 'home' })
+}
+
+function handlePlay(seriesId) {
+    uiStore.switchToChild(child.value)
+    router.push({ name: 'child-series-player', params: { id: child.value.id, seriesId } })
+}
+
+async function cancelSubscription() {
+    try {
+        await subscriptionService.cancel(child.value.id)
+        await loadChild()
+    } catch {
+        // loadChild rafraichit l'état, erreur silencieuse ici
+    }
 }
 
 const avatarColor = (id) => avatarColors[id % avatarColors.length]
@@ -96,6 +118,7 @@ const formattedBirthdate = (birthdate) =>
                 <SubscriptionCard
                     :subscription="child.subscription"
                     :child-id="child.id"
+                    @cancel="cancelSubscription"
                 />
                 <TherapistsCard
                     :therapists="child.therapists"
@@ -108,6 +131,8 @@ const formattedBirthdate = (birthdate) =>
             <SeriesPreview
                 :series="series"
                 :child-id="child.id"
+                @see-all="handleSeeAll"
+                @play="handlePlay"
             />
 
             <div v-if="child.notes" class="bg-white rounded-2xl shadow-sm p-6">
